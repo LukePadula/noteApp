@@ -1,0 +1,24 @@
+/* General stylings */
+
+button {
+  width: 40px;
+  border-radius: 10px;
+  color: white;
+  width: 85px;
+  padding: 6px;
+  border: none;
+}
+
+.button-green {
+  background-color: #266e58;
+}
+
+.button-orange {
+  background-color: #e36027;
+}
+
+.button-orange-square {
+  width: 40px;
+  height: 40px;
+  background-color: #e36027;
+}
