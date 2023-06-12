@@ -1,0 +1,9 @@
+.record {
+  grid-row: 2 / auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  justify-items: center;
+  align-items: center;
+  border: 1px solid #dae7e3;
+  padding: 20px;
+}

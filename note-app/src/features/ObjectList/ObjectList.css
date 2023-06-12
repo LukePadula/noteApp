@@ -1,0 +1,7 @@
+.list-headings {
+  grid-row: 1 / auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  justify-items: center;
+  align-items: center;
+}
