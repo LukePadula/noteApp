@@ -2,6 +2,8 @@ import ObjectContainer from "../ObjectContainer/ObjectContainer";
 import { LIST_HEADERS } from "../../app/PredefinedValues";
 import { useSelector, useDispatch } from "react-redux";
 import { selectTestData } from "../../app/Slices/AppSlice";
+import { NOTE, TEMPLATE, EVENT } from "../../app/PredefinedValues";
+
 import "./ObjectList.css";
 import "../../features/General.css";
 
@@ -22,16 +24,26 @@ const ObjectList = (props) => {
     <ObjectContainer key={index} object={object} record={record} />
   ));
 
-  let listButtons;
+  let listActionButtons;
+
+  switch (object) {
+    case NOTE:
+      listActionButtons = <button className="button-orange-square">+</button>;
+      break;
+
+    case TEMPLATE:
+      listActionButtons = <button className="button-orange-square">+</button>;
+      break;
+
+    default:
+      break;
+  }
 
   return (
     <div className="list-container">
       <div className="list-title">
         <h1>{listTitle}</h1>
-        <div className="list-actions">
-          <button className="button-orange-square">+</button>
-          {/* <button className="button-orange">Delete</button> */}
-        </div>
+        <div className="list-actions">{listActionButtons}</div>
       </div>
       <div className="record-list">
         <div className="list-headings">{headers}</div>

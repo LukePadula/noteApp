@@ -8,7 +8,7 @@ small {
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
   justify-items: center;
   align-items: center;
-  border: 1px solid #dae7e3;
+  border: 3.5px solid #dae7e3;
   padding: 20px;
   border-radius: 10px;
   margin: 6px;

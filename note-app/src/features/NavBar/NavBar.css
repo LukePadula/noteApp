@@ -1,0 +1,11 @@
+h1 {
+  font-size: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background-color: #f6f6f7;
+}
