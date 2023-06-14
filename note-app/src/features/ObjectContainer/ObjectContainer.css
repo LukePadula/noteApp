@@ -3,6 +3,7 @@ small {
 }
 
 .record {
+  position: relative;
   grid-row: 2 / auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
@@ -12,4 +13,27 @@ small {
   padding: 20px;
   border-radius: 10px;
   margin: 6px;
+  z-index: 1;
+}
+
+.actions-cont {
+  background-color: #266e58;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  z-index: 2;
+}
+
+.record-actions {
+  position: absolute;
+  top: 25px;
+  z-index: 3;
+  background-color: #f6f6f7;
+}
+.actions-cont:hover {
+  cursor: pointer;
 }
