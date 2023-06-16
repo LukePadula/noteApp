@@ -1,5 +1,8 @@
-small {
+small,
+a {
   font-size: 18px;
+  color: black;
+  text-decoration: none;
 }
 
 .record {
@@ -13,26 +16,31 @@ small {
   padding: 20px;
   border-radius: 10px;
   margin: 6px;
-  z-index: 1;
 }
 
 .actions-cont {
   background-color: #266e58;
   position: absolute;
-  right: 5px;
+  right: 0%;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 24px;
   height: 24px;
   border-radius: 5px;
-  z-index: 2;
+  z-index: 50;
 }
 
 .record-actions {
   position: absolute;
   top: 25px;
-  z-index: 3;
+  z-index: 100;
   background-color: #f6f6f7;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.record-actions div {
+  padding: 5px;
 }
 .actions-cont:hover {
   cursor: pointer;

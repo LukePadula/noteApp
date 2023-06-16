@@ -1,6 +1,8 @@
 import ObjectContainer from "../ObjectContainer/ObjectContainer";
 import { LIST_HEADERS } from "../../app/PredefinedValues";
 import { useSelector, useDispatch } from "react-redux";
+import "../../features/General.css";
+
 import {
   selectNoteData,
   selectTemplateData,
@@ -29,26 +31,12 @@ const ObjectList = (props) => {
   //Format list title.
   let listTitle = object.toLowerCase() + "s";
   listTitle = listTitle[0].toUpperCase() + listTitle.substring(1);
+  let listActionButtons;
 
   //Create predefined list headers.
   let headers = LIST_HEADERS[object].map((header, index) => (
     <h2 key={index}>{header}</h2>
   ));
-
-  let listActionButtons;
-
-  switch (object) {
-    case NOTE:
-      listActionButtons = <button className="button-orange-square">+</button>;
-      break;
-
-    case TEMPLATE:
-      listActionButtons = <button className="button-orange-square">+</button>;
-      break;
-
-    default:
-      break;
-  }
 
   if (!objectRecords || objectRecords.length === 0) {
     return (
@@ -68,6 +56,40 @@ const ObjectList = (props) => {
     <ObjectContainer key={index} object={object} record={record} />
   ));
 
+  let calendarAction;
+
+  switch (object) {
+    case NOTE:
+      listActionButtons = <button className="button-orange-square">+</button>;
+      break;
+
+    case TEMPLATE:
+      listActionButtons = <button className="button-orange-square">+</button>;
+
+      break;
+    case EVENT:
+      if (objectRecords) {
+        calendarAction = (
+          <div className="calendar-action-cont">
+            <button className="calendar-action button-orange">
+              Open calendar
+            </button>
+          </div>
+        );
+      } else {
+        calendarAction = (
+          <div className="calendar-action-cont">
+            <button className="open-calendar button-orange">
+              Sync calendar
+            </button>
+          </div>
+        );
+      }
+
+    default:
+      break;
+  }
+
   return (
     <div className="list-container">
       <div className="list-title">
@@ -77,6 +99,7 @@ const ObjectList = (props) => {
       <div className="record-list">
         <div className="list-headings">{headers}</div>
         {recordList}
+        {calendarAction}
       </div>
     </div>
   );

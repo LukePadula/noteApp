@@ -6,6 +6,7 @@ import {
   onRecordDelete,
   onRecordView,
 } from "../../app/Slices/AppSlice";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
 const ObjectContainer = (props) => {
   const { object, record } = props;
@@ -18,7 +19,7 @@ const ObjectContainer = (props) => {
     case NOTE:
       recordContent = (
         <>
-          <small>{record.title}</small>
+          <Link to={`note/${record.id}`}>{record.title}</Link>
           <small>{record.eventName}</small>
           <small>{record.created}</small>
           <small>{record.modified}</small>
@@ -29,12 +30,8 @@ const ObjectContainer = (props) => {
         recordButtonActions = (
           <>
             <div className="record-actions">
-              <div
-                onClick={() =>
-                  dispatch(onRecordView({ id: record.id, object: object }))
-                }
-              >
-                View
+              <div>
+                <Link to={`note/${record.id}`}>View</Link>
               </div>
               <div
                 onClick={() =>
@@ -91,6 +88,22 @@ const ObjectContainer = (props) => {
           <small>{record.startDateTime}</small>
         </>
       );
+
+      if (record.showActions) {
+        recordButtonActions = (
+          <>
+            <div className="record-actions">
+              <div
+                onClick={() =>
+                  dispatch(onRecordView({ id: record.id, object: object }))
+                }
+              >
+                View
+              </div>
+            </div>
+          </>
+        );
+      }
       break;
 
     default:

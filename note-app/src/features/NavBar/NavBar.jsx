@@ -1,17 +1,24 @@
 import { useSelector, useDispatch } from "react-redux";
 import "./NavBar.css";
-
+import { onModalOpenClose } from "../../app/Slices/AppSlice";
 const ObjectContainer = (props) => {
-  const { page } = props;
+  const dispatch = useDispatch();
+
   return (
     <nav>
       <div className="page-title">
-        <h1>{page}</h1>
+        <h1>Noted</h1>
       </div>
-      <div className="search-bar">
-        <input type="text" />
+      <div className="nav-actions">
+        <button className="search">Q</button>
+        <button className="home">Home</button>
+        <button
+          className="sign-out"
+          onClick={() => dispatch(onModalOpenClose())}
+        >
+          Sign out
+        </button>
       </div>
-      <div className="nav-actions">+</div>
     </nav>
   );
 };

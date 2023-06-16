@@ -1,10 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  showModal: false,
   NOTE: [
     {
       id: "n1823190",
       title: "This is a note",
+      eventName: "Event 1",
+      created: "Today",
+      modified: "Today",
+      showActions: false,
+    },
+    {
+      id: "123",
+      title: "This is a test",
       eventName: "Event 1",
       created: "Today",
       modified: "Today",
@@ -74,15 +83,19 @@ export const appSlice = createSlice({
       );
       state[action.payload.object].splice(index, 1);
     },
-    onRecordView: (state, action) => {
-      console.log(action.payload.object);
+    onRecordView: (state, action) => {},
+    onModalOpenClose: (state, action) => {
+      state.showModal = !state.showModal;
     },
   },
-  // The `extraReducers` field lets the slice handle
 });
 
-export const { onActionMenuClick, onRecordDelete, onRecordView } =
-  appSlice.actions;
+export const {
+  onActionMenuClick,
+  onRecordDelete,
+  onRecordView,
+  onModalOpenClose,
+} = appSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -90,5 +103,8 @@ export const { onActionMenuClick, onRecordDelete, onRecordView } =
 export const selectNoteData = (state) => state.appSlice.NOTE;
 export const selectTemplateData = (state) => state.appSlice.TEMPLATE;
 export const selectEventData = (state) => state.appSlice.EVENT;
+export const selectRecordData = (state, payload) =>
+  state.appSlice[payload.object].find((record) => record.id == payload.id);
+export const selectShowModal = (state) => state.appSlice.showModal;
 
 export default appSlice.reducer;

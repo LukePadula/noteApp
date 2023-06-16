@@ -1,5 +1,5 @@
 h1 {
-  font-size: 20px;
+  font-size: 1.8rem;
 }
 
 nav {
@@ -8,4 +8,25 @@ nav {
   align-items: center;
   padding: 8px;
   background-color: #f6f6f7;
+  padding-left: 3%;
+  padding-right: 3%;
+  margin-bottom: 15px;
+}
+.nav-actions > button {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.search {
+  width: 30px;
+  height: 30px;
+  background-color: #266e58;
+}
+
+.home {
+  background-color: #266e58;
+}
+
+.sign-out {
+  background-color: #e36027;
 }
