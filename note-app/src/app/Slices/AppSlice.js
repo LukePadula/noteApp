@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  showModal: false,
+  modalType: null,
   NOTE: [
     {
       id: "n1823190",
@@ -65,7 +65,6 @@ const initialState = {
 export const appSlice = createSlice({
   name: "appSlice",
   initialState,
-  // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     onActionMenuClick: (state, action) => {
       const record = state[action.payload.object].find(
@@ -85,7 +84,11 @@ export const appSlice = createSlice({
     },
     onRecordView: (state, action) => {},
     onModalOpenClose: (state, action) => {
-      state.showModal = !state.showModal;
+      state.modalType = action.payload;
+    },
+    onSignOutConfirm: (state, action) => {
+      state.modalType = undefined;
+      // Navigate to login.
     },
   },
 });
@@ -95,6 +98,7 @@ export const {
   onRecordDelete,
   onRecordView,
   onModalOpenClose,
+  onSignOutConfirm,
 } = appSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
@@ -105,6 +109,6 @@ export const selectTemplateData = (state) => state.appSlice.TEMPLATE;
 export const selectEventData = (state) => state.appSlice.EVENT;
 export const selectRecordData = (state, payload) =>
   state.appSlice[payload.object].find((record) => record.id == payload.id);
-export const selectShowModal = (state) => state.appSlice.showModal;
+export const selectModalType = (state) => state.appSlice.modalType;
 
 export default appSlice.reducer;

@@ -2,6 +2,7 @@ import ObjectContainer from "../ObjectContainer/ObjectContainer";
 import { LIST_HEADERS } from "../../app/PredefinedValues";
 import { useSelector, useDispatch } from "react-redux";
 import "../../features/General.css";
+import ListHeaders from "../ListHeaders/ListHeaders";
 
 import {
   selectNoteData,
@@ -16,7 +17,13 @@ import "../../features/General.css";
 const ObjectList = (props) => {
   const { object } = props;
 
-  console.log(props);
+  // Empty string is for record actions column
+  const headers = {
+    [NOTE]: ["Title", "Event", "Created", "Modified", ""],
+    [TEMPLATE]: ["Title", "Created", "Modified", ""],
+    [EVENT]: ["Title", "Status", "Time", ""],
+  };
+
   //Create map to easily get correct selector function.
   const selectorMap = {
     [NOTE]: selectNoteData,
@@ -33,10 +40,7 @@ const ObjectList = (props) => {
   listTitle = listTitle[0].toUpperCase() + listTitle.substring(1);
   let listActionButtons;
 
-  //Create predefined list headers.
-  let headers = LIST_HEADERS[object].map((header, index) => (
-    <h2 key={index}>{header}</h2>
-  ));
+  console.log(object);
 
   if (!objectRecords || objectRecords.length === 0) {
     return (
@@ -51,10 +55,17 @@ const ObjectList = (props) => {
       </>
     );
   }
+
+  // Get headers.
+  let headerList = headers[object].map((title) => (
+    <ListHeaders key={title} header={title}></ListHeaders>
+  ));
   // Get record details
   let recordList = objectRecords.map((record, index) => (
     <ObjectContainer key={index} object={object} record={record} />
   ));
+  // Add headers to first row of grid.
+  recordList.unshift(headerList);
 
   let calendarAction;
 
@@ -96,11 +107,13 @@ const ObjectList = (props) => {
         <h1>{listTitle}</h1>
         <div className="list-actions">{listActionButtons}</div>
       </div>
-      <div className="record-list">
-        <div className="list-headings">{headers}</div>
+      <div
+        style={{ gridTemplateColumns: `repeat(${headerList.length} ,1fr)` }}
+        className="record-list"
+      >
         {recordList}
-        {calendarAction}
       </div>
+      {calendarAction}
     </div>
   );
 };

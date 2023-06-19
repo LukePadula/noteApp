@@ -12,17 +12,24 @@ const ObjectContainer = (props) => {
   const { object, record } = props;
   let recordContent;
   let recordButtonActions;
-  let showActionMenu = false;
   const dispatch = useDispatch();
 
   switch (object) {
     case NOTE:
       recordContent = (
         <>
-          <Link to={`note/${record.id}`}>{record.title}</Link>
-          <small>{record.eventName}</small>
-          <small>{record.created}</small>
-          <small>{record.modified}</small>
+          <div className="record-data">
+            <Link to={`/note/${record.id}`}>{record.title}</Link>
+          </div>
+          <div className="record-data">
+            <small>{record.eventName}</small>
+          </div>
+          <div className="record-data">
+            <small>{record.created}</small>
+          </div>
+          <div className="record-data">
+            <small>{record.modified}</small>
+          </div>
         </>
       );
 
@@ -31,7 +38,7 @@ const ObjectContainer = (props) => {
           <>
             <div className="record-actions">
               <div>
-                <Link to={`note/${record.id}`}>View</Link>
+                <Link to={`/note/${record.id}`}>View</Link>
               </div>
               <div
                 onClick={() =>
@@ -50,9 +57,15 @@ const ObjectContainer = (props) => {
     case TEMPLATE:
       recordContent = (
         <>
-          <small>{record.title}</small>
-          <small>{record.created}</small>
-          <small>{record.modified}</small>
+          <div className="record-data">
+            <Link to={`/note/${record.id}`}>{record.title}</Link>
+          </div>
+          <div className="record-data">
+            <small>{record.created}</small>
+          </div>
+          <div className="record-data">
+            <small>{record.modified}</small>
+          </div>
         </>
       );
 
@@ -83,9 +96,15 @@ const ObjectContainer = (props) => {
     case EVENT:
       recordContent = (
         <>
-          <small>{record.title}</small>
-          <small>{record.status}</small>
-          <small>{record.startDateTime}</small>
+          <div className="record-data">
+            <small>{record.title}</small>
+          </div>
+          <div className="record-data">
+            <small>{record.status}</small>
+          </div>
+          <div className="record-data">
+            <small>{record.startDateTime}</small>
+          </div>
         </>
       );
 
@@ -112,16 +131,14 @@ const ObjectContainer = (props) => {
 
   return (
     <>
-      <div className="record">
-        {recordContent}
-        <div
-          className="actions-cont"
-          onClick={() =>
-            dispatch(onActionMenuClick({ id: record.id, object: object }))
-          }
-        >
-          {recordButtonActions}
-        </div>
+      {recordContent}
+      <div
+        className="actions-cont"
+        onClick={() =>
+          dispatch(onActionMenuClick({ id: record.id, object: object }))
+        }
+      >
+        {recordButtonActions}
       </div>
     </>
   );

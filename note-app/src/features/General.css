@@ -1,4 +1,7 @@
 /* General stylings */
+h1 {
+  margin: 0;
+}
 
 button {
   border-radius: 10px;

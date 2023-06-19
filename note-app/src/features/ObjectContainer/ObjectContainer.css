@@ -1,17 +1,11 @@
 small,
 a {
-  font-size: 18px;
+  /* font-size: 18px; */
   color: black;
   text-decoration: none;
 }
 
 .record {
-  position: relative;
-  grid-row: 2 / auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-  justify-items: center;
-  align-items: center;
   border: 3.5px solid #dae7e3;
   padding: 20px;
   border-radius: 10px;
@@ -19,24 +13,13 @@ a {
 }
 
 .actions-cont {
+  position: relative;
   background-color: #266e58;
-  position: absolute;
-  right: 0%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  align-self: center;
+  justify-self: end;
+  border-radius: 5px;
   width: 24px;
   height: 24px;
-  border-radius: 5px;
-  z-index: 50;
-}
-
-.record-actions {
-  position: absolute;
-  top: 25px;
-  z-index: 100;
-  background-color: #f6f6f7;
-  border-radius: 5px;
-  background-color: white;
 }
 
 .record-actions div {
@@ -44,4 +27,18 @@ a {
 }
 .actions-cont:hover {
   cursor: pointer;
+}
+
+.record-data {
+  text-align: center;
+  padding: 20px;
+}
+
+.record-actions {
+  position: absolute;
+  top: 25px;
+  background-color: #f6f6f7;
+  border-radius: 5px;
+  background-color: white;
+  z-index: 10;
 }

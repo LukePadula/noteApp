@@ -1,13 +1,32 @@
 import React from "react";
+import { selectModalType } from "./app/Slices/AppSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import Login from "./features/pages/Login.jsx";
 import Home from "./features/pages/Home.jsx";
 import Template from "./features/pages/Template.jsx";
 import Note from "./features/pages/Note.jsx";
 import NavBar from "./features/NavBar/NavBar.jsx";
-import Modal from "./features/Modal/Modal.jsx";
+
+import Modal from "./features/Modals/Modal/ModalTemplate/Modal.jsx";
+import SignOut from "./features/Modals/Modal/SignOutModal/SignOutModal.jsx";
 
 const App = () => {
+  let modalType = useSelector(selectModalType);
+  let modalContent;
+
+  console.log(modalType);
+
+  switch (modalType) {
+    case "signOut":
+      console.log("run");
+      modalContent = <SignOut />;
+      break;
+
+    default:
+      break;
+  }
+
   return (
     <>
       <NavBar page="home"></NavBar>
@@ -17,7 +36,7 @@ const App = () => {
         <Route path="/template" element={<Template />} />
         <Route path="/note/:id" element={<Note />} />
       </Routes>
-      <Modal />
+      {modalType && <Modal content={modalContent} />}
     </>
   );
 };

@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import "./NavBar.css";
 import { onModalOpenClose } from "../../app/Slices/AppSlice";
+
 const ObjectContainer = (props) => {
   const dispatch = useDispatch();
 
@@ -14,7 +15,7 @@ const ObjectContainer = (props) => {
         <button className="home">Home</button>
         <button
           className="sign-out"
-          onClick={() => dispatch(onModalOpenClose())}
+          onClick={() => dispatch(onModalOpenClose("signOut"))}
         >
           Sign out
         </button>
