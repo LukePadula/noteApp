@@ -1,18 +1,29 @@
 import { useSelector, useDispatch } from "react-redux";
 import "./NavBar.css";
 import { onModalOpenClose } from "../../app/Slices/AppSlice";
+import { useNavigate } from "react-router-dom";
 
-const ObjectContainer = (props) => {
+const NavBar = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <nav>
       <div className="page-title">
-        <h1>Noted</h1>
+        <h1 onClick={() => navigate("/home")} className="title">
+          Noted
+        </h1>
       </div>
       <div className="nav-actions">
-        <button className="search">Q</button>
-        <button className="home">Home</button>
+        <button
+          className="search"
+          onClick={() => dispatch(onModalOpenClose("search"))}
+        >
+          Q
+        </button>
+        <button onClick={() => navigate("/home")} className="home">
+          Home
+        </button>
         <button
           className="sign-out"
           onClick={() => dispatch(onModalOpenClose("signOut"))}
@@ -24,4 +35,4 @@ const ObjectContainer = (props) => {
   );
 };
 
-export default ObjectContainer;
+export default NavBar;

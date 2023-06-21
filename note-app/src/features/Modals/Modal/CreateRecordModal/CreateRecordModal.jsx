@@ -1,29 +1,25 @@
 import { useSelector, useDispatch } from "react-redux";
 import "../SignOutModal/SignOutModal.css";
-import {
-  onModalOpenClose,
-  onSignOutConfirm,
-} from "../../../../app/Slices/AppSlice";
+import { onModalOpenClose } from "../../../../app/Slices/AppSlice";
 import { useNavigate } from "react-router-dom";
 
-const SignOutModal = (props) => {
+const CreateRecordModal = (props) => {
+  const { object } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
     <>
       <div className="modal-content">
-        <h1 className="modal-header">Sign out</h1>
-        <p>Are you sure you want to sign out?</p>
+        <h1 className="modal-header">Create {object}</h1>
         <div className="modal-actions">
           <button
             className="button-orange"
             onClick={() => {
-              dispatch(onSignOutConfirm());
-              navigate("/");
+              dispatch(onModalOpenClose());
             }}
           >
-            Sign out
+            Create
           </button>
           <button
             className="button-green"
@@ -37,4 +33,4 @@ const SignOutModal = (props) => {
   );
 };
 
-export default SignOutModal;
+export default CreateRecordModal;

@@ -7,3 +7,13 @@
   border-radius: 10px;
   box-shadow: 0px 4px 4px 0px #80808040;
 }
+
+.tab {
+  padding: 4px;
+  background-color: #ffffff;
+  overflow: scroll;
+  border-radius: 10px;
+  height: 60vw;
+  box-shadow: px 1px 1px 0px #80808040;
+  margin-top: 5px;
+}

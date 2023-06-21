@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { NOTE, TEMPLATE, EVENT } from "../../app/PredefinedValues";
+import { NOTE, TEMPLATE, EVENT, SUMMARY } from "../../app/PredefinedValues";
 import "./ObjectContainer.css";
 import {
   onActionMenuClick,
@@ -124,6 +124,18 @@ const ObjectContainer = (props) => {
         );
       }
       break;
+
+    case SUMMARY:
+      recordContent = (
+        <>
+          <div className="record-data">
+            <small>{record.category}</small>
+          </div>
+          <div className="record-data">
+            <small>{record.description}</small>
+          </div>
+        </>
+      );
 
     default:
       break;

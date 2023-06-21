@@ -7,26 +7,33 @@ import { useEffect } from "react";
 // import ImageTool from "@editorjs/image";
 // import List from "@editorjs/list";
 
-const TextEditor = () => {
+const TextEditor = (props) => {
+  const { title, actions } = props;
+
+  useEffect(() => {
+    const editor = new EditorJS({
+      /**
+       * Id of Element that should contain the Editor
+       */
+      holder: "editorjs",
+      placeholder: "Put your notes here...",
+      autofocus: true,
+
+      // tools: {
+      //   header: {
+      //     class: Header,
+      //   },
+      //   list: List,
+      //   imageTool: ImageTool,
+      // },
+      data: { savedTextContent },
+    });
+  }, []);
   // Get text if there is any
-  let savedTextContent;
+  const { savedTextContent } = props;
   let textContent;
 
-  const editor = new EditorJS({
-    /**
-     * Id of Element that should contain the Editor
-     */
-    holder: "editorjs",
-    placeholder: "Put your notes here...",
-
-    // tools: {
-    //   header: {
-    //     class: Header,
-    //   },
-    //   list: List,
-    //   imageTool: ImageTool,
-    // },
-  });
+  //Get presaved data.
 
   if (savedTextContent) {
     textContent = textContent;
@@ -35,6 +42,7 @@ const TextEditor = () => {
   return (
     <>
       <div className="editor-cont">
+        <h1>{title}</h1>
         <div class="tab" id="editorjs"></div>
       </div>
     </>

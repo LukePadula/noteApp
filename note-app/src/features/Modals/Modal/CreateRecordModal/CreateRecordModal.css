@@ -1,0 +1,12 @@
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-actions {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+}

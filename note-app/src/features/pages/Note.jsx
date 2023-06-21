@@ -13,14 +13,12 @@ const Note = () => {
 
   return (
     <>
-      <h1>Note</h1>
-      <div></div>
-      <div>{/* <ObjectList object={SUMMARY} /> */}</div>
       <div>
-        <TextEditor />
+        <TextEditor title={`Note: ${recordData.title}`} />
       </div>
-      <p>{recordData.title}</p>
-      <p>{recordData.eventName}</p>
+      <div>
+        <ObjectList object={SUMMARY} />
+      </div>
     </>
   );
 };

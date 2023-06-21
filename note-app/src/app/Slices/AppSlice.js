@@ -60,6 +60,15 @@ const initialState = {
       showActions: false,
     },
   ],
+  SUMMARY: [
+    { note: "n1823190", category: "Positive", description: "Liked the UI" },
+    { note: "n1823190", category: "Negative", description: "Too expensive" },
+    {
+      note: "n1823190",
+      category: "Question",
+      description: "What is the pricing for more than 10 licences",
+    },
+  ],
 };
 
 export const appSlice = createSlice({
@@ -88,7 +97,6 @@ export const appSlice = createSlice({
     },
     onSignOutConfirm: (state, action) => {
       state.modalType = undefined;
-      // Navigate to login.
     },
   },
 });
@@ -107,6 +115,7 @@ export const {
 export const selectNoteData = (state) => state.appSlice.NOTE;
 export const selectTemplateData = (state) => state.appSlice.TEMPLATE;
 export const selectEventData = (state) => state.appSlice.EVENT;
+export const selectSummaryData = (state) => state.appSlice.SUMMARY;
 export const selectRecordData = (state, payload) =>
   state.appSlice[payload.object].find((record) => record.id == payload.id);
 export const selectModalType = (state) => state.appSlice.modalType;

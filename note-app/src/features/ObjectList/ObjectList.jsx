@@ -8,20 +8,25 @@ import {
   selectNoteData,
   selectTemplateData,
   selectEventData,
+  selectSummaryData,
 } from "../../app/Slices/AppSlice";
-import { NOTE, TEMPLATE, EVENT } from "../../app/PredefinedValues";
+import { onModalOpenClose } from "../../app/Slices/AppSlice";
+
+import { NOTE, TEMPLATE, EVENT, SUMMARY } from "../../app/PredefinedValues";
 
 import "./ObjectList.css";
 import "../../features/General.css";
 
 const ObjectList = (props) => {
   const { object } = props;
+  const dispatch = useDispatch();
 
   // Empty string is for record actions column
   const headers = {
     [NOTE]: ["Title", "Event", "Created", "Modified", ""],
     [TEMPLATE]: ["Title", "Created", "Modified", ""],
     [EVENT]: ["Title", "Status", "Time", ""],
+    [SUMMARY]: ["Category", "Description", ""],
   };
 
   //Create map to easily get correct selector function.
@@ -29,18 +34,18 @@ const ObjectList = (props) => {
     [NOTE]: selectNoteData,
     [TEMPLATE]: selectTemplateData,
     [EVENT]: selectEventData,
+    [SUMMARY]: selectSummaryData,
   };
 
   // Retrieve correct selector using object key and get predefined data.
   const selectData = selectorMap[object];
   let objectRecords = useSelector(selectData);
 
+  console.log(objectRecords);
   //Format list title.
   let listTitle = object.toLowerCase() + "s";
   listTitle = listTitle[0].toUpperCase() + listTitle.substring(1);
   let listActionButtons;
-
-  console.log(object);
 
   if (!objectRecords || objectRecords.length === 0) {
     return (
@@ -71,11 +76,25 @@ const ObjectList = (props) => {
 
   switch (object) {
     case NOTE:
-      listActionButtons = <button className="button-orange-square">+</button>;
+      listActionButtons = (
+        <button
+          onClick={() => dispatch(onModalOpenClose("createRecord"))}
+          className="button-orange-square"
+        >
+          +
+        </button>
+      );
       break;
 
     case TEMPLATE:
-      listActionButtons = <button className="button-orange-square">+</button>;
+      listActionButtons = (
+        <button
+          onClick={() => dispatch(onModalOpenClose("createRecord"))}
+          className="button-orange-square"
+        >
+          +
+        </button>
+      );
 
       break;
     case EVENT:
@@ -96,11 +115,9 @@ const ObjectList = (props) => {
           </div>
         );
       }
-
     default:
       break;
   }
-
   return (
     <div className="list-container">
       <div className="list-title">

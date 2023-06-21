@@ -30,3 +30,7 @@ nav {
 .sign-out {
   background-color: #e36027;
 }
+
+.title:hover {
+  cursor: pointer;
+}
