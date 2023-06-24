@@ -13,10 +13,15 @@ import SignOut from "./features/Modals/Modal/SignOutModal/SignOutModal.jsx";
 import CreateRecordModal from "./features/Modals/Modal/CreateRecordModal/CreateRecordModal";
 import SearchModal from "./features/Modals/Modal/SearchModal/SearchModal";
 const App = () => {
-  let modalType = useSelector(selectModalType);
+  let modal = useSelector(selectModalType);
   let modalContent;
+  let modalType;
+  let modalObject;
 
-  console.log(modalType);
+  if (modal) {
+    modalType = modal.type;
+    modalObject = modal.object;
+  }
 
   switch (modalType) {
     case "signOut":
@@ -24,7 +29,7 @@ const App = () => {
       break;
 
     case "createRecord":
-      modalContent = <CreateRecordModal />;
+      modalContent = <CreateRecordModal object={modalObject} />;
       break;
 
     case "search":
@@ -41,10 +46,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/template" element={<Template />} />
+        <Route path="/template/:id" element={<Template />} />
         <Route path="/note/:id" element={<Note />} />
       </Routes>
-      {modalType && <Modal content={modalContent} />}
+      {modal && <Modal content={modalContent} />}
     </>
   );
 };

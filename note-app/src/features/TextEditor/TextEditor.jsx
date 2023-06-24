@@ -1,38 +1,40 @@
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import EditorJS from "@editorjs/editorjs";
+import { useSelector, useDispatch } from "react-redux";
 import "../TextEditor/TextEditor.css";
 import { useEffect } from "react";
-// import Header from "@editorjs/header";
-// import ImageTool from "@editorjs/image";
-// import List from "@editorjs/list";
+import { onTextEdit } from "../../app/Slices/AppSlice";
+// import { SimpleImage } from "../../app/tools";
 
 const TextEditor = (props) => {
-  const { title, actions } = props;
+  const { recordId, object, title, actions, content } = props;
+  console.log(content);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const editor = new EditorJS({
-      /**
-       * Id of Element that should contain the Editor
-       */
       holder: "editorjs",
-      placeholder: "Put your notes here...",
       autofocus: true,
+      onChange: async () => {
+        let content = await editor.saver.save();
+        dispatch(onTextEdit({ recordId, object, content }));
+      },
 
       // tools: {
-      //   header: {
-      //     class: Header,
-      //   },
-      //   list: List,
-      //   imageTool: ImageTool,
+      //   image: SimpleImage,
+      //   // header: {
+      //   //   class: Header,
+      //   // },
+      //   // list: List,
+      //   // imageTool: ImageTool,
       // },
-      data: { savedTextContent },
+      data: content,
     });
   }, []);
+
   // Get text if there is any
   const { savedTextContent } = props;
   let textContent;
-
   //Get presaved data.
 
   if (savedTextContent) {
@@ -43,7 +45,7 @@ const TextEditor = (props) => {
     <>
       <div className="editor-cont">
         <h1>{title}</h1>
-        <div class="tab" id="editorjs"></div>
+        <div className="tab" id="editorjs"></div>
       </div>
     </>
   );

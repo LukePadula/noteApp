@@ -17,7 +17,7 @@ const NavBar = (props) => {
       <div className="nav-actions">
         <button
           className="search"
-          onClick={() => dispatch(onModalOpenClose("search"))}
+          onClick={() => dispatch(onModalOpenClose({ type: "search" }))}
         >
           Q
         </button>
@@ -26,7 +26,7 @@ const NavBar = (props) => {
         </button>
         <button
           className="sign-out"
-          onClick={() => dispatch(onModalOpenClose("signOut"))}
+          onClick={() => dispatch(onModalOpenClose({ type: "signOut" }))}
         >
           Sign out
         </button>

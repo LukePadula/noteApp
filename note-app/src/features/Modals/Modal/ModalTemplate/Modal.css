@@ -6,9 +6,9 @@
 }
 
 .modal-cont {
-  width: 450px;
+  width: 75vw;
+  max-width: 450px;
   padding: 25px;
-  /* height: 250px; */
   position: fixed;
   left: 50%;
   top: 40%;
@@ -17,6 +17,19 @@
   background-color: white;
   box-shadow: 0px 4px 4px 0px #80808040;
   z-index: 100;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-actions {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .exit-modal {

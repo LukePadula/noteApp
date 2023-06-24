@@ -10,6 +10,20 @@ const initialState = {
       created: "Today",
       modified: "Today",
       showActions: false,
+
+      content: {
+        time: 1687620792880,
+        blocks: [
+          {
+            id: "wbDRvWqI8A",
+            type: "paragraph",
+            data: {
+              text: "Hello this is already predefined text",
+            },
+          },
+        ],
+        version: "2.27.0",
+      },
     },
     {
       id: "123",
@@ -85,18 +99,47 @@ export const appSlice = createSlice({
       }
     },
     onRecordDelete: (state, action) => {
-      console.log(action.payload.object);
       const index = state[action.payload.object].findIndex(
         (item) => item.id === action.payload.id
       );
       state[action.payload.object].splice(index, 1);
     },
-    onRecordView: (state, action) => {},
     onModalOpenClose: (state, action) => {
       state.modalType = action.payload;
     },
     onSignOutConfirm: (state, action) => {
       state.modalType = undefined;
+    },
+    onRecordCreate: (state, action) => {
+      state.modalType = undefined;
+      const { recordObject, recordName, recordDescription } =
+        action.payload.formData;
+      state[recordObject].push({
+        id: "1234",
+        title: recordName,
+        description: recordDescription,
+        eventName: "Event 1",
+        created: "Today",
+        modified: "Today",
+        showActions: false,
+      });
+    },
+    onSummaryRefresh: (state, action) => {},
+    onSearch: (state, action) => {
+      if (action.payload) {
+        const results = state.NOTE.filter((item) =>
+          item.title.toLowerCase().includes(action.payload.toLowerCase())
+        );
+        state.searchResults = results;
+      } else {
+        state.searchResults = undefined;
+      }
+    },
+    onTextEdit: (state, action) => {
+      const { recordId, object, content } = action.payload;
+      const record = state[object].find((item) => item.id === recordId);
+      record.content = content;
+      console.log(content);
     },
   },
 });
@@ -107,11 +150,12 @@ export const {
   onRecordView,
   onModalOpenClose,
   onSignOutConfirm,
+  onSummaryRefresh,
+  onRecordCreate,
+  onTextEdit,
+  onSearch,
 } = appSlice.actions;
 
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectNoteData = (state) => state.appSlice.NOTE;
 export const selectTemplateData = (state) => state.appSlice.TEMPLATE;
 export const selectEventData = (state) => state.appSlice.EVENT;
@@ -119,5 +163,7 @@ export const selectSummaryData = (state) => state.appSlice.SUMMARY;
 export const selectRecordData = (state, payload) =>
   state.appSlice[payload.object].find((record) => record.id == payload.id);
 export const selectModalType = (state) => state.appSlice.modalType;
+export const selectSearchInput = (state) => state.appSlice.searchInput;
+export const selectSearchResults = (state) => state.appSlice.searchResults;
 
 export default appSlice.reducer;

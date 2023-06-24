@@ -1,4 +1,4 @@
-.modal-content {
+/* .modal-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,4 +9,30 @@
   width: 40%;
   display: flex;
   justify-content: space-between;
+} */
+
+#createRecordModal .modal-actions {
+  margin-top: 10px;
+}
+
+#createRecordModal .modal-actions button {
+  margin: 5px;
+}
+
+.create-record-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.record-create-input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+textarea {
+  resize: none;
 }

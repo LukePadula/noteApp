@@ -3,30 +3,29 @@ import { LIST_HEADERS } from "../../app/PredefinedValues";
 import { useSelector, useDispatch } from "react-redux";
 import "../../features/General.css";
 import ListHeaders from "../ListHeaders/ListHeaders";
-
 import {
   selectNoteData,
   selectTemplateData,
   selectEventData,
   selectSummaryData,
 } from "../../app/Slices/AppSlice";
-import { onModalOpenClose } from "../../app/Slices/AppSlice";
-
+import { onModalOpenClose, onSummaryRefresh } from "../../app/Slices/AppSlice";
+import { useNavigate } from "react-router-dom";
 import { NOTE, TEMPLATE, EVENT, SUMMARY } from "../../app/PredefinedValues";
-
 import "./ObjectList.css";
 import "../../features/General.css";
 
 const ObjectList = (props) => {
   const { object } = props;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Empty string is for record actions column
   const headers = {
     [NOTE]: ["Title", "Event", "Created", "Modified", ""],
     [TEMPLATE]: ["Title", "Created", "Modified", ""],
     [EVENT]: ["Title", "Status", "Time", ""],
-    [SUMMARY]: ["Category", "Description", ""],
+    [SUMMARY]: ["Category", "Description"],
   };
 
   //Create map to easily get correct selector function.
@@ -41,7 +40,6 @@ const ObjectList = (props) => {
   const selectData = selectorMap[object];
   let objectRecords = useSelector(selectData);
 
-  console.log(objectRecords);
   //Format list title.
   let listTitle = object.toLowerCase() + "s";
   listTitle = listTitle[0].toUpperCase() + listTitle.substring(1);
@@ -78,7 +76,10 @@ const ObjectList = (props) => {
     case NOTE:
       listActionButtons = (
         <button
-          onClick={() => dispatch(onModalOpenClose("createRecord"))}
+          onClick={() => {
+            dispatch(onModalOpenClose({ type: "createRecord", object }));
+            navigate("/home");
+          }}
           className="button-orange-square"
         >
           +
@@ -89,7 +90,9 @@ const ObjectList = (props) => {
     case TEMPLATE:
       listActionButtons = (
         <button
-          onClick={() => dispatch(onModalOpenClose("createRecord"))}
+          onClick={() =>
+            dispatch(onModalOpenClose({ type: "createRecord", object }))
+          }
           className="button-orange-square"
         >
           +
@@ -115,6 +118,17 @@ const ObjectList = (props) => {
           </div>
         );
       }
+      break;
+    case SUMMARY:
+      listActionButtons = (
+        <button
+          onClick={() => dispatch(onSummaryRefresh())}
+          className="button-orange-square"
+        >
+          R
+        </button>
+      );
+      break;
     default:
       break;
   }
