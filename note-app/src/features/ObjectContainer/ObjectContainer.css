@@ -15,7 +15,7 @@ a {
   position: relative;
   background-color: #266e58;
   align-self: center;
-  justify-self: end;
+  /* justify-self: end; */
   border-radius: 5px;
   width: 24px;
   height: 24px;
@@ -33,6 +33,10 @@ a {
   justify-content: center;
   align-items: center;
   padding: 5px;
+}
+.record-link a {
+  font-weight: 600;
+  color: #266e58;
 }
 
 .record-actions {

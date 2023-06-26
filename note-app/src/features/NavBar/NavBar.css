@@ -31,6 +31,10 @@ nav {
   background-color: #e36027;
 }
 
+.title {
+  justify-self: flex-end;
+}
+
 .title:hover {
   cursor: pointer;
 }

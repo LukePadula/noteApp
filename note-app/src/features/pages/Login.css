@@ -1,0 +1,32 @@
+.login-cont {
+  display: flex;
+  justify-content: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  background-color: #f6f6f7;
+  padding: 25px;
+  width: 60%;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px 0px #80808040;
+  max-width: 375px;
+}
+
+.login-form input {
+  /* justify-self: flex-start; */
+  width: 75%;
+}
+
+.login-title {
+  align-self: center;
+}
+
+.login-actions {
+  margin-top: 10px;
+  align-self: flex-end;
+}
+.login-actions button {
+  margin: 3px;
+}

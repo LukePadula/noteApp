@@ -1,10 +1,12 @@
+import "./ListHeaders.css";
+
 const ListHeaders = (props) => {
   const { header } = props;
 
   return (
     <>
       <div className="header">
-        <small>{header}</small>
+        <small className="list-header">{header}</small>
       </div>
     </>
   );

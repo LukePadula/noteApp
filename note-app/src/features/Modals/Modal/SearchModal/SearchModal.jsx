@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { onModalOpenClose, onSearch } from "../../../../app/Slices/AppSlice";
 import { useNavigate } from "react-router-dom";
 import "../SearchModal/SearchModal.css";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
 import {
   selectNoteData,
@@ -21,12 +22,20 @@ const SearchModal = (props) => {
   if (searchResults) {
     searchResults.forEach((element) => {
       console.log(element.title);
-      searchItems.push(<div className="search-item"> {element.title} </div>);
+      searchItems.push(
+        <div
+          className="search-item"
+          onClick={() => {
+            navigate(`/${element.object}/${element.id}`);
+            dispatch(onModalOpenClose());
+          }}
+        >
+          <Link to={`/${element.object}/${element.id}`}>{element.title}</Link>
+          <small>{element.object}</small>
+        </div>
+      );
     });
   }
-  // if (searchResults) {
-  //   searchItems = <div className="search-item">{searchResults.title}</div>;
-  // }
 
   return (
     <>
@@ -37,7 +46,7 @@ const SearchModal = (props) => {
           type="text"
           onChange={(e) => dispatch(onSearch(e.target.value))}
         />
-        <div>{searchItems}</div>
+        <div className="search-results-cont">{searchItems}</div>
       </div>
     </>
   );

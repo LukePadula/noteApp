@@ -17,3 +17,8 @@
   box-shadow: px 1px 1px 0px #80808040;
   margin-top: 5px;
 }
+
+.negative {
+  background-color: red;
+  color: red;
+}

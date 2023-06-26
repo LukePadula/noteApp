@@ -19,7 +19,7 @@ const ObjectContainer = (props) => {
     case NOTE:
       recordContent = (
         <>
-          <div className="record-data">
+          <div className="record-data record-link">
             <Link to={`/note/${record.id}`}>{record.title}</Link>
           </div>
           <div className="record-data">

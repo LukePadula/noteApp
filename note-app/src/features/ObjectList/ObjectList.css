@@ -5,9 +5,6 @@ h1 {
 .header {
   text-align: center;
 }
-.header small {
-  font-size: 1.2rem;
-}
 
 .list-container {
   background-color: #f6f6f7;
@@ -16,6 +13,7 @@ h1 {
   margin-right: 15px;
   border-radius: 10px;
   box-shadow: 0px 4px 4px 0px #80808040;
+  padding: 3px;
 }
 .no-results {
   display: flex;
@@ -40,9 +38,8 @@ h1 {
 
 .record-list {
   display: grid;
-  row-gap: 10px;
   border-radius: 10px;
-  margin: 20px;
+  margin: 10px;
   overflow: scroll;
 }
 

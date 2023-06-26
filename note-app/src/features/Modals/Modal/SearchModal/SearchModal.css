@@ -1,7 +1,36 @@
+.modal-content {
+  position: relative;
+}
 .search-bar {
+  margin-top: 8px;
   width: 80%;
+  border-radius: 5px;
+  border-color: #dae7e3;
+}
+
+.search-results-cont {
+  width: 100%;
+  position: absolute;
+  top: 70px;
+  /* left:s 0; */
+  background-color: white;
+}
+
+.cont {
+  position: relative;
 }
 
 .search-item {
-  margin-top: 20px;
+  padding: 2px;
+  margin: 7px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-evenly;
+}
+.search-item:hover {
+  background-color: #dae7e3;
+}
+.search-item small {
+  color: #97979b;
+  text-align: center;
 }

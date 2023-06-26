@@ -1,0 +1,25 @@
+.record-details-cont {
+  background-color: #f6f6f7;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0px 4px 4px 0px #80808040;
+  border-radius: 10px;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.record-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.record-details-actions {
+  align-self: center;
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+  max-width: 260px;
+}

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   modalType: null,
+  recordDetailsDropdownActive: false,
   NOTE: [
     {
       id: "n1823190",
@@ -10,6 +11,7 @@ const initialState = {
       created: "Today",
       modified: "Today",
       showActions: false,
+      object: "NOTE",
 
       content: {
         time: 1687620792880,
@@ -32,6 +34,7 @@ const initialState = {
       created: "Today",
       modified: "Today",
       showActions: false,
+      object: "NOTE",
     },
     {
       id: "n7459431",
@@ -40,6 +43,7 @@ const initialState = {
       created: "Today",
       modified: "Today",
       showActions: false,
+      object: "NOTE",
     },
   ],
   TEMPLATE: [
@@ -49,6 +53,7 @@ const initialState = {
       created: "Yesterday",
       modified: "Today",
       showActions: false,
+      object: "TEMPLATE",
     },
     {
       id: "t3435245",
@@ -56,6 +61,7 @@ const initialState = {
       created: "Yesterday",
       modified: "Today",
       showActions: false,
+      object: "TEMPLATE",
     },
   ],
   EVENT: [
@@ -65,6 +71,7 @@ const initialState = {
       status: "cancelled",
       startDateTime: "Today",
       showActions: false,
+      object: "EVENT",
     },
     {
       id: "e1264526",
@@ -72,6 +79,7 @@ const initialState = {
       status: "cancelled",
       startDateTime: "Today",
       showActions: false,
+      object: "EVENT",
     },
   ],
   SUMMARY: [
@@ -106,6 +114,7 @@ export const appSlice = createSlice({
     },
     onModalOpenClose: (state, action) => {
       state.modalType = action.payload;
+      state.searchResults = undefined;
     },
     onSignOutConfirm: (state, action) => {
       state.modalType = undefined;
@@ -124,10 +133,41 @@ export const appSlice = createSlice({
         showActions: false,
       });
     },
-    onSummaryRefresh: (state, action) => {},
+    onSummaryRefresh: (state, action) => {
+      console.log(action.payload);
+      const index = state.NOTE.findIndex((item) => item.id === action.payload);
+
+      console.log(index);
+      const record = state.NOTE[index];
+
+      record.questionSummary = [];
+      record.positiveSummary = [];
+      record.negativeSummary = [];
+
+      console.log(record);
+      record.content.blocks.forEach((element) => {
+        switch (element.type) {
+          case "question":
+            record.questionSummary.push(element.data.text);
+            break;
+          case "positive":
+            record.positiveSummary.push(element.data.text);
+            break;
+          case "negative":
+            record.negativeSummary.push(element.data.text);
+            break;
+          default:
+            break;
+        }
+      });
+
+      console.log(record.questionSummary, "HEY");
+    },
     onSearch: (state, action) => {
       if (action.payload) {
-        const results = state.NOTE.filter((item) =>
+        const records = [...state.NOTE, ...state.TEMPLATE];
+
+        const results = records.filter((item) =>
           item.title.toLowerCase().includes(action.payload.toLowerCase())
         );
         state.searchResults = results;
@@ -140,6 +180,9 @@ export const appSlice = createSlice({
       const record = state[object].find((item) => item.id === recordId);
       record.content = content;
       console.log(content);
+    },
+    onDropDownOpenClose: (state, action) => {
+      state.recordDetailsDropdownActive = !state.recordDetailsDropdownActive;
     },
   },
 });
@@ -154,6 +197,7 @@ export const {
   onRecordCreate,
   onTextEdit,
   onSearch,
+  onDropDownOpenClose,
 } = appSlice.actions;
 
 export const selectNoteData = (state) => state.appSlice.NOTE;
@@ -165,5 +209,7 @@ export const selectRecordData = (state, payload) =>
 export const selectModalType = (state) => state.appSlice.modalType;
 export const selectSearchInput = (state) => state.appSlice.searchInput;
 export const selectSearchResults = (state) => state.appSlice.searchResults;
+export const selectRecordDetailsDropdownActive = (state) =>
+  state.appSlice.recordDetailsDropdownActive;
 
 export default appSlice.reducer;

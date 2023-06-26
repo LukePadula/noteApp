@@ -4,6 +4,7 @@ import { selectRecordData } from "../../app/Slices/AppSlice";
 import { SUMMARY, NOTE } from "../../app/PredefinedValues";
 import ObjectList from "../ObjectList/ObjectList";
 import TextEditor from "../TextEditor/TextEditor";
+import RecordDetails from "../RecordDetails/RecordDetails";
 
 const Note = () => {
   const { id } = useParams();
@@ -15,6 +16,7 @@ const Note = () => {
 
   return (
     <>
+      <RecordDetails recordData={recordData} />
       <div>
         <TextEditor recordId={id} object={NOTE} content={recordData.content} />
       </div>

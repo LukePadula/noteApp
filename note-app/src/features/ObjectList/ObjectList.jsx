@@ -122,7 +122,7 @@ const ObjectList = (props) => {
     case SUMMARY:
       listActionButtons = (
         <button
-          onClick={() => dispatch(onSummaryRefresh())}
+          onClick={() => dispatch(onSummaryRefresh("n1823190"))}
           className="button-orange-square"
         >
           R

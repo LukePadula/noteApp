@@ -4,8 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "../TextEditor/TextEditor.css";
 import { useEffect } from "react";
 import { onTextEdit } from "../../app/Slices/AppSlice";
-// import { SimpleImage } from "../../app/tools";
-
+import { SimpleImage, Question, Positive, Negative } from "../../app/tools";
 const TextEditor = (props) => {
   const { recordId, object, title, actions, content } = props;
   console.log(content);
@@ -18,6 +17,11 @@ const TextEditor = (props) => {
       onChange: async () => {
         let content = await editor.saver.save();
         dispatch(onTextEdit({ recordId, object, content }));
+      },
+      tools: {
+        question: Question,
+        positive: Positive,
+        negative: Negative,
       },
 
       // tools: {
