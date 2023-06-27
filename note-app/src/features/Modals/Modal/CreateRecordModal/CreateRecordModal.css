@@ -1,16 +1,3 @@
-/* .modal-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-actions {
-  width: 40%;
-  display: flex;
-  justify-content: space-between;
-} */
-
 #createRecordModal .modal-actions {
   margin-top: 10px;
 }

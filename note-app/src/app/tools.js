@@ -1,22 +1,3 @@
-export class SimpleImage {
-  static get toolbox() {
-    return {
-      title: "Image",
-      icon: '<svg width="17" height="15" viewBox="0 0 336 276" xmlns="http://www.w3.org/2000/svg"><path d="M291 150V79c0-19-15-34-34-34H79c-19 0-34 15-34 34v42l67-44 81 72 56-29 42 30zm0 52l-43-30-56 30-81-67-66 39v23c0 19 15 34 34 34h178c17 0 31-13 34-29zM79 0h178c44 0 79 35 79 79v118c0 44-35 79-79 79H79c-44 0-79-35-79-79V79C0 35 35 0 79 0z"/></svg>',
-    };
-  }
-
-  render() {
-    return document.createElement("input");
-  }
-
-  save(blockContent) {
-    return {
-      url: blockContent.value,
-    };
-  }
-}
-
 export class Question {
   static get toolbox() {
     return {
@@ -26,12 +7,16 @@ export class Question {
   }
 
   render() {
-    return document.createElement("p");
+    const wrapper = document.createElement("div");
+    wrapper.contentEditable = true;
+    wrapper.classList.add("question");
+
+    return wrapper;
   }
 
   save(blockContent) {
     return {
-      url: blockContent.value,
+      text: blockContent.innerHTML,
     };
   }
 }
@@ -45,12 +30,16 @@ export class Positive {
   }
 
   render() {
-    return document.createElement("p");
+    const wrapper = document.createElement("div");
+    wrapper.contentEditable = true;
+    wrapper.classList.add("positive");
+
+    return wrapper;
   }
 
   save(blockContent) {
     return {
-      url: blockContent.value,
+      text: blockContent.innerHTML,
     };
   }
 }
@@ -64,15 +53,16 @@ export class Negative {
   }
 
   render() {
-    let elem = document.createElement("div");
-    elem.classList.add("negative");
+    const wrapper = document.createElement("div");
+    wrapper.contentEditable = true;
+    wrapper.classList.add("negative");
 
-    return elem;
+    return wrapper;
   }
 
   save(blockContent) {
     return {
-      url: blockContent.value,
+      text: blockContent.innerHTML,
     };
   }
 }

@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import EditorJS from "@editorjs/editorjs";
+import Header from "@editorjs/header";
+
 import { useSelector, useDispatch } from "react-redux";
 import "../TextEditor/TextEditor.css";
 import { useEffect } from "react";
@@ -7,7 +9,6 @@ import { onTextEdit } from "../../app/Slices/AppSlice";
 import { SimpleImage, Question, Positive, Negative } from "../../app/tools";
 const TextEditor = (props) => {
   const { recordId, object, title, actions, content } = props;
-  console.log(content);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,6 +20,9 @@ const TextEditor = (props) => {
         dispatch(onTextEdit({ recordId, object, content }));
       },
       tools: {
+        header: {
+          class: Header,
+        },
         question: Question,
         positive: Positive,
         negative: Negative,

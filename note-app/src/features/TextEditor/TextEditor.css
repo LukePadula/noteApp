@@ -18,7 +18,20 @@
   margin-top: 5px;
 }
 
-.negative {
+[data-item-name="question"] {
   background-color: red;
-  color: red;
+}
+
+.question,
+[data-item-name="question"] {
+  background-color: rgba(234, 234, 56, 0.5);
+}
+
+.positive,
+[data-item-name="positive"] {
+  background-color: rgb(32, 141, 43, 0.5);
+}
+.negative,
+[data-item-name="negative"] {
+  background-color: rgb(186, 67, 20, 0.5);
 }

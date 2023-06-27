@@ -140,28 +140,39 @@ export const appSlice = createSlice({
       console.log(index);
       const record = state.NOTE[index];
 
-      record.questionSummary = [];
-      record.positiveSummary = [];
-      record.negativeSummary = [];
+      console.log(JSON.stringify(record.content));
 
-      console.log(record);
+      const questionSummary = [];
+      const positiveSummary = [];
+      const negativeSummary = [];
+
+      let testQ;
+
       record.content.blocks.forEach((element) => {
+        console.log(typeof element.data.text === "string", "ELEM");
         switch (element.type) {
           case "question":
-            record.questionSummary.push(element.data.text);
+            console.log("QUESTION MARKET");
+            questionSummary.push(element.data.text);
+            testQ = element.data.text;
             break;
           case "positive":
-            record.positiveSummary.push(element.data.text);
+            positiveSummary.push(element.data.text);
             break;
           case "negative":
-            record.negativeSummary.push(element.data.text);
+            negativeSummary.push(element.data.text);
             break;
           default:
             break;
         }
       });
 
-      console.log(record.questionSummary, "HEY");
+      console.log(testQ, "TEST ");
+
+      state.NOTE[index][questionSummary] = questionSummary;
+      state.NOTE[index][positiveSummary] = positiveSummary;
+      state.NOTE[index][negativeSummary] = negativeSummary;
+      console.log(questionSummary, "list");
     },
     onSearch: (state, action) => {
       if (action.payload) {
@@ -177,9 +188,13 @@ export const appSlice = createSlice({
     },
     onTextEdit: (state, action) => {
       const { recordId, object, content } = action.payload;
-      const record = state[object].find((item) => item.id === recordId);
-      record.content = content;
-      console.log(content);
+      console.log(content, "CONTENT");
+
+      const index = state[object].findIndex((item) => item.id === recordId);
+      console.log(JSON.stringify(state[object][index].content));
+      state[object][index].content = content;
+
+      console.log(state[object][index].content, "HERE");
     },
     onDropDownOpenClose: (state, action) => {
       state.recordDetailsDropdownActive = !state.recordDetailsDropdownActive;

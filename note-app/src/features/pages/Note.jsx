@@ -12,8 +12,6 @@ const Note = () => {
     selectRecordData(state, { object: "NOTE", id })
   );
 
-  console.log(recordData);
-
   return (
     <>
       <RecordDetails recordData={recordData} />
