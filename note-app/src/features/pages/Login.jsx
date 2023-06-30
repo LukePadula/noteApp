@@ -1,5 +1,11 @@
 import "./Login.css";
+import { useDispatch } from "react-redux";
+import { onLogin } from "../../app/Slices/AppSlice";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <div className="login-cont">
       <div className="login-form">
@@ -14,7 +20,15 @@ const Login = () => {
         </div>
 
         <div className="login-actions">
-          <button className="button-green">Login</button>
+          <button
+            className="button-green"
+            onClick={() => {
+              dispatch(onLogin());
+              navigate("/home");
+            }}
+          >
+            Login
+          </button>
           <button className="button-orange">Sign up</button>
         </div>
       </div>

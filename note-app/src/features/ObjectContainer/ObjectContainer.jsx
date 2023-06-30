@@ -5,8 +5,9 @@ import {
   onActionMenuClick,
   onRecordDelete,
   onRecordView,
+  onModalOpenClose,
 } from "../../app/Slices/AppSlice";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ObjectContainer = (props) => {
   const { object, record } = props;
@@ -52,14 +53,7 @@ const ObjectContainer = (props) => {
       );
 
       recordButtonActionsContainer = (
-        <div
-          className="actions-cont"
-          onClick={() =>
-            dispatch(onActionMenuClick({ id: record.id, object: object }))
-          }
-        >
-          {record.showActions && [recordButtonActions]}
-        </div>
+        <button className="actions-cont">{recordButtonActions}</button>
       );
 
       break;
@@ -67,7 +61,7 @@ const ObjectContainer = (props) => {
     case TEMPLATE:
       recordContent = (
         <>
-          <div className="record-data">
+          <div className="record-data record-link">
             <Link to={`/template/${record.id}`}>{record.title}</Link>
           </div>
           <div className="record-data">
@@ -101,21 +95,14 @@ const ObjectContainer = (props) => {
       );
 
       recordButtonActionsContainer = (
-        <div
-          className="actions-cont"
-          onClick={() =>
-            dispatch(onActionMenuClick({ id: record.id, object: object }))
-          }
-        >
-          {record.showActions && [recordButtonActions]}
-        </div>
+        <button className="actions-cont">{recordButtonActions}</button>
       );
       break;
 
     case EVENT:
       recordContent = (
         <>
-          <div className="record-data">
+          <div className="record-data record-link">
             <small>{record.title}</small>
           </div>
           <div className="record-data">
@@ -131,9 +118,9 @@ const ObjectContainer = (props) => {
         <>
           <div className="record-actions">
             <div
-              onClick={() =>
-                dispatch(onRecordView({ id: record.id, object: object }))
-              }
+              onClick={() => {
+                dispatch(onRecordView({ id: record.id, object }));
+              }}
             >
               View
             </div>
@@ -142,14 +129,14 @@ const ObjectContainer = (props) => {
       );
 
       recordButtonActionsContainer = (
-        <div
-          className="actions-cont"
-          onClick={() =>
-            dispatch(onActionMenuClick({ id: record.id, object: object }))
-          }
+        <button
+          onClick={() => {
+            dispatch(onModalOpenClose({ type: "createRecord", object: NOTE }));
+          }}
+          className="actions-cont event-action"
         >
-          {record.showActions && [recordButtonActions]}
-        </div>
+          {recordButtonActions}
+        </button>
       );
       break;
 

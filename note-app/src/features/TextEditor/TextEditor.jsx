@@ -27,15 +27,6 @@ const TextEditor = (props) => {
         positive: Positive,
         negative: Negative,
       },
-
-      // tools: {
-      //   image: SimpleImage,
-      //   // header: {
-      //   //   class: Header,
-      //   // },
-      //   // list: List,
-      //   // imageTool: ImageTool,
-      // },
       data: content,
     });
   }, []);

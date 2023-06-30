@@ -16,10 +16,16 @@
   flex-direction: column;
 }
 
+.edit-field,
+.read-only-fields {
+  display: flex;
+  flex-direction: column;
+}
+
 .record-details-actions {
   align-self: center;
-  width: 70%;
   display: flex;
-  justify-content: space-around;
-  max-width: 260px;
+  justify-content: center;
+  margin-top: 18px;
+  width: 100%;
 }

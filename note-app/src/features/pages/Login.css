@@ -14,9 +14,10 @@
   max-width: 375px;
 }
 
-.login-form input {
-  /* justify-self: flex-start; */
-  width: 75%;
+.login-input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .login-title {

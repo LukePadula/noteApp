@@ -26,7 +26,9 @@ const NavBar = (props) => {
         </button>
         <button
           className="sign-out"
-          onClick={() => dispatch(onModalOpenClose({ type: "signOut" }))}
+          onClick={() => {
+            dispatch(onModalOpenClose({ type: "signOut" }));
+          }}
         >
           Sign out
         </button>

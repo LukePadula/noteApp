@@ -1,0 +1,16 @@
+.search-bar-cont {
+  position: relative;
+  width: 100%;
+  margin: 0;
+}
+
+.search-bar {
+  width: 100%;
+}
+
+.search-clear {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

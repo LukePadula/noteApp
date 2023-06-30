@@ -9,7 +9,7 @@ export class Question {
   render() {
     const wrapper = document.createElement("div");
     wrapper.contentEditable = true;
-    wrapper.classList.add("question");
+    wrapper.classList.add("question", "text-block");
 
     return wrapper;
   }
@@ -32,7 +32,7 @@ export class Positive {
   render() {
     const wrapper = document.createElement("div");
     wrapper.contentEditable = true;
-    wrapper.classList.add("positive");
+    wrapper.classList.add("positive", "text-block");
 
     return wrapper;
   }
@@ -55,7 +55,7 @@ export class Negative {
   render() {
     const wrapper = document.createElement("div");
     wrapper.contentEditable = true;
-    wrapper.classList.add("negative");
+    wrapper.classList.add("negative", "text-block");
 
     return wrapper;
   }

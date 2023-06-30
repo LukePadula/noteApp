@@ -1,0 +1,24 @@
+@media (min-width: 650px) {
+  #home-page-content {
+    height: 89vh;
+    width: 100vw;
+    justify-content: end;
+    align-items: end;
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+  }
+
+  #NOTE {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  #EVENT {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  #TEMPLATE {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}

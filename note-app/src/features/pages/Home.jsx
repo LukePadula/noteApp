@@ -1,16 +1,15 @@
 import ObjectList from "../ObjectList/ObjectList";
 import { NOTE, TEMPLATE, EVENT } from "../../app/PredefinedValues";
+import NavBar from "../NavBar/NavBar";
+import "./Home.css";
 
 const Home = () => {
   return (
     <>
-      <div>
+      <NavBar />
+      <div id="home-page-content">
         <ObjectList object={NOTE} />
-      </div>
-      <div>
         <ObjectList object={TEMPLATE} />
-      </div>
-      <div>
         <ObjectList object={EVENT} />
       </div>
     </>

@@ -1,6 +1,5 @@
 import ObjectContainer from "../ObjectContainer/ObjectContainer";
-import { LIST_HEADERS } from "../../app/PredefinedValues";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import "../../features/General.css";
 import ListHeaders from "../ListHeaders/ListHeaders";
 import {
@@ -9,16 +8,13 @@ import {
   selectEventData,
   selectSummaryData,
 } from "../../app/Slices/AppSlice";
-import { onModalOpenClose, onSummaryRefresh } from "../../app/Slices/AppSlice";
-import { useNavigate } from "react-router-dom";
 import { NOTE, TEMPLATE, EVENT, SUMMARY } from "../../app/PredefinedValues";
 import "./ObjectList.css";
 import "../../features/General.css";
+import ListActions from "../ListActions/ListActions";
 
 const ObjectList = (props) => {
-  const { object } = props;
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { object, recordId } = props;
 
   // Empty string is for record actions column
   const headers = {
@@ -37,14 +33,15 @@ const ObjectList = (props) => {
   };
 
   // Retrieve correct selector using object key and get predefined data.
-  const selectData = selectorMap[object];
-  let objectRecords = useSelector(selectData);
+  let objectRecords = useSelector(selectorMap[object]);
 
   //Format list title.
   let listTitle = object.toLowerCase() + "s";
   listTitle = listTitle[0].toUpperCase() + listTitle.substring(1);
   let listActionButtons;
+  listActionButtons = <ListActions object={object} />;
 
+  //If no results found.
   if (!objectRecords || objectRecords.length === 0) {
     return (
       <>
@@ -70,79 +67,31 @@ const ObjectList = (props) => {
   // Add headers to first row of grid.
   recordList.unshift(headerList);
 
+  //If event add calendar button.
   let calendarAction;
-
-  switch (object) {
-    case NOTE:
-      listActionButtons = (
-        <button
-          onClick={() => {
-            dispatch(onModalOpenClose({ type: "createRecord", object }));
-            navigate("/home");
-          }}
-          className="button-orange-square"
-        >
-          +
+  if (object === EVENT) {
+    calendarAction = (
+      <div className="calendar-action-cont">
+        <button className="calendar-action button-orange">
+          {objectRecords ? "Open calendar" : "Sync calendar"}
         </button>
-      );
-      break;
-
-    case TEMPLATE:
-      listActionButtons = (
-        <button
-          onClick={() =>
-            dispatch(onModalOpenClose({ type: "createRecord", object }))
-          }
-          className="button-orange-square"
-        >
-          +
-        </button>
-      );
-
-      break;
-    case EVENT:
-      if (objectRecords) {
-        calendarAction = (
-          <div className="calendar-action-cont">
-            <button className="calendar-action button-orange">
-              Open calendar
-            </button>
-          </div>
-        );
-      } else {
-        calendarAction = (
-          <div className="calendar-action-cont">
-            <button className="open-calendar button-orange">
-              Sync calendar
-            </button>
-          </div>
-        );
-      }
-      break;
-    case SUMMARY:
-      listActionButtons = (
-        <button
-          onClick={() => dispatch(onSummaryRefresh("n1823190"))}
-          className="button-orange-square"
-        >
-          R
-        </button>
-      );
-      break;
-    default:
-      break;
-  }
-  return (
-    <div className="list-container">
-      <div className="list-title">
-        <h1>{listTitle}</h1>
-        <div className="list-actions">{listActionButtons}</div>
       </div>
-      <div
-        style={{ gridTemplateColumns: `repeat(${headerList.length} ,1fr)` }}
-        className="record-list"
-      >
-        {recordList}
+    );
+  }
+
+  return (
+    <div id={object} className="list-container">
+      <div className="main-content">
+        <div className="list-title">
+          <h1>{listTitle}</h1>
+          <div className="list-actions">{listActionButtons}</div>
+        </div>
+        <div
+          style={{ gridTemplateColumns: `repeat(${headerList.length} ,1fr)` }}
+          className="record-list"
+        >
+          {recordList}
+        </div>
       </div>
       {calendarAction}
     </div>

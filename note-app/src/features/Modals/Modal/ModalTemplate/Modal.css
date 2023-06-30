@@ -6,6 +6,8 @@
 }
 
 .modal-cont {
+  display: flex;
+  justify-content: center;
   width: 75vw;
   max-width: 450px;
   padding: 25px;
@@ -27,7 +29,6 @@
 }
 
 .modal-actions {
-  width: 70%;
   display: flex;
   justify-content: space-between;
 }

@@ -15,17 +15,27 @@ a {
   position: relative;
   background-color: #266e58;
   align-self: center;
-  /* justify-self: end; */
+  justify-self: center;
   border-radius: 5px;
   width: 24px;
   height: 24px;
 }
 
+.event-action {
+  background-color: #e36027;
+}
+
 .record-actions div {
   padding: 5px;
+  color: black;
 }
-.actions-cont:hover {
-  cursor: pointer;
+
+.actions-cont:focus-within .record-actions {
+  visibility: visible;
+}
+
+.record-actions {
+  visibility: hidden;
 }
 
 .record-data {
@@ -34,16 +44,26 @@ a {
   align-items: center;
   padding: 5px;
 }
-.record-link a {
+.record-link a,
+.record-link small {
   font-weight: 600;
+  font-size: 0.9rem;
   color: #266e58;
+  text-align: center;
 }
 
 .record-actions {
   position: absolute;
   top: 25px;
+  left: 0;
   background-color: #f6f6f7;
   border-radius: 5px;
   background-color: white;
   z-index: 10;
+}
+
+@media (min-width: 650px) {
+  .record-actions div {
+    padding: 2px;
+  }
 }

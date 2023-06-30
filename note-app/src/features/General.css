@@ -3,6 +3,16 @@ h1 {
   margin: 0;
 }
 
+input,
+textarea {
+  padding: 7px;
+  margin: 1px;
+  border-radius: 5px;
+  border: 1px solid #ddd7d7;
+  width: 100%;
+  font-size: 1rem;
+}
+
 button {
   border-radius: 10px;
   color: white;
@@ -33,10 +43,4 @@ button:hover {
   width: 40px;
   height: 40px;
   background-color: #266e58;
-}
-
-.record-details-actions {
-  width: 35%;
-  display: flex;
-  justify-content: space-evenly;
 }

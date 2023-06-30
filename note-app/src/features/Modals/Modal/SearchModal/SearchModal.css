@@ -1,23 +1,14 @@
 .modal-content {
   position: relative;
-}
-.search-bar {
-  margin-top: 8px;
-  width: 80%;
-  border-radius: 5px;
-  border-color: #dae7e3;
+  width: 90%;
 }
 
 .search-results-cont {
   width: 100%;
   position: absolute;
-  top: 70px;
-  /* left:s 0; */
+  left: 0;
+  top: 30px;
   background-color: white;
-}
-
-.cont {
-  position: relative;
 }
 
 .search-item {
@@ -27,9 +18,12 @@
   grid-template-columns: 1fr 1fr;
   justify-content: space-evenly;
 }
+
 .search-item:hover {
   background-color: #dae7e3;
+  cursor: pointer;
 }
+
 .search-item small {
   color: #97979b;
   text-align: center;

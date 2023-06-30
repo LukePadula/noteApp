@@ -1,8 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
+const defaultRecordLookup = { id: "", title: "" };
+const defaultcreateRecordFormData = {
+  title: "",
+  description: "",
+  object: "",
+  template: defaultRecordLookup,
+  event: defaultRecordLookup,
+};
 
 const initialState = {
   modalType: null,
+  searchInput: "",
+  eventSearchInput: "",
   recordDetailsDropdownActive: false,
+  userLoggedIn: false,
+  createRecordFormData: defaultcreateRecordFormData,
   NOTE: [
     {
       id: "n1823190",
@@ -115,11 +127,14 @@ export const appSlice = createSlice({
     onModalOpenClose: (state, action) => {
       state.modalType = action.payload;
       state.searchResults = undefined;
+      state.createRecordFormData = defaultcreateRecordFormData;
     },
     onSignOutConfirm: (state, action) => {
       state.modalType = undefined;
+      state.userLoggedIn = false;
     },
     onRecordCreate: (state, action) => {
+      console.log(action.payload.formData);
       state.modalType = undefined;
       const { recordObject, recordName, recordDescription } =
         action.payload.formData;
@@ -132,72 +147,107 @@ export const appSlice = createSlice({
         modified: "Today",
         showActions: false,
       });
+
+      state.createRecordFormData = defaultcreateRecordFormData;
     },
     onSummaryRefresh: (state, action) => {
-      console.log(action.payload);
-      const index = state.NOTE.findIndex((item) => item.id === action.payload);
-
-      console.log(index);
+      console.log(action.payload.recordId);
+      const index = state.NOTE.findIndex(
+        (item) => item.id === action.payload.recordId
+      );
       const record = state.NOTE[index];
-
-      console.log(JSON.stringify(record.content));
-
       const questionSummary = [];
       const positiveSummary = [];
       const negativeSummary = [];
 
-      let testQ;
+      console.log(record.content);
+      if (record.content) {
+        record.content.blocks.forEach((element) => {
+          if (element.data.text) {
+            switch (element.type) {
+              case "question":
+                questionSummary.push(element.data.text);
+                break;
+              case "positive":
+                positiveSummary.push(element.data.text);
+                break;
+              case "negative":
+                negativeSummary.push(element.data.text);
+                break;
+              default:
+                break;
+            }
+          }
+        });
 
-      record.content.blocks.forEach((element) => {
-        console.log(typeof element.data.text === "string", "ELEM");
-        switch (element.type) {
-          case "question":
-            console.log("QUESTION MARKET");
-            questionSummary.push(element.data.text);
-            testQ = element.data.text;
-            break;
-          case "positive":
-            positiveSummary.push(element.data.text);
-            break;
-          case "negative":
-            negativeSummary.push(element.data.text);
-            break;
-          default:
-            break;
-        }
-      });
-
-      console.log(testQ, "TEST ");
-
-      state.NOTE[index][questionSummary] = questionSummary;
-      state.NOTE[index][positiveSummary] = positiveSummary;
-      state.NOTE[index][negativeSummary] = negativeSummary;
-      console.log(questionSummary, "list");
+        state.NOTE[index].summary = {
+          question: questionSummary,
+          positive: positiveSummary,
+          negative: negativeSummary,
+        };
+      }
     },
     onSearch: (state, action) => {
-      if (action.payload) {
-        const records = [...state.NOTE, ...state.TEMPLATE];
+      console.log(action.payload);
+      if (action.payload.value) {
+        const { value, searchObjects } = action.payload;
+        const records = [];
+
+        searchObjects.forEach((object) => {
+          records.push(...state[object]);
+        });
 
         const results = records.filter((item) =>
-          item.title.toLowerCase().includes(action.payload.toLowerCase())
+          item.title.toLowerCase().includes(value.toLowerCase())
         );
+        state.searchInput = value;
         state.searchResults = results;
       } else {
         state.searchResults = undefined;
       }
     },
+    onSearchClear: (state, action) => {
+      state.searchInput = "";
+      state.createRecordFormData.template = defaultRecordLookup;
+    },
+    onRecordLookupSelect: (state, action) => {
+      const index = state.TEMPLATE.findIndex(
+        (item) => item.id === action.payload.recordId
+      );
+
+      const { id, title } = state.TEMPLATE[index];
+      state.createRecordFormData.template = { id, title };
+      state.searchResults = undefined;
+    },
     onTextEdit: (state, action) => {
       const { recordId, object, content } = action.payload;
-      console.log(content, "CONTENT");
 
       const index = state[object].findIndex((item) => item.id === recordId);
-      console.log(JSON.stringify(state[object][index].content));
       state[object][index].content = content;
-
-      console.log(state[object][index].content, "HERE");
     },
     onDropDownOpenClose: (state, action) => {
       state.recordDetailsDropdownActive = !state.recordDetailsDropdownActive;
+    },
+    onLogin: (state, action) => {
+      console.log("here");
+      state.userLoggedIn = true;
+    },
+    onCreateRecordFormDataChange: (state, action) => {
+      console.log(action.payload, "Change");
+      const { id, value } = action.payload;
+      if (id !== "template") {
+        state.createRecordFormData[id] = value;
+      }
+    },
+    onRecordEdit: (state, action) => {
+      const { recordId, object, formData } = action.payload;
+
+      for (const key in formData) {
+        console.log(key);
+        state[object][index][key] = formData.key;
+      }
+
+      const index = state[object].findIndex((item) => item.id === recordId);
     },
   },
 });
@@ -213,6 +263,11 @@ export const {
   onTextEdit,
   onSearch,
   onDropDownOpenClose,
+  onRecordLookupSelect,
+  onSearchClear,
+  onLogin,
+  onCreateRecordFormDataChange,
+  onRecordEdit,
 } = appSlice.actions;
 
 export const selectNoteData = (state) => state.appSlice.NOTE;
@@ -220,11 +275,16 @@ export const selectTemplateData = (state) => state.appSlice.TEMPLATE;
 export const selectEventData = (state) => state.appSlice.EVENT;
 export const selectSummaryData = (state) => state.appSlice.SUMMARY;
 export const selectRecordData = (state, payload) =>
-  state.appSlice[payload.object].find((record) => record.id == payload.id);
+  state.appSlice[payload.object].find((record) => record.id === payload.id);
 export const selectModalType = (state) => state.appSlice.modalType;
 export const selectSearchInput = (state) => state.appSlice.searchInput;
 export const selectSearchResults = (state) => state.appSlice.searchResults;
 export const selectRecordDetailsDropdownActive = (state) =>
   state.appSlice.recordDetailsDropdownActive;
+export const selectCreateRecordFormData = (state) =>
+  state.appSlice.createRecordFormData;
+export const selectUserLoggedIn = (state) => state.appSlice.userLoggedIn;
+export const selectEventSearchInput = (state) =>
+  state.appSlice.eventSearchInput;
 
 export default appSlice.reducer;

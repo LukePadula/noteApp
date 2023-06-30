@@ -1,10 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectRecordData } from "../../app/Slices/AppSlice";
-import { SUMMARY, NOTE } from "../../app/PredefinedValues";
+import { NOTE } from "../../app/PredefinedValues";
 import ObjectList from "../ObjectList/ObjectList";
 import TextEditor from "../TextEditor/TextEditor";
 import RecordDetails from "../RecordDetails/RecordDetails";
+import NoteSummary from "../NoteSummary/NoteSummary";
+import NavBar from "../NavBar/NavBar";
+import "./Note.css";
 
 const Note = () => {
   const { id } = useParams();
@@ -14,12 +17,11 @@ const Note = () => {
 
   return (
     <>
-      <RecordDetails recordData={recordData} />
-      <div>
+      <NavBar />
+      <div className="page-content">
+        <RecordDetails record={recordData} object={NOTE} />
         <TextEditor recordId={id} object={NOTE} content={recordData.content} />
-      </div>
-      <div>
-        <ObjectList object={SUMMARY} />
+        <NoteSummary summary={recordData.summary} recordId={id} />
       </div>
     </>
   );
