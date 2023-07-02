@@ -58,9 +58,8 @@ h1 {
 @media (min-width: 650px) {
   .list-container {
     display: grid;
-    margin: 10px;
+    margin: 6px;
     padding: 5px;
-    height: 100%;
   }
 
   .list-title {

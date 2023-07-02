@@ -18,9 +18,11 @@ const Template = (props) => {
   return (
     <>
       <NavBar />
-      <RecordDetails record={recordData} object={TEMPLATE} />
-      <div>
-        <TextEditor title={`Template: ${recordData.title}`} />
+      <div className="page-content">
+        <RecordDetails record={recordData} object={TEMPLATE} />
+        <div>
+          <TextEditor title={`Template: ${recordData.title}`} />
+        </div>
       </div>
     </>
   );

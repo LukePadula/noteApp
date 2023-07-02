@@ -14,7 +14,7 @@ const Modal = (props) => {
             className="exit-modal"
             onClick={() => dispatch(onModalOpenClose())}
           >
-            X
+            <span class="material-symbols-outlined">close</span>
           </div>
           {content}
         </div>

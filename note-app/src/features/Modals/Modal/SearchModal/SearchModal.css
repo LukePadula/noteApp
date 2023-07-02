@@ -7,16 +7,17 @@
   width: 100%;
   position: absolute;
   left: 0;
-  top: 30px;
+  top: 35px;
   background-color: white;
 }
 
 .search-item {
-  padding: 2px;
+  padding: 3px;
   margin: 7px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: space-evenly;
+  border-radius: 5px;
 }
 
 .search-item:hover {

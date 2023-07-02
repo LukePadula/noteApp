@@ -3,6 +3,10 @@ import { selectModalType } from "./app/Slices/AppSlice";
 import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
+import {
+  getNoteData,
+  getTemplateData,
+} from "./app/DataControllers/DataController";
 
 // Pages
 import Login from "./features/pages/Login.jsx";
@@ -23,8 +27,8 @@ const App = () => {
   let modalObject;
 
   useEffect(() => {
-    if (window.innerWidth > 600) {
-    }
+    getNoteData();
+    getTemplateData();
   }, []);
 
   if (modal) {

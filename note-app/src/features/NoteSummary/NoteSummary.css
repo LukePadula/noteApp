@@ -1,6 +1,7 @@
 .summary-list {
   display: grid;
   grid-template-columns: 30% 70%;
+  align-items: center;
   margin: 10px;
   gap: 15px;
 }

@@ -16,10 +16,10 @@ const NavBar = (props) => {
       </div>
       <div className="nav-actions">
         <button
-          className="search"
+          className="search material-symbols-outlined"
           onClick={() => dispatch(onModalOpenClose({ type: "search" }))}
         >
-          Q
+          <span class="material-symbols-outlined">search</span>
         </button>
         <button onClick={() => navigate("/home")} className="home">
           Home

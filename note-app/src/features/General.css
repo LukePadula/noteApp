@@ -1,4 +1,10 @@
 /* General stylings */
+
+body * {
+  /* font-family: "Heebo", sans-serif;
+  font-size: 12px; */
+}
+
 h1 {
   margin: 0;
 }

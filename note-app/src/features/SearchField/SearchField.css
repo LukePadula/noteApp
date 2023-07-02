@@ -9,8 +9,19 @@
 }
 
 .search-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
-  right: 0;
+  right: -25px;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.search-clear:hover {
+  cursor: pointer;
+}
+
+.search-results-cont {
+  border-radius: 10px;
 }

@@ -9,7 +9,6 @@ const NoteSummary = (props) => {
 
   for (const key in summary) {
     summary[key].forEach((element) => {
-      console.log(element);
       summaryItems.push(
         <>
           <small className="summary-topic">{key}</small>
@@ -18,13 +17,32 @@ const NoteSummary = (props) => {
       );
     });
   }
+  console.log("summary items", summaryItems, summaryItems.length);
+
+  let summaryContent;
+  if (summaryItems.length) {
+    console.log(" here");
+
+    summaryContent = (
+      <div style={{ gridTemplateColumns: `30% 70%` }} className="summary-list">
+        {summaryItems}
+      </div>
+    );
+  } else {
+    console.log("Not here");
+    summaryContent = (
+      <div className="no-results">
+        <p> Click refresh to generate a summary</p>
+      </div>
+    );
+  }
 
   let listActionButtons = (
     <button
       onClick={() => dispatch(onSummaryRefresh({ recordId }))}
       className="button-orange-square"
     >
-      R
+      <span class="material-symbols-outlined">refresh</span>
     </button>
   );
 
@@ -34,9 +52,7 @@ const NoteSummary = (props) => {
         <h1>Summary</h1>
         <div className="list-actions">{listActionButtons}</div>
       </div>
-      <div style={{ gridTemplateColumns: `30% 70%` }} className="summary-list">
-        {summaryItems}
-      </div>
+      {summaryContent}
     </div>
   );
 };

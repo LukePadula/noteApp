@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { NOTE } from "../PredefinedValues";
 const defaultRecordLookup = { id: "", title: "" };
 const defaultcreateRecordFormData = {
   title: "",
@@ -12,70 +13,11 @@ const initialState = {
   modalType: null,
   searchInput: "",
   eventSearchInput: "",
+  templateSearchInput: "",
   recordDetailsDropdownActive: false,
   userLoggedIn: false,
   createRecordFormData: defaultcreateRecordFormData,
-  NOTE: [
-    {
-      id: "n1823190",
-      title: "This is a note",
-      eventName: "Event 1",
-      created: "Today",
-      modified: "Today",
-      showActions: false,
-      object: "NOTE",
 
-      content: {
-        time: 1687620792880,
-        blocks: [
-          {
-            id: "wbDRvWqI8A",
-            type: "paragraph",
-            data: {
-              text: "Hello this is already predefined text",
-            },
-          },
-        ],
-        version: "2.27.0",
-      },
-    },
-    {
-      id: "123",
-      title: "This is a test",
-      eventName: "Event 1",
-      created: "Today",
-      modified: "Today",
-      showActions: false,
-      object: "NOTE",
-    },
-    {
-      id: "n7459431",
-      title: "This is a note two",
-      eventName: "Event 1",
-      created: "Today",
-      modified: "Today",
-      showActions: false,
-      object: "NOTE",
-    },
-  ],
-  TEMPLATE: [
-    {
-      id: "t3424435",
-      title: "This is a template",
-      created: "Yesterday",
-      modified: "Today",
-      showActions: false,
-      object: "TEMPLATE",
-    },
-    {
-      id: "t3435245",
-      title: "This is a template2",
-      created: "Yesterday",
-      modified: "Today",
-      showActions: false,
-      object: "TEMPLATE",
-    },
-  ],
   EVENT: [
     {
       id: "e5192561",
@@ -109,6 +51,10 @@ export const appSlice = createSlice({
   name: "appSlice",
   initialState,
   reducers: {
+    onQueryData: (state, action) => {
+      const { object, data } = action.payload;
+      state[object] = data;
+    },
     onActionMenuClick: (state, action) => {
       const record = state[action.payload.object].find(
         (item) => item.id === action.payload.id
@@ -125,6 +71,7 @@ export const appSlice = createSlice({
       state[action.payload.object].splice(index, 1);
     },
     onModalOpenClose: (state, action) => {
+      state.searchInput = "";
       state.modalType = action.payload;
       state.searchResults = undefined;
       state.createRecordFormData = defaultcreateRecordFormData;
@@ -134,20 +81,28 @@ export const appSlice = createSlice({
       state.userLoggedIn = false;
     },
     onRecordCreate: (state, action) => {
-      console.log(action.payload.formData);
+      console.log(action.payload);
       state.modalType = undefined;
-      const { recordObject, recordName, recordDescription } =
-        action.payload.formData;
-      state[recordObject].push({
-        id: "1234",
-        title: recordName,
-        description: recordDescription,
-        eventName: "Event 1",
-        created: "Today",
-        modified: "Today",
-        showActions: false,
-      });
+      const { title, description, object, template, event } =
+        state.createRecordFormData;
 
+      const newRecord = {
+        id: "1234",
+        title,
+        description,
+        created: new Date(),
+        modified: new Date(),
+        showActions: false,
+      };
+
+      if (object === NOTE) {
+        newRecord.template = template;
+        newRecord.event = event;
+
+        if (newRecord.template) {
+        }
+      }
+      state[object].push(newRecord);
       state.createRecordFormData = defaultcreateRecordFormData;
     },
     onSummaryRefresh: (state, action) => {
@@ -193,14 +148,19 @@ export const appSlice = createSlice({
         const { value, searchObjects } = action.payload;
         const records = [];
 
-        searchObjects.forEach((object) => {
-          records.push(...state[object]);
-        });
+        console.log(value);
+        if (Array.isArray(searchObjects)) {
+          searchObjects.forEach((object) => {
+            records.push(...state[object]);
+          });
+          state.searchInput = value;
+        } else {
+          records.push(...state[searchObjects]);
+        }
 
         const results = records.filter((item) =>
           item.title.toLowerCase().includes(value.toLowerCase())
         );
-        state.searchInput = value;
         state.searchResults = results;
       } else {
         state.searchResults = undefined;
@@ -233,10 +193,10 @@ export const appSlice = createSlice({
       state.userLoggedIn = true;
     },
     onCreateRecordFormDataChange: (state, action) => {
-      console.log(action.payload, "Change");
-      const { id, value } = action.payload;
+      const { object, id, value } = action.payload;
       if (id !== "template") {
         state.createRecordFormData[id] = value;
+        state.createRecordFormData.object = object;
       }
     },
     onRecordEdit: (state, action) => {
@@ -253,6 +213,7 @@ export const appSlice = createSlice({
 });
 
 export const {
+  onQueryData,
   onActionMenuClick,
   onRecordDelete,
   onRecordView,
@@ -286,5 +247,7 @@ export const selectCreateRecordFormData = (state) =>
 export const selectUserLoggedIn = (state) => state.appSlice.userLoggedIn;
 export const selectEventSearchInput = (state) =>
   state.appSlice.eventSearchInput;
+export const selectTemplateSearchInput = (state) =>
+  state.appSlice.templateSearchInput;
 
 export default appSlice.reducer;

@@ -8,11 +8,6 @@
   grid-row-end: 10;
 }
 
-.list-container {
-  grid-row-start: 3;
-  grid-row-end: 5;
-}
-
 @media (min-width: 650px) {
   .page-content {
     height: 100vh;

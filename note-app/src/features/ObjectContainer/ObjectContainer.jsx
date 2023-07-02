@@ -16,6 +16,7 @@ const ObjectContainer = (props) => {
   let recordButtonActions;
   const dispatch = useDispatch();
 
+  // console.log(record.created);
   switch (object) {
     case NOTE:
       recordContent = (
@@ -27,10 +28,26 @@ const ObjectContainer = (props) => {
             <small>{record.eventName}</small>
           </div>
           <div className="record-data">
-            <small>{record.created}</small>
+            <small>
+              {record.created.toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </small>
           </div>
           <div className="record-data">
-            <small>{record.modified}</small>
+            <small>
+              {record.modified.toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </small>
           </div>
         </>
       );
@@ -53,7 +70,10 @@ const ObjectContainer = (props) => {
       );
 
       recordButtonActionsContainer = (
-        <button className="actions-cont">{recordButtonActions}</button>
+        <button className="actions-cont">
+          <span class="material-symbols-outlined">expand_more</span>
+          {recordButtonActions}
+        </button>
       );
 
       break;
@@ -65,10 +85,26 @@ const ObjectContainer = (props) => {
             <Link to={`/template/${record.id}`}>{record.title}</Link>
           </div>
           <div className="record-data">
-            <small>{record.created}</small>
+            <small>
+              {record.created.toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </small>
           </div>
           <div className="record-data">
-            <small>{record.modified}</small>
+            <small>
+              {record.modified.toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </small>
           </div>
         </>
       );
@@ -95,7 +131,10 @@ const ObjectContainer = (props) => {
       );
 
       recordButtonActionsContainer = (
-        <button className="actions-cont">{recordButtonActions}</button>
+        <button className="actions-cont">
+          <span class="material-symbols-outlined">expand_more</span>
+          {recordButtonActions}
+        </button>
       );
       break;
 
@@ -114,20 +153,6 @@ const ObjectContainer = (props) => {
         </>
       );
 
-      recordButtonActions = (
-        <>
-          <div className="record-actions">
-            <div
-              onClick={() => {
-                dispatch(onRecordView({ id: record.id, object }));
-              }}
-            >
-              View
-            </div>
-          </div>
-        </>
-      );
-
       recordButtonActionsContainer = (
         <button
           onClick={() => {
@@ -135,7 +160,7 @@ const ObjectContainer = (props) => {
           }}
           className="actions-cont event-action"
         >
-          {recordButtonActions}
+          <span class="material-symbols-outlined">add</span>
         </button>
       );
       break;

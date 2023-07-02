@@ -13,7 +13,7 @@
   padding: 25px;
   position: fixed;
   left: 50%;
-  top: 40%;
+  top: 50%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
   background-color: white;
@@ -29,6 +29,7 @@
 }
 
 .modal-actions {
+  width: 50%;
   display: flex;
   justify-content: space-between;
 }

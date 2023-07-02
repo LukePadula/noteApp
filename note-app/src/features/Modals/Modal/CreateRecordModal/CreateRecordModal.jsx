@@ -17,8 +17,6 @@ const CreateRecordModal = (props) => {
   const formTitle = object.toLowerCase();
   const formData = useSelector(selectCreateRecordFormData);
 
-  console.log(object);
-
   const templateSelector = (
     <>
       <label className="record-create-input">
@@ -27,7 +25,7 @@ const CreateRecordModal = (props) => {
           searchAction={SELECT}
           value={formData.event.title}
           id="event"
-          searchObjects={[EVENT]}
+          searchObjects={EVENT}
         />
       </label>
       <label className="record-create-input">
@@ -36,7 +34,7 @@ const CreateRecordModal = (props) => {
           searchAction={SELECT}
           value={formData.template.title}
           id="template"
-          searchObjects={[TEMPLATE]}
+          searchObjects={TEMPLATE}
         />
       </label>
     </>
@@ -52,12 +50,13 @@ const CreateRecordModal = (props) => {
               onCreateRecordFormDataChange({
                 id: e.target.id,
                 value: e.target.value,
+                object,
               })
             )
           }
           onSubmit={(e) => {
             e.preventDefault();
-            dispatch(onRecordCreate({ object, formData }));
+            dispatch(onRecordCreate());
           }}
         >
           <label className="record-create-input">

@@ -12,6 +12,9 @@ a {
 }
 
 .actions-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   background-color: #266e58;
   align-self: center;

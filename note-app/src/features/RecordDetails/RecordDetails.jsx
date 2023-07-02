@@ -49,24 +49,55 @@ const RecordDetails = (props) => {
           }
         >
           <div className="edit-field">
-            <label htmlFor="title">Title</label>
-            <input id="title" value={title} type="text" />
+            <label htmlFor="title">
+              Title
+              <input id="title" value={title} type="text" />
+            </label>
           </div>
           <div className="edit-field">
-            <label htmlFor="template">Template</label>
-            <input id="template" disabled="true" value={template} type="text" />
+            <label htmlFor="template">
+              Template
+              <input
+                id="template"
+                disabled="true"
+                value={template}
+                type="text"
+              />
+            </label>
           </div>
           <div className="edit-field">
-            <label htmlFor="event">Event</label>
-            <input id="event" disabled="true" value={event} type="text" />
+            <label htmlFor="event">
+              Event
+              <input id="event" disabled="true" value={event} type="text" />
+            </label>
           </div>
           <div className="edit-field">
-            <label htmlFor="description">Description</label>
-            <input id="description" value={description} type="text" />
+            <label htmlFor="description">
+              Description
+              <textarea id="description" value={description} type="text" />
+            </label>
           </div>
           <div className="read-only-fields">
-            <small>Last modified: {modified} </small>
-            <small>Created: {created}</small>
+            <small>
+              Last modified:{" "}
+              {modified.toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}{" "}
+            </small>
+            <small>
+              Created:{" "}
+              {created.toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </small>
           </div>
           {recordActions}
         </form>
@@ -77,12 +108,16 @@ const RecordDetails = (props) => {
       detailData = (
         <>
           <div className="edit-field">
-            <label htmlFor="title">Title</label>
-            <input id="title" type="text" />
+            <label htmlFor="title">
+              Title
+              <input id="title" type="text" />
+            </label>
           </div>
           <div className="edit-field">
-            <label htmlFor="description">Description</label>
-            <textarea id="description" cols="30" rows="4"></textarea>
+            <label htmlFor="description">
+              Description
+              <textarea id="description" cols="30" rows="4"></textarea>
+            </label>
           </div>
           <div className="read-only-fields">
             <small>Last modified: </small>
@@ -104,7 +139,7 @@ const RecordDetails = (props) => {
           onClick={() => dispatch(onDropDownOpenClose())}
           className="button-green-square"
         >
-          T
+          <span class="material-symbols-outlined">expand_more</span>
         </button>
       </div>
       {dropDownActive && <div className="record-details">{detailData}</div>}

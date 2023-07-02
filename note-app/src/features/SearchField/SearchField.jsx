@@ -11,8 +11,10 @@ import {
   selectSearchResults,
   selectSearchInput,
   selectEventSearchInput,
+  selectTemplateSearchInput,
 } from "../../app/Slices/AppSlice";
 import { NAVIGATE, SELECT } from "../../app/PredefinedValues";
+import { TEMPLATE, EVENT } from "../../app/PredefinedValues";
 import "./SearchField.css";
 
 const SearchField = (props) => {
@@ -22,12 +24,26 @@ const SearchField = (props) => {
   const navigate = useNavigate();
   let searchResults = useSelector(selectSearchResults);
   let searchItems = [];
-  let searchInput = useSelector(selectSearchInput);
-  console.log(value, "VALUE");
+  let objectToSearch;
+
+  const objectSearchInputSelector = {
+    [TEMPLATE]: selectTemplateSearchInput,
+    [EVENT]: selectEventSearchInput,
+    templateAndEvents: selectSearchInput,
+  };
+
+  console.log(Array.isArray(searchObjects));
+
+  if (Array.isArray(searchObjects)) {
+    objectToSearch = objectSearchInputSelector.templateAndEvents;
+  } else {
+    objectToSearch = objectSearchInputSelector[searchObjects];
+  }
+  console.log(objectToSearch, "Object to search");
+  let searchInput = useSelector(objectToSearch);
 
   if (searchResults) {
     searchResults.forEach((element) => {
-      console.log(element);
       searchItems.push(
         <div
           className="search-item"
@@ -67,7 +83,7 @@ const SearchField = (props) => {
             dispatch(onSearchClear());
           }}
         >
-          X
+          <span class="material-symbols-outlined">close</span>
         </div>
         <div className="search-results-cont">{searchItems}</div>
       </div>

@@ -1,9 +1,8 @@
 @media (min-width: 650px) {
   #home-page-content {
-    height: 89vh;
+    min-height: 83vh;
     width: 100vw;
     justify-content: end;
-    align-items: end;
     display: grid;
     grid-template-columns: 30% 40% 30%;
   }
