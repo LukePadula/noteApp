@@ -36,7 +36,6 @@ const RecordDetails = (props) => {
       <button className="button-orange">Delete</button>
     </div>
   );
-  console.log(record);
 
   switch (object) {
     case NOTE:
@@ -135,14 +134,12 @@ const RecordDetails = (props) => {
     <div className="record-details-cont">
       <div className="details-header">
         <h1>{record.title}</h1>
-        <button
-          onClick={() => dispatch(onDropDownOpenClose())}
-          className="button-green-square"
-        >
-          <span class="material-symbols-outlined">expand_more</span>
-        </button>
+
+        <label htmlFor="toggle">Click</label>
+        <input type="checkbox" id="toggle" className="visually-hidden" />
+        <div className="detail">{detailData}</div>
       </div>
-      {dropDownActive && <div className="record-details">{detailData}</div>}
+      {/* {dropDownActive && <div className="record-details">{detailData}</div>} */}
     </div>
   );
 };

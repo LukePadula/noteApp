@@ -12,9 +12,15 @@ import {
   selectSearchInput,
   selectEventSearchInput,
   selectTemplateSearchInput,
+  selectTemplateSearchResults,
+  selectEventSearchResults,
 } from "../../app/Slices/AppSlice";
 import { NAVIGATE, SELECT } from "../../app/PredefinedValues";
-import { TEMPLATE, EVENT } from "../../app/PredefinedValues";
+import {
+  TEMPLATE,
+  EVENT,
+  TEMPLATE_AND_EVENT,
+} from "../../app/PredefinedValues";
 import "./SearchField.css";
 
 const SearchField = (props) => {
@@ -22,25 +28,27 @@ const SearchField = (props) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let searchResults = useSelector(selectSearchResults);
   let searchItems = [];
-  let objectToSearch;
 
-  const objectSearchInputSelector = {
-    [TEMPLATE]: selectTemplateSearchInput,
-    [EVENT]: selectEventSearchInput,
-    templateAndEvents: selectSearchInput,
+  const getSearchSelectors = () => {
+    if (Array.isArray(searchObjects)) {
+      return { input: selectSearchInput, results: selectSearchResults };
+    } else if (searchObjects === TEMPLATE) {
+      return {
+        input: selectTemplateSearchInput,
+        results: selectTemplateSearchResults,
+      };
+    } else if (searchObjects === EVENT) {
+      return {
+        input: selectEventSearchInput,
+        results: selectEventSearchResults,
+      };
+    }
   };
 
-  console.log(Array.isArray(searchObjects));
-
-  if (Array.isArray(searchObjects)) {
-    objectToSearch = objectSearchInputSelector.templateAndEvents;
-  } else {
-    objectToSearch = objectSearchInputSelector[searchObjects];
-  }
-  console.log(objectToSearch, "Object to search");
-  let searchInput = useSelector(objectToSearch);
+  const relevantSearchSelectors = getSearchSelectors();
+  let searchInput = useSelector(relevantSearchSelectors.input);
+  let searchResults = useSelector(relevantSearchSelectors.results);
 
   if (searchResults) {
     searchResults.forEach((element) => {

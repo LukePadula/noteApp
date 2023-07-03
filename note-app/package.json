@@ -12,11 +12,13 @@
     "buffer": "^6.0.3",
     "buffer-equal-constant-time": "^1.0.1",
     "googleapis": "^120.0.0",
+    "https": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.7",
     "react-router-dom": "^6.12.1",
     "react-scripts": "5.0.1",
+    "util": "^0.12.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { NOTE } from "../PredefinedValues";
+import { EVENT, NOTE, TEMPLATE } from "../PredefinedValues";
 const defaultRecordLookup = { id: "", title: "" };
 const defaultcreateRecordFormData = {
   title: "",
@@ -14,6 +14,7 @@ const initialState = {
   searchInput: "",
   eventSearchInput: "",
   templateSearchInput: "",
+
   recordDetailsDropdownActive: false,
   userLoggedIn: false,
   createRecordFormData: defaultcreateRecordFormData,
@@ -52,6 +53,7 @@ export const appSlice = createSlice({
   initialState,
   reducers: {
     onQueryData: (state, action) => {
+      console.log(action.payload);
       const { object, data } = action.payload;
       state[object] = data;
     },
@@ -115,7 +117,6 @@ export const appSlice = createSlice({
       const positiveSummary = [];
       const negativeSummary = [];
 
-      console.log(record.content);
       if (record.content) {
         record.content.blocks.forEach((element) => {
           if (element.data.text) {
@@ -148,26 +149,44 @@ export const appSlice = createSlice({
         const { value, searchObjects } = action.payload;
         const records = [];
 
-        console.log(value);
         if (Array.isArray(searchObjects)) {
           searchObjects.forEach((object) => {
             records.push(...state[object]);
           });
           state.searchInput = value;
+
+          state.searchResults = records.filter((item) =>
+            item.title.toLowerCase().includes(value.toLowerCase())
+          );
         } else {
           records.push(...state[searchObjects]);
-        }
 
-        const results = records.filter((item) =>
-          item.title.toLowerCase().includes(value.toLowerCase())
-        );
-        state.searchResults = results;
+          const results = records.filter((item) =>
+            item.title.toLowerCase().includes(value.toLowerCase())
+          );
+
+          if (searchObjects === TEMPLATE) {
+            state.templateSearchInput = value;
+            state.templateSearchResults = results;
+          } else if (searchObjects === EVENT) {
+            state.eventSearchInput = value;
+            state.eventSearchResults = results;
+          }
+        }
       } else {
         state.searchResults = undefined;
+        state.templateSearchResults = undefined;
+        state.eventSearchResults = undefined;
+        state.templateSearchInput = undefined;
+        state.searchInput = undefined;
       }
     },
     onSearchClear: (state, action) => {
-      state.searchInput = "";
+      state.searchResults = undefined;
+      state.templateSearchResults = undefined;
+      state.eventSearchResults = undefined;
+      state.templateSearchInput = undefined;
+      state.searchInput = undefined;
       state.createRecordFormData.template = defaultRecordLookup;
     },
     onRecordLookupSelect: (state, action) => {
@@ -235,8 +254,14 @@ export const selectNoteData = (state) => state.appSlice.NOTE;
 export const selectTemplateData = (state) => state.appSlice.TEMPLATE;
 export const selectEventData = (state) => state.appSlice.EVENT;
 export const selectSummaryData = (state) => state.appSlice.SUMMARY;
-export const selectRecordData = (state, payload) =>
-  state.appSlice[payload.object].find((record) => record.id === payload.id);
+export const selectRecordData = (state, payload) => {
+  console.log(payload, "Here");
+  console.log(state.appSlice);
+  return state.appSlice[payload.object].find(
+    (record) => record.id === payload.id
+  );
+};
+
 export const selectModalType = (state) => state.appSlice.modalType;
 export const selectSearchInput = (state) => state.appSlice.searchInput;
 export const selectSearchResults = (state) => state.appSlice.searchResults;
@@ -249,5 +274,9 @@ export const selectEventSearchInput = (state) =>
   state.appSlice.eventSearchInput;
 export const selectTemplateSearchInput = (state) =>
   state.appSlice.templateSearchInput;
+export const selectTemplateSearchResults = (state) =>
+  state.appSlice.templateSearchResults;
+export const selectEventSearchResults = (state) =>
+  state.appSlice.eventSearchResults;
 
 export default appSlice.reducer;

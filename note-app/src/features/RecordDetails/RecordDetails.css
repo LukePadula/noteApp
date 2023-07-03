@@ -7,17 +7,17 @@
 }
 
 .details-header {
-  display: flex;
-  justify-content: space-between;
+  /* display: flex; */
+  /* justify-content: space-between; */
 }
 
-.record-details {
+/* .record-details {
   display: flex;
   flex-direction: column;
-}
+} */
 
 .edit-field,
-.read-only-fields {
+.read -only-fields {
   display: flex;
   flex-direction: column;
 }
@@ -28,4 +28,19 @@
   justify-content: center;
   margin-top: 18px;
   width: 100%;
+}
+
+.detail {
+  display: none;
+}
+
+#toggle:checked ~ .detail {
+  /* background-color: red; */
+  display: block;
+  height: 100%;
+}
+
+.visually-hidden {
+  position: absolute;
+  left: -100vw;
 }

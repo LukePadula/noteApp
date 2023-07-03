@@ -1,7 +1,7 @@
-.record-details-cont {
+/* .record-details-cont {
   grid-row-start: 1;
   grid-row-end: 3;
-}
+} */
 .editor-cont {
   grid-column: 2;
   grid-row-start: 1;
