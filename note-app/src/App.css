@@ -44,3 +44,7 @@ button:hover {
   height: 40px;
   background-color: #266e58;
 }
+
+.material-symbols-outlined {
+  color: #ffffff;
+}

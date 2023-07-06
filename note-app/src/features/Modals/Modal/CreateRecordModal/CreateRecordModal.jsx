@@ -18,21 +18,24 @@ import { TEMPLATE, NOTE } from "../../../../app/PredefinedValues";
 const CreateRecordModal = (props) => {
   const { object, operation } = props;
   const dispatch = useDispatch();
-  const formTitle = object.toLowerCase();
-  const defaultFormData = useSelector(selectCreateRecordFormData);
-  // const recordFormData = useSelector(selectRecordEdit());
-  let formData = { title: "", description: "" };
+  const formData = useSelector(selectCreateRecordFormData);
 
-  console.log("EDIT MODAL");
-  console.log(defaultFormData);
+  const formTitle = object.toLowerCase();
+  console.log("EDIT MODAL", operation);
+  console.log(formData);
 
   let formSubmitFunction;
+  let formSubmitButtonLabel;
 
   if (operation === "edit") {
     formSubmitFunction = onRecordEdit;
+    formSubmitButtonLabel = "Edit";
   } else {
     formSubmitFunction = onRecordCreate;
+    formSubmitButtonLabel = "Create";
   }
+
+  console.log(formData);
 
   const templateSelector = (
     <>
@@ -59,7 +62,9 @@ const CreateRecordModal = (props) => {
   return (
     <>
       <div id="createRecordModal" className="modal-content">
-        <h1 className="modal-header">Create {formTitle}</h1>
+        <h1 className="modal-header">
+          {formSubmitButtonLabel} {formTitle}
+        </h1>
         <form
           className="create-record-form"
           onChange={(e) =>
@@ -73,7 +78,7 @@ const CreateRecordModal = (props) => {
           }
           onSubmit={(e) => {
             e.preventDefault();
-            dispatch(formSubmitFunction());
+            dispatch(formSubmitFunction({}));
           }}
         >
           <label className="record-create-input">
@@ -94,7 +99,7 @@ const CreateRecordModal = (props) => {
           </label>
           <div className="modal-actions">
             <button className="button-orange" type="submit">
-              Create
+              {formSubmitButtonLabel}
             </button>
             <button
               className="button-green"

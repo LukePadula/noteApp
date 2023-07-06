@@ -13,7 +13,7 @@ const RecordDetails = (props) => {
       <button
         onClick={(e) => {
           e.preventDefault();
-          dispatch(onModalOpenClose({ type: "edit", record, object }));
+          dispatch(onModalOpenClose({ type: "edit", id: record.id, object }));
         }}
         className="button-green"
       >
@@ -39,6 +39,7 @@ const RecordDetails = (props) => {
   switch (object) {
     case NOTE:
       const { title, template, event, description, created, modified } = record;
+
       detailData = (
         <form>
           <div className="edit-field">
@@ -53,7 +54,7 @@ const RecordDetails = (props) => {
               <input
                 id="template"
                 disabled="true"
-                value={template}
+                value={template.title}
                 type="text"
               />
             </label>
@@ -61,7 +62,12 @@ const RecordDetails = (props) => {
           <div className="edit-field">
             <label htmlFor="event">
               Event
-              <input id="event" disabled="true" value={event} type="text" />
+              <input
+                id="event"
+                disabled="true"
+                value={event.title}
+                type="text"
+              />
             </label>
           </div>
           <div className="edit-field">
@@ -137,11 +143,14 @@ const RecordDetails = (props) => {
     <div className="record-details-cont">
       <div className="details-header">
         <h1 id="details-title">{record.title}</h1>
+
         <label
           className="button-green-square"
           id="detail-drop-down"
           htmlFor="toggle"
-        ></label>
+        >
+          <span className="material-symbols-outlined">expand_more</span>
+        </label>
         <input type="checkbox" id="toggle" className="visually-hidden" />
         <div className="detail">{detailData}</div>
       </div>

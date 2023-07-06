@@ -18,7 +18,7 @@ const ObjectList = (props) => {
   const headers = {
     [NOTE]: ["Title", "Event", "Created", "Modified", ""],
     [TEMPLATE]: ["Title", "Created", "Modified", ""],
-    [EVENT]: ["Title", "Status", "Start time", ""],
+    [EVENT]: ["Title", "Status", "Start", ""],
     [SUMMARY]: ["Category", "Description"],
   };
 

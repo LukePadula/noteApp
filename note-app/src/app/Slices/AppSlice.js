@@ -32,6 +32,8 @@ const initialState = {
       modified: new Date(),
       showActions: false,
       object: "NOTE",
+      template: defaultRecordLookup,
+      event: defaultRecordLookup,
 
       content: {
         time: 1687620792880,
@@ -55,6 +57,8 @@ const initialState = {
       modified: new Date(),
       showActions: false,
       object: "NOTE",
+      template: defaultRecordLookup,
+      event: defaultRecordLookup,
     },
     {
       id: "n7459431",
@@ -64,6 +68,8 @@ const initialState = {
       modified: new Date(),
       showActions: false,
       object: "NOTE",
+      template: defaultRecordLookup,
+      event: defaultRecordLookup,
     },
   ],
 
@@ -135,29 +141,27 @@ export const appSlice = createSlice({
       state.modalType = undefined;
     },
     onModalOpenClose: (state, action) => {
-      console.log(action.payload === undefined);
-
       if (action.payload === undefined) {
         state.searchInput = "";
         state.modalType = action.payload;
         state.searchResults = undefined;
+        state.createRecordFormData = defaultcreateRecordFormData;
       } else {
         state.modalType = action.payload;
 
         if (action.payload.type === "delete") {
+          console.log(action.payload);
           state.recordDelete = action.payload.recordDelete;
         } else {
           state.recordDelete = defaultDeleteRecordObject;
         }
 
         if (action.payload.type === "edit") {
-          //Get the index and the record
-          //Get those values and put it in the objec.
-          const { id, object } = action.payload.recordEdit;
+          const { type, id, object } = action.payload;
           const index = state[object].findIndex((item) => item.id === id);
+          const record = state[object][index];
 
-          const recorde = state[object][index];
-          state.createRecordFormData.title = record.title;
+          state.createRecordFormData = { ...record };
         }
       }
     },
@@ -187,9 +191,15 @@ export const appSlice = createSlice({
       state.createRecordFormData = defaultcreateRecordFormData;
     },
     onRecordEdit: (state, action) => {
-      const { id, object } = state.createRecordFormData;
-      const index = state[object].findIndex((item) => item.id === id);
-      state.createRecordFormData = state[object][index];
+      const { object } = state.createRecordFormData;
+      const index = state[object].findIndex(
+        (item) => item.id === state.createRecordFormData.id
+      );
+
+      state[object][index] = {
+        ...state.createRecordFormData,
+        modified: new Date(),
+      };
     },
     onSummaryRefresh: (state, action) => {
       const index = state.NOTE.findIndex(

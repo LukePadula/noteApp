@@ -3,10 +3,14 @@
 }
 
 #detail-drop-down {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   right: -15px;
   top: 30px;
   transform: translate(-50%, -50%);
+  border-radius: 10px;
 }
 #details-title {
   max-width: 70%;
