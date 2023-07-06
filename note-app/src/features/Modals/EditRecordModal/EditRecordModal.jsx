@@ -4,35 +4,18 @@ import {
   onModalOpenClose,
   onRecordCreate,
   onCreateRecordFormDataChange,
-  onRecordEdit,
 } from "../../../../app/Slices/AppSlice";
 import "../CreateRecordModal/CreateRecordModal.css";
-import {
-  selectCreateRecordFormData,
-  selectRecordData,
-} from "../../../../app/Slices/AppSlice";
+import { selectCreateRecordFormData } from "../../../../app/Slices/AppSlice";
 import SearchField from "../../../SearchField/SearchField";
 import { EVENT, SELECT } from "../../../../app/PredefinedValues";
 import { TEMPLATE, NOTE } from "../../../../app/PredefinedValues";
 
-const CreateRecordModal = (props) => {
-  const { object, operation } = props;
+const EditRecordModal = (props) => {
+  const { object } = props;
   const dispatch = useDispatch();
   const formTitle = object.toLowerCase();
-  const defaultFormData = useSelector(selectCreateRecordFormData);
-  // const recordFormData = useSelector(selectRecordEdit());
-  let formData = { title: "", description: "" };
-
-  console.log("EDIT MODAL");
-  console.log(defaultFormData);
-
-  let formSubmitFunction;
-
-  if (operation === "edit") {
-    formSubmitFunction = onRecordEdit;
-  } else {
-    formSubmitFunction = onRecordCreate;
-  }
+  const formData = useSelector(selectCreateRecordFormData);
 
   const templateSelector = (
     <>
@@ -73,7 +56,7 @@ const CreateRecordModal = (props) => {
           }
           onSubmit={(e) => {
             e.preventDefault();
-            dispatch(formSubmitFunction());
+            dispatch(onRecordCreate());
           }}
         >
           <label className="record-create-input">
@@ -109,4 +92,4 @@ const CreateRecordModal = (props) => {
   );
 };
 
-export default CreateRecordModal;
+export default EditRecordModal;

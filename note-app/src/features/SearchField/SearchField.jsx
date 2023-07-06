@@ -91,7 +91,7 @@ const SearchField = (props) => {
             dispatch(onSearchClear());
           }}
         >
-          <span class="material-symbols-outlined">close</span>
+          <span className="material-symbols-outlined">close</span>
         </div>
         <div className="search-results-cont">{searchItems}</div>
       </div>

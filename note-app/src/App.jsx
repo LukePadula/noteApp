@@ -2,23 +2,18 @@ import React from "react";
 import { selectModalType } from "./app/Slices/AppSlice";
 import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
-import {
-  getNoteData,
-  getTemplateData,
-} from "./app/DataControllers/DataController";
+import "./App.css";
 
-// Pages
 import Login from "./features/pages/Login.jsx";
 import Home from "./features/pages/Home.jsx";
 import Template from "./features/pages/Template.jsx";
 import Note from "./features/pages/Note.jsx";
 
-//Modals
 import Modal from "./features/Modals/Modal/ModalTemplate/Modal.jsx";
 import SignOut from "./features/Modals/Modal/SignOutModal/SignOutModal.jsx";
 import CreateRecordModal from "./features/Modals/Modal/CreateRecordModal/CreateRecordModal";
 import SearchModal from "./features/Modals/Modal/SearchModal/SearchModal";
+import DeleteRecordModal from "./features/Modals/DeleteRecordModal/DeleteRecordModal";
 
 const App = () => {
   let modal = useSelector(selectModalType);
@@ -26,16 +21,10 @@ const App = () => {
   let modalType;
   let modalObject;
 
-  useEffect(() => {
-    getNoteData();
-    getTemplateData();
-  }, []);
-
   if (modal) {
     modalType = modal.type;
     modalObject = modal.object;
   }
-  console.log(modalType, "MODAL TYPE");
 
   switch (modalType) {
     case "signOut":
@@ -43,14 +32,24 @@ const App = () => {
       break;
 
     case "createRecord":
-      console.log("CREATE RECORD");
-      modalContent = <CreateRecordModal object={modalObject} />;
+      modalContent = (
+        <CreateRecordModal object={modalObject} operation={modalType} />
+      );
+      break;
+
+    case "edit":
+      modalContent = (
+        <CreateRecordModal object={modalObject} operation={modalType} />
+      );
       break;
 
     case "search":
       modalContent = <SearchModal />;
       break;
 
+    case "delete":
+      modalContent = <DeleteRecordModal />;
+      break;
     default:
       break;
   }

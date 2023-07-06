@@ -1,12 +1,12 @@
-import { useParams } from "react-router-dom";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import "../TextEditor/TextEditor.css";
 import { useEffect } from "react";
 import { onTextEdit } from "../../app/Slices/AppSlice";
-import { SimpleImage, Question, Positive, Negative } from "../../app/tools";
+import { Question, Positive, Negative } from "../../app/tools";
+
 const TextEditor = (props) => {
   const { recordId, object, title, actions, content } = props;
   const dispatch = useDispatch();

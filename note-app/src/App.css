@@ -1,0 +1,46 @@
+h1 {
+  margin: 0;
+  color: #266e58;
+}
+
+input,
+textarea {
+  padding: 7px;
+  margin: 1px;
+  border-radius: 5px;
+  border: 1px solid #ddd7d7;
+  width: 100%;
+  font-size: 1rem;
+}
+
+button {
+  border-radius: 10px;
+  color: white;
+  width: 85px;
+  padding: 6px;
+  border: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.button-green {
+  background-color: #266e58;
+}
+
+.button-orange {
+  background-color: #e36027;
+}
+
+.button-orange-square {
+  width: 40px;
+  height: 40px;
+  background-color: #e36027;
+}
+
+.button-green-square {
+  width: 40px;
+  height: 40px;
+  background-color: #266e58;
+}

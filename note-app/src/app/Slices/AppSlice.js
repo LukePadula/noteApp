@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { EVENT, NOTE, TEMPLATE } from "../PredefinedValues";
+import { log } from "util";
 const defaultRecordLookup = { id: "", title: "" };
 const defaultcreateRecordFormData = {
   title: "",
@@ -8,31 +9,96 @@ const defaultcreateRecordFormData = {
   template: defaultRecordLookup,
   event: defaultRecordLookup,
 };
+const defaultDeleteRecordObject = {
+  object: "",
+  recordId: "",
+};
 
 const initialState = {
   modalType: null,
   searchInput: "",
   eventSearchInput: "",
   templateSearchInput: "",
-
   recordDetailsDropdownActive: false,
   userLoggedIn: false,
   createRecordFormData: defaultcreateRecordFormData,
+  recordDelete: defaultDeleteRecordObject,
+  NOTE: [
+    {
+      id: "n1823190",
+      title: "Client meeting",
+      eventName: "Event 1",
+      created: new Date(),
+      modified: new Date(),
+      showActions: false,
+      object: "NOTE",
 
+      content: {
+        time: 1687620792880,
+        blocks: [
+          {
+            id: "wbDRvWqI8A",
+            type: "paragraph",
+            data: {
+              text: "Hello this is already predefined text",
+            },
+          },
+        ],
+        version: "2.27.0",
+      },
+    },
+    {
+      id: "123",
+      title: "Internal meeting",
+      eventName: "Event 1",
+      created: new Date(),
+      modified: new Date(),
+      showActions: false,
+      object: "NOTE",
+    },
+    {
+      id: "n7459431",
+      title: "Client sales call",
+      eventName: "Event 1",
+      created: new Date(),
+      modified: new Date(),
+      showActions: false,
+      object: "NOTE",
+    },
+  ],
+
+  TEMPLATE: [
+    {
+      id: "t3424435",
+      title: "Sales template",
+      created: new Date(),
+      modified: new Date(),
+      showActions: false,
+      object: "TEMPLATE",
+    },
+    {
+      id: "t3435245",
+      title: "General template",
+      created: new Date(),
+      modified: new Date(),
+      showActions: false,
+      object: "TEMPLATE",
+    },
+  ],
   EVENT: [
     {
       id: "e5192561",
       title: "This is a event",
-      status: "cancelled",
-      startDateTime: "Today",
+      status: "Accepted",
+      startDateTime: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
       showActions: false,
       object: "EVENT",
     },
     {
       id: "e1264526",
       title: "This is a event 2",
-      status: "cancelled",
-      startDateTime: "Today",
+      status: "Cancelled",
+      startDateTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       showActions: false,
       object: "EVENT",
     },
@@ -52,11 +118,6 @@ export const appSlice = createSlice({
   name: "appSlice",
   initialState,
   reducers: {
-    onQueryData: (state, action) => {
-      console.log(action.payload);
-      const { object, data } = action.payload;
-      state[object] = data;
-    },
     onActionMenuClick: (state, action) => {
       const record = state[action.payload.object].find(
         (item) => item.id === action.payload.id
@@ -67,23 +128,44 @@ export const appSlice = createSlice({
       }
     },
     onRecordDelete: (state, action) => {
-      const index = state[action.payload.object].findIndex(
-        (item) => item.id === action.payload.id
+      const index = state[state.recordDelete.object].findIndex(
+        (item) => item.id === state.recordDelete.recordId
       );
-      state[action.payload.object].splice(index, 1);
+      state[state.recordDelete.object].splice(index, 1);
+      state.modalType = undefined;
     },
     onModalOpenClose: (state, action) => {
-      state.searchInput = "";
-      state.modalType = action.payload;
-      state.searchResults = undefined;
-      state.createRecordFormData = defaultcreateRecordFormData;
+      console.log(action.payload === undefined);
+
+      if (action.payload === undefined) {
+        state.searchInput = "";
+        state.modalType = action.payload;
+        state.searchResults = undefined;
+      } else {
+        state.modalType = action.payload;
+
+        if (action.payload.type === "delete") {
+          state.recordDelete = action.payload.recordDelete;
+        } else {
+          state.recordDelete = defaultDeleteRecordObject;
+        }
+
+        if (action.payload.type === "edit") {
+          //Get the index and the record
+          //Get those values and put it in the objec.
+          const { id, object } = action.payload.recordEdit;
+          const index = state[object].findIndex((item) => item.id === id);
+
+          const recorde = state[object][index];
+          state.createRecordFormData.title = record.title;
+        }
+      }
     },
     onSignOutConfirm: (state, action) => {
       state.modalType = undefined;
       state.userLoggedIn = false;
     },
     onRecordCreate: (state, action) => {
-      console.log(action.payload);
       state.modalType = undefined;
       const { title, description, object, template, event } =
         state.createRecordFormData;
@@ -100,15 +182,16 @@ export const appSlice = createSlice({
       if (object === NOTE) {
         newRecord.template = template;
         newRecord.event = event;
-
-        if (newRecord.template) {
-        }
       }
       state[object].push(newRecord);
       state.createRecordFormData = defaultcreateRecordFormData;
     },
+    onRecordEdit: (state, action) => {
+      const { id, object } = state.createRecordFormData;
+      const index = state[object].findIndex((item) => item.id === id);
+      state.createRecordFormData = state[object][index];
+    },
     onSummaryRefresh: (state, action) => {
-      console.log(action.payload.recordId);
       const index = state.NOTE.findIndex(
         (item) => item.id === action.payload.recordId
       );
@@ -208,7 +291,6 @@ export const appSlice = createSlice({
       state.recordDetailsDropdownActive = !state.recordDetailsDropdownActive;
     },
     onLogin: (state, action) => {
-      console.log("here");
       state.userLoggedIn = true;
     },
     onCreateRecordFormDataChange: (state, action) => {
@@ -217,16 +299,6 @@ export const appSlice = createSlice({
         state.createRecordFormData[id] = value;
         state.createRecordFormData.object = object;
       }
-    },
-    onRecordEdit: (state, action) => {
-      const { recordId, object, formData } = action.payload;
-
-      for (const key in formData) {
-        console.log(key);
-        state[object][index][key] = formData.key;
-      }
-
-      const index = state[object].findIndex((item) => item.id === recordId);
     },
   },
 });
@@ -255,13 +327,10 @@ export const selectTemplateData = (state) => state.appSlice.TEMPLATE;
 export const selectEventData = (state) => state.appSlice.EVENT;
 export const selectSummaryData = (state) => state.appSlice.SUMMARY;
 export const selectRecordData = (state, payload) => {
-  console.log(payload, "Here");
-  console.log(state.appSlice);
   return state.appSlice[payload.object].find(
     (record) => record.id === payload.id
   );
 };
-
 export const selectModalType = (state) => state.appSlice.modalType;
 export const selectSearchInput = (state) => state.appSlice.searchInput;
 export const selectSearchResults = (state) => state.appSlice.searchResults;
@@ -278,5 +347,6 @@ export const selectTemplateSearchResults = (state) =>
   state.appSlice.templateSearchResults;
 export const selectEventSearchResults = (state) =>
   state.appSlice.eventSearchResults;
+export const selectRecordEdit = (state) => state.appSlice.recordEdit;
 
 export default appSlice.reducer;

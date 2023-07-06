@@ -1,6 +1,5 @@
 import ObjectContainer from "../ObjectContainer/ObjectContainer";
 import { useSelector } from "react-redux";
-import "../../features/General.css";
 import ListHeaders from "../ListHeaders/ListHeaders";
 import {
   selectNoteData,
@@ -10,7 +9,6 @@ import {
 } from "../../app/Slices/AppSlice";
 import { NOTE, TEMPLATE, EVENT, SUMMARY } from "../../app/PredefinedValues";
 import "./ObjectList.css";
-import "../../features/General.css";
 import ListActions from "../ListActions/ListActions";
 
 const ObjectList = (props) => {
@@ -20,11 +18,11 @@ const ObjectList = (props) => {
   const headers = {
     [NOTE]: ["Title", "Event", "Created", "Modified", ""],
     [TEMPLATE]: ["Title", "Created", "Modified", ""],
-    [EVENT]: ["Title", "Status", "Time", ""],
+    [EVENT]: ["Title", "Status", "Start time", ""],
     [SUMMARY]: ["Category", "Description"],
   };
 
-  //Create map to easily get correct selector function.
+  //Create object to easily get correct selector function.
   const selectorMap = {
     [NOTE]: selectNoteData,
     [TEMPLATE]: selectTemplateData,
@@ -32,14 +30,13 @@ const ObjectList = (props) => {
     [SUMMARY]: selectSummaryData,
   };
 
-  // Retrieve correct selector using object key and get predefined data.
   let objectRecords = useSelector(selectorMap[object]);
 
   //Format list title.
   let listTitle = object.toLowerCase() + "s";
   listTitle = listTitle[0].toUpperCase() + listTitle.substring(1);
-  let listActionButtons;
-  listActionButtons = <ListActions object={object} />;
+
+  let listActionButtons = <ListActions object={object} />;
 
   //If no results found.
   if (!objectRecords || objectRecords.length === 0) {

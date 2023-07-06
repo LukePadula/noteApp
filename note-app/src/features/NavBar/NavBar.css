@@ -1,7 +1,3 @@
-h1 {
-  font-size: 1.8rem;
-}
-
 nav {
   display: flex;
   justify-content: space-between;
@@ -41,6 +37,7 @@ nav {
 
 .title {
   justify-self: flex-end;
+  font-size: 1.8rem;
 }
 
 .title:hover {

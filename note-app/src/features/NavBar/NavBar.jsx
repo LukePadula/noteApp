@@ -1,9 +1,9 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./NavBar.css";
 import { onModalOpenClose } from "../../app/Slices/AppSlice";
 import { useNavigate } from "react-router-dom";
 
-const NavBar = (props) => {
+const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const NavBar = (props) => {
           className="search material-symbols-outlined"
           onClick={() => dispatch(onModalOpenClose({ type: "search" }))}
         >
-          <span class="material-symbols-outlined">search</span>
+          <span className="material-symbols-outlined">search</span>
         </button>
         <button onClick={() => navigate("/home")} className="home">
           Home

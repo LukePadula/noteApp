@@ -1,23 +1,27 @@
+.details-header {
+  position: relative;
+}
+
+#detail-drop-down {
+  position: absolute;
+  right: -15px;
+  top: 30px;
+  transform: translate(-50%, -50%);
+}
+#details-title {
+  max-width: 70%;
+}
+
 .record-details-cont {
   background-color: #f6f6f7;
-  margin: 20px;
+  margin: 6px;
   padding: 20px;
   box-shadow: 0px 4px 4px 0px #80808040;
   border-radius: 10px;
 }
 
-.details-header {
-  /* display: flex; */
-  /* justify-content: space-between; */
-}
-
-/* .record-details {
-  display: flex;
-  flex-direction: column;
-} */
-
 .edit-field,
-.read -only-fields {
+.read-only-fields {
   display: flex;
   flex-direction: column;
 }
@@ -25,7 +29,7 @@
 .record-details-actions {
   align-self: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   margin-top: 18px;
   width: 100%;
 }
@@ -35,12 +39,9 @@
 }
 
 #toggle:checked ~ .detail {
-  /* background-color: red; */
-  display: block;
-  height: 100%;
+  display: initial;
 }
 
 .visually-hidden {
-  position: absolute;
-  left: -100vw;
+  visibility: hidden;
 }

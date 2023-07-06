@@ -1,8 +1,7 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { NOTE, TEMPLATE, EVENT, SUMMARY } from "../../app/PredefinedValues";
 import "./ObjectContainer.css";
 import {
-  onActionMenuClick,
   onRecordDelete,
   onRecordView,
   onModalOpenClose,
@@ -16,7 +15,6 @@ const ObjectContainer = (props) => {
   let recordButtonActions;
   const dispatch = useDispatch();
 
-  // console.log(record.created);
   switch (object) {
     case NOTE:
       recordContent = (
@@ -60,7 +58,12 @@ const ObjectContainer = (props) => {
             </div>
             <div
               onClick={() =>
-                dispatch(onRecordDelete({ id: record.id, object: object }))
+                dispatch(
+                  onModalOpenClose({
+                    type: "delete",
+                    recordDelete: { object, recordId: record.id },
+                  })
+                )
               }
             >
               Delete
@@ -71,7 +74,7 @@ const ObjectContainer = (props) => {
 
       recordButtonActionsContainer = (
         <button className="actions-cont">
-          <span class="material-symbols-outlined">expand_more</span>
+          <span className="material-symbols-outlined">expand_more</span>
           {recordButtonActions}
         </button>
       );
@@ -132,7 +135,7 @@ const ObjectContainer = (props) => {
 
       recordButtonActionsContainer = (
         <button className="actions-cont">
-          <span class="material-symbols-outlined">expand_more</span>
+          <span className="material-symbols-outlined">expand_more</span>
           {recordButtonActions}
         </button>
       );
@@ -148,7 +151,15 @@ const ObjectContainer = (props) => {
             <small>{record.status}</small>
           </div>
           <div className="record-data">
-            <small>{record.startDateTime}</small>
+            <small>
+              {record.startDateTime.toLocaleDateString("en-GB", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              })}
+            </small>
           </div>
         </>
       );
@@ -160,7 +171,7 @@ const ObjectContainer = (props) => {
           }}
           className="actions-cont event-action"
         >
-          <span class="material-symbols-outlined">add</span>
+          <span className="material-symbols-outlined">add</span>
         </button>
       );
       break;

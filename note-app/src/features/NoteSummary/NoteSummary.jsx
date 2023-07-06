@@ -12,24 +12,20 @@ const NoteSummary = (props) => {
       summaryItems.push(
         <>
           <small className="summary-topic">{key}</small>
-          <small className="summary-content">{element}</small>
+          <small>{element}</small>
         </>
       );
     });
   }
-  console.log("summary items", summaryItems, summaryItems.length);
 
   let summaryContent;
   if (summaryItems.length) {
-    console.log(" here");
-
     summaryContent = (
       <div style={{ gridTemplateColumns: `30% 70%` }} className="summary-list">
         {summaryItems}
       </div>
     );
   } else {
-    console.log("Not here");
     summaryContent = (
       <div className="no-results">
         <p> Click refresh to generate a summary</p>
@@ -42,7 +38,7 @@ const NoteSummary = (props) => {
       onClick={() => dispatch(onSummaryRefresh({ recordId }))}
       className="button-orange-square"
     >
-      <span class="material-symbols-outlined">refresh</span>
+      <span className="material-symbols-outlined">refresh</span>
     </button>
   );
 
