@@ -14,6 +14,7 @@ import SignOut from "./features/Modals/Modal/SignOutModal/SignOutModal.jsx";
 import CreateRecordModal from "./features/Modals/Modal/CreateRecordModal/CreateRecordModal";
 import SearchModal from "./features/Modals/Modal/SearchModal/SearchModal";
 import DeleteRecordModal from "./features/Modals/DeleteRecordModal/DeleteRecordModal";
+import WorkInProgressModal from "./features/Modals/WorkInProgressModal/WorkInProgressModal";
 
 const App = () => {
   let modal = useSelector(selectModalType);
@@ -51,6 +52,10 @@ const App = () => {
 
     case "delete":
       modalContent = <DeleteRecordModal />;
+      break;
+
+    case "wip":
+      modalContent = <WorkInProgressModal />;
       break;
     default:
       break;

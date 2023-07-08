@@ -13,8 +13,10 @@ const Template = () => {
     selectRecordData(state, { object: TEMPLATE, id })
   );
 
+  console.log(recordData, "RECORD DATA");
+
   if (!recordData) {
-    return <h1>Something went wrong</h1>;
+    return <h1 className="error">Something went wrong</h1>;
   }
 
   return (
@@ -23,7 +25,13 @@ const Template = () => {
       <div className="page-content">
         <RecordDetails record={recordData} object={TEMPLATE} />
         <div>
-          <TextEditor title={`Template: ${recordData.title}`} />
+          <TextEditor
+            record={recordData}
+            title={`Template: ${recordData.title}`}
+            recordId={id}
+            object={TEMPLATE}
+            content={recordData.content}
+          />
         </div>
       </div>
     </>

@@ -1,0 +1,8 @@
+.button-wide {
+  width: 80%;
+}
+
+#work-in-progress-modal .modal-actions {
+  display: flex;
+  justify-content: center;
+}

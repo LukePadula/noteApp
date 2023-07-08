@@ -22,6 +22,7 @@ import {
   TEMPLATE_AND_EVENT,
 } from "../../app/PredefinedValues";
 import "./SearchField.css";
+import { generateObjectTitle } from "../../app/Utils/Utils";
 
 const SearchField = (props) => {
   const { searchAction, searchObjects, value } = props;
@@ -67,7 +68,7 @@ const SearchField = (props) => {
           }}
         >
           <small>{element.title}</small>
-          <small>{element.object}</small>
+          <small>{generateObjectTitle(element.object)}</small>
         </div>
       );
     });

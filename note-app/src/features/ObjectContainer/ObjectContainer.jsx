@@ -167,7 +167,13 @@ const ObjectContainer = (props) => {
       recordButtonActionsContainer = (
         <button
           onClick={() => {
-            dispatch(onModalOpenClose({ type: "createRecord", object: NOTE }));
+            dispatch(
+              onModalOpenClose({
+                type: "createRecord",
+                object: NOTE,
+                value: { id: record.id, title: record.title },
+              })
+            );
           }}
           className="actions-cont event-action"
         >

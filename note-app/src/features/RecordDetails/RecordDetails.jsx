@@ -45,7 +45,7 @@ const RecordDetails = (props) => {
           <div className="edit-field">
             <label htmlFor="title">
               Title
-              <input id="title" disabled="true" value={title} type="text" />
+              <input id="title" disabled={true} value={title} type="text" />
             </label>
           </div>
           <div className="edit-field">
@@ -53,7 +53,7 @@ const RecordDetails = (props) => {
               Template
               <input
                 id="template"
-                disabled="true"
+                disabled={true}
                 value={template.title}
                 type="text"
               />
@@ -64,7 +64,7 @@ const RecordDetails = (props) => {
               Event
               <input
                 id="event"
-                disabled="true"
+                disabled={true}
                 value={event.title}
                 type="text"
               />
@@ -75,7 +75,7 @@ const RecordDetails = (props) => {
               Description
               <textarea
                 id="description"
-                disabled="true"
+                disabled={true}
                 value={description}
                 type="text"
               />
@@ -113,7 +113,7 @@ const RecordDetails = (props) => {
           <div className="edit-field">
             <label htmlFor="title">
               Title
-              <input id="title" disabled="true" type="text" />
+              <input id="title" disabled={true} type="text" />
             </label>
           </div>
           <div className="edit-field">
@@ -121,7 +121,7 @@ const RecordDetails = (props) => {
               Description
               <textarea
                 id="description"
-                disabled="true"
+                disabled={true}
                 cols="30"
                 rows="4"
               ></textarea>

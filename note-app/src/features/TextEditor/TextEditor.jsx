@@ -1,15 +1,32 @@
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
-
 import { useDispatch } from "react-redux";
 import "../TextEditor/TextEditor.css";
 import { useEffect } from "react";
 import { onTextEdit } from "../../app/Slices/AppSlice";
 import { Question, Positive, Negative } from "../../app/tools";
+import { NOTE } from "../../app/PredefinedValues";
+import { generateObjectTitle } from "../../app/Utils/Utils";
 
 const TextEditor = (props) => {
-  const { recordId, object, title, actions, content } = props;
   const dispatch = useDispatch();
+  const { id, object, content } = props.record;
+  let editorObjectTitle = generateObjectTitle(object);
+
+  const noteTools = {
+    header: {
+      class: Header,
+    },
+    question: Question,
+    positive: Positive,
+    negative: Negative,
+  };
+
+  const templateTools = {
+    header: {
+      class: Header,
+    },
+  };
 
   useEffect(() => {
     const editor = new EditorJS({
@@ -17,33 +34,31 @@ const TextEditor = (props) => {
       autofocus: true,
       onChange: async () => {
         let content = await editor.saver.save();
-        dispatch(onTextEdit({ recordId, object, content }));
+        dispatch(onTextEdit({ id, object, content }));
       },
-      tools: {
-        header: {
-          class: Header,
-        },
-        question: Question,
-        positive: Positive,
-        negative: Negative,
-      },
+      tools: object === NOTE ? noteTools : templateTools,
       data: content,
     });
   }, []);
 
-  // Get text if there is any
-  const { savedTextContent } = props;
-  let textContent;
-  //Get presaved data.
-
-  if (savedTextContent) {
-    textContent = textContent;
+  let lastEdited;
+  if (content) {
+    lastEdited = new Date(content.time).toLocaleDateString("en-GB", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    });
   }
 
   return (
     <>
       <div className="editor-cont">
-        <h1>{title}</h1>
+        <h1>{editorObjectTitle}</h1>
+        <div className="modified-cont">
+          {content && <small>Last edited: {lastEdited}</small>}
+        </div>
         <div className="tab" id="editorjs"></div>
       </div>
     </>

@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { EVENT, NOTE, TEMPLATE } from "../PredefinedValues";
-import { log } from "util";
 const defaultRecordLookup = { id: "", title: "" };
 const defaultcreateRecordFormData = {
   title: "",
@@ -34,7 +33,6 @@ const initialState = {
       object: "NOTE",
       template: defaultRecordLookup,
       event: defaultRecordLookup,
-
       content: {
         time: 1687620792880,
         blocks: [
@@ -81,14 +79,79 @@ const initialState = {
       modified: new Date(),
       showActions: false,
       object: "TEMPLATE",
-    },
-    {
-      id: "t3435245",
-      title: "General template",
-      created: new Date(),
-      modified: new Date(),
-      showActions: false,
-      object: "TEMPLATE",
+      content: {
+        time: 1688731860495,
+        blocks: [
+          {
+            id: "EDDAw9-Nk6",
+            type: "header",
+            data: {
+              text: "Introduction",
+              level: 2,
+            },
+          },
+          {
+            id: "TOQbFvCG97",
+            type: "paragraph",
+            data: {
+              text: "- About us",
+            },
+          },
+          {
+            id: "AwcgExYt6_",
+            type: "paragraph",
+            data: {
+              text: "- Meeting outline",
+            },
+          },
+          {
+            id: "RfdiSKATmM",
+            type: "header",
+            data: {
+              text: "Identify client process",
+              level: 2,
+            },
+          },
+          {
+            id: "a9mhnXaRcz",
+            type: "paragraph",
+            data: {
+              text: "- Day to day process",
+            },
+          },
+          {
+            id: "pvG3a-omV9",
+            type: "paragraph",
+            data: {
+              text: "- Wants and needs",
+            },
+          },
+          {
+            id: "oVEpSPp4OP",
+            type: "paragraph",
+            data: {
+              text: "- main problems",
+            },
+          },
+          {
+            id: "63U70kZuYD",
+            type: "header",
+            data: {
+              text: "Demo product",
+              level: 2,
+            },
+          },
+          {
+            id: "Li0ToogOgX",
+            type: "header",
+            data: {
+              text: "Client questions and feedback",
+              level: 2,
+            },
+          },
+        ],
+        version: "2.27.0",
+      },
     },
   ],
   EVENT: [
@@ -141,8 +204,11 @@ export const appSlice = createSlice({
       state.modalType = undefined;
     },
     onModalOpenClose: (state, action) => {
+      console.log(action.payload);
       if (action.payload === undefined) {
         state.searchInput = "";
+        state.templateSearchInput = "";
+        state.eventSearchInput = "";
         state.modalType = action.payload;
         state.searchResults = undefined;
         state.createRecordFormData = defaultcreateRecordFormData;
@@ -150,18 +216,22 @@ export const appSlice = createSlice({
         state.modalType = action.payload;
 
         if (action.payload.type === "delete") {
-          console.log(action.payload);
           state.recordDelete = action.payload.recordDelete;
         } else {
           state.recordDelete = defaultDeleteRecordObject;
         }
 
         if (action.payload.type === "edit") {
-          const { type, id, object } = action.payload;
+          const { id, object, value } = action.payload;
           const index = state[object].findIndex((item) => item.id === id);
           const record = state[object][index];
 
           state.createRecordFormData = { ...record };
+        }
+
+        if (action.payload.type === "createRecord") {
+          const { value } = action.payload;
+          state.createRecordFormData.event = { ...value };
         }
       }
     },
@@ -174,6 +244,7 @@ export const appSlice = createSlice({
       const { title, description, object, template, event } =
         state.createRecordFormData;
 
+      console.log(JSON.stringify(template), "TEMPLATE");
       const newRecord = {
         id: "1234",
         title,
@@ -184,8 +255,15 @@ export const appSlice = createSlice({
       };
 
       if (object === NOTE) {
-        newRecord.template = template;
-        newRecord.event = event;
+        const index = state[TEMPLATE].findIndex(
+          (item) => item.id === template.id
+        );
+
+        index >= 0
+          ? (newRecord.content = state[TEMPLATE][index].content)
+          : (newRecord.content = undefined);
+        newRecord.template = { ...template };
+        newRecord.event = { ...event };
       }
       state[object].push(newRecord);
       state.createRecordFormData = defaultcreateRecordFormData;
@@ -290,12 +368,15 @@ export const appSlice = createSlice({
       const { id, title } = state.TEMPLATE[index];
       state.createRecordFormData.template = { id, title };
       state.searchResults = undefined;
+      state.templateSearchResults = undefined;
+      state.eventSearchResults = undefined;
+      state.templateSearchInput = undefined;
+      state.searchInput = undefined;
     },
     onTextEdit: (state, action) => {
-      const { recordId, object, content } = action.payload;
-
-      const index = state[object].findIndex((item) => item.id === recordId);
-      state[object][index].content = content;
+      const { id, object, content } = action.payload;
+      const index = state[object].findIndex((item) => item.id === id);
+      state[object][index].content = { ...content };
     },
     onDropDownOpenClose: (state, action) => {
       state.recordDetailsDropdownActive = !state.recordDetailsDropdownActive;

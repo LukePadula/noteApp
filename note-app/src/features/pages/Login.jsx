@@ -2,6 +2,7 @@ import "./Login.css";
 import { useDispatch } from "react-redux";
 import { onLogin } from "../../app/Slices/AppSlice";
 import { useNavigate } from "react-router-dom";
+import { onModalOpenClose } from "../../app/Slices/AppSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,12 @@ const Login = () => {
           >
             Login
           </button>
-          <button className="button-orange">Sign up</button>
+          <button
+            onClick={() => dispatch(onModalOpenClose({ type: "wip" }))}
+            className="button-orange"
+          >
+            Sign up
+          </button>
         </div>
       </div>
     </div>

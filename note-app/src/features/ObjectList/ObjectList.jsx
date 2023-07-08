@@ -1,5 +1,5 @@
 import ObjectContainer from "../ObjectContainer/ObjectContainer";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ListHeaders from "../ListHeaders/ListHeaders";
 import {
   selectNoteData,
@@ -7,12 +7,15 @@ import {
   selectEventData,
   selectSummaryData,
 } from "../../app/Slices/AppSlice";
+import { onModalOpenClose } from "../../app/Slices/AppSlice";
 import { NOTE, TEMPLATE, EVENT, SUMMARY } from "../../app/PredefinedValues";
 import "./ObjectList.css";
 import ListActions from "../ListActions/ListActions";
+import { generateObjectTitle } from "../../app/Utils/Utils";
 
 const ObjectList = (props) => {
   const { object, recordId } = props;
+  const dispatch = useDispatch();
 
   // Empty string is for record actions column
   const headers = {
@@ -31,11 +34,7 @@ const ObjectList = (props) => {
   };
 
   let objectRecords = useSelector(selectorMap[object]);
-
-  //Format list title.
-  let listTitle = object.toLowerCase() + "s";
-  listTitle = listTitle[0].toUpperCase() + listTitle.substring(1);
-
+  let listTitle = generateObjectTitle(object) + "s";
   let listActionButtons = <ListActions object={object} />;
 
   //If no results found.
@@ -69,7 +68,12 @@ const ObjectList = (props) => {
   if (object === EVENT) {
     calendarAction = (
       <div className="calendar-action-cont">
-        <button className="calendar-action button-orange">
+        <button
+          onClick={() => {
+            dispatch(onModalOpenClose({ type: "wip" }));
+          }}
+          className="calendar-action button-orange"
+        >
           {objectRecords ? "Open calendar" : "Sync calendar"}
         </button>
       </div>

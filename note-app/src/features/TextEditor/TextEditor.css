@@ -11,12 +11,16 @@
   grid-row-end: 10;
 }
 
+.modified-cont {
+  margin-left: 5px;
+  color: #807a7a;
+}
+
 .tab {
   padding: 4px;
   background-color: #ffffff;
   overflow: scroll;
   border-radius: 10px;
-  height: 100%;
   box-shadow: px 1px 1px 0px #80808040;
   margin-top: 5px;
 }
@@ -40,7 +44,7 @@
   background-color: rgb(186, 67, 20, 0.5);
 }
 
-@media (min-width: 650px) {
+@media (min-width: 850px) {
   .page-content {
     display: grid;
     grid-template-columns: 30% 70%;

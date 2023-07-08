@@ -43,3 +43,7 @@
 .exit-modal:hover {
   cursor: pointer;
 }
+
+.exit-modal span {
+  color: black;
+}

@@ -29,6 +29,7 @@
   border-radius: 10px;
   margin: 10px;
   overflow: scroll;
+  row-gap: 7px;
 }
 
 .calendar-action-cont {
@@ -44,11 +45,11 @@
   margin-bottom: 10px;
 }
 
-@media (min-width: 650px) {
+@media (min-width: 850px) {
   .list-container {
     display: grid;
-    margin: 6px;
-    padding: 5px;
+    margin: 7px;
+    padding: 2.5px;
   }
 
   .list-title {

@@ -15,7 +15,7 @@ const Note = () => {
   );
 
   if (!recordData) {
-    return <h1>Something went wrong</h1>;
+    return <h1 className="error">Something went wrong</h1>;
   }
 
   console.log("RECORD", recordData);
@@ -25,7 +25,12 @@ const Note = () => {
       <NavBar />
       <div className="page-content">
         <RecordDetails record={recordData} object={NOTE} />
-        <TextEditor recordId={id} object={NOTE} content={recordData.content} />
+        <TextEditor
+          record={recordData}
+          recordId={id}
+          object={NOTE}
+          content={recordData.content}
+        />
         <NoteSummary summary={recordData.summary} recordId={id} />
       </div>
     </>

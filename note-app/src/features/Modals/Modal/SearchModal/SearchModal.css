@@ -13,7 +13,7 @@
 }
 
 .search-item {
-  padding: 3px;
+  padding: 7px;
   margin: 7px;
   display: grid;
   grid-template-columns: 1fr 1fr;
