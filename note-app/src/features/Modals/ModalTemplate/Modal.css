@@ -29,9 +29,13 @@
 }
 
 .modal-actions {
-  width: 50%;
+  width: 70%;
   display: flex;
   justify-content: space-between;
+}
+
+.modal-actions button {
+  width: 45%;
 }
 
 .exit-modal {
@@ -46,4 +50,10 @@
 
 .exit-modal span {
   color: black;
+}
+
+@media (min-width: 900px) {
+  .modal-cont {
+    top: 35%;
+  }
 }

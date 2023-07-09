@@ -1,9 +1,20 @@
-.summary-list {
-  display: grid;
-  grid-template-columns: 30% 70%;
+.refresh {
+  display: flex;
+  justify-content: center;
   align-items: center;
-  margin: 10px;
+}
+
+.refresh-date {
+  position: absolute;
+  bottom: -5px;
+  color: #807a7a;
+}
+
+.summary-list {
+  margin: 15px;
   gap: 15px;
+  max-height: 500px;
+  position: relative;
 }
 
 .summary-topic {
@@ -11,4 +22,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #266e58;
+  font-weight: 600;
+}
+
+.summary-text {
+  overflow-wrap: break-word;
+  margin-right: 10px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
 }

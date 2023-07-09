@@ -52,6 +52,10 @@
   text-align: center;
 }
 
+.record-link a:hover {
+  opacity: 0.7;
+}
+
 .record-actions {
   position: absolute;
   top: 25px;
@@ -67,7 +71,7 @@
   color: #000000;
 }
 
-@media (min-width: 850px) {
+@media (min-width: 900px) {
   .record-actions div {
     padding: 6px;
   }

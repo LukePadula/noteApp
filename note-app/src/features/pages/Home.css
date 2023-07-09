@@ -1,4 +1,4 @@
-@media (min-width: 850px) {
+@media (min-width: 900px) {
   #home-page-content {
     height: 92vh;
     justify-content: end;
@@ -19,5 +19,12 @@
   #TEMPLATE {
     grid-column: 3;
     grid-row: 1;
+  }
+}
+
+@media (min-width: 1500px) {
+  #home-page-content {
+    margin-left: 40px;
+    margin-right: 40px;
   }
 }

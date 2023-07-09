@@ -32,23 +32,10 @@
   row-gap: 7px;
 }
 
-.calendar-action-cont {
-  display: flex;
-  justify-content: center;
-  margin-top: 12px;
-}
-
-.calendar-action {
-  width: 65%;
-  height: 35px;
-  max-width: 500px;
-  margin-bottom: 10px;
-}
-
-@media (min-width: 850px) {
+@media (min-width: 900px) {
   .list-container {
     display: grid;
-    margin: 7px;
+    margin: 12px;
     padding: 2.5px;
   }
 
@@ -56,14 +43,16 @@
     min-height: 50px;
   }
 
-  .calendar-action-cont {
-    align-self: flex-end;
-  }
-
   .record-list {
     align-self: flex-start;
     margin: 0;
     overflow: initial;
     row-gap: 10px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .list-container {
+    margin: 15px;
   }
 }

@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { EVENT, NOTE, TEMPLATE } from "../PredefinedValues";
+import { generateId } from "../Utils/Utils";
+
 const defaultRecordLookup = { id: "", title: "" };
 const defaultcreateRecordFormData = {
   title: "",
@@ -22,9 +24,10 @@ const initialState = {
   userLoggedIn: false,
   createRecordFormData: defaultcreateRecordFormData,
   recordDelete: defaultDeleteRecordObject,
+  titleValid: true,
   NOTE: [
     {
-      id: "n1823190",
+      id: generateId(),
       title: "Client meeting",
       eventName: "Event 1",
       created: new Date(),
@@ -48,7 +51,7 @@ const initialState = {
       },
     },
     {
-      id: "123",
+      id: generateId(),
       title: "Internal meeting",
       eventName: "Event 1",
       created: new Date(),
@@ -59,7 +62,7 @@ const initialState = {
       event: defaultRecordLookup,
     },
     {
-      id: "n7459431",
+      id: generateId(),
       title: "Client sales call",
       eventName: "Event 1",
       created: new Date(),
@@ -73,7 +76,7 @@ const initialState = {
 
   TEMPLATE: [
     {
-      id: "t3424435",
+      id: generateId(),
       title: "Sales template",
       created: new Date(),
       modified: new Date(),
@@ -156,7 +159,7 @@ const initialState = {
   ],
   EVENT: [
     {
-      id: "e5192561",
+      id: generateId(),
       title: "This is a event",
       status: "Accepted",
       startDateTime: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
@@ -164,7 +167,7 @@ const initialState = {
       object: "EVENT",
     },
     {
-      id: "e1264526",
+      id: generateId(),
       title: "This is a event 2",
       status: "Cancelled",
       startDateTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
@@ -197,6 +200,7 @@ export const appSlice = createSlice({
       }
     },
     onRecordDelete: (state, action) => {
+      console.log(action.payload);
       const index = state[state.recordDelete.object].findIndex(
         (item) => item.id === state.recordDelete.recordId
       );
@@ -204,14 +208,16 @@ export const appSlice = createSlice({
       state.modalType = undefined;
     },
     onModalOpenClose: (state, action) => {
-      console.log(action.payload);
       if (action.payload === undefined) {
         state.searchInput = "";
         state.templateSearchInput = "";
         state.eventSearchInput = "";
         state.modalType = action.payload;
         state.searchResults = undefined;
+        state.eventSearchResults = undefined;
+        state.templateSearchResults = undefined;
         state.createRecordFormData = defaultcreateRecordFormData;
+        state.titleValid = true;
       } else {
         state.modalType = action.payload;
 
@@ -244,14 +250,14 @@ export const appSlice = createSlice({
       const { title, description, object, template, event } =
         state.createRecordFormData;
 
-      console.log(JSON.stringify(template), "TEMPLATE");
       const newRecord = {
-        id: "1234",
+        id: generateId(),
         title,
         description,
         created: new Date(),
         modified: new Date(),
         showActions: false,
+        object,
       };
 
       if (object === NOTE) {
@@ -278,6 +284,9 @@ export const appSlice = createSlice({
         ...state.createRecordFormData,
         modified: new Date(),
       };
+
+      state.modalType = undefined;
+      state.createRecordFormData = defaultcreateRecordFormData;
     },
     onSummaryRefresh: (state, action) => {
       const index = state.NOTE.findIndex(
@@ -312,6 +321,8 @@ export const appSlice = createSlice({
           positive: positiveSummary,
           negative: negativeSummary,
         };
+        state.NOTE[index].summaryLastRefreshed = new Date();
+        console.log(new Date());
       }
     },
     onSearch: (state, action) => {
@@ -349,27 +360,33 @@ export const appSlice = createSlice({
         state.templateSearchResults = undefined;
         state.eventSearchResults = undefined;
         state.templateSearchInput = undefined;
+        state.eventSearchInput = undefined;
         state.searchInput = undefined;
       }
     },
     onSearchClear: (state, action) => {
       state.searchResults = undefined;
+      state.eventSearchInput = undefined;
+      state.templateSearchInput = undefined;
       state.templateSearchResults = undefined;
       state.eventSearchResults = undefined;
       state.templateSearchInput = undefined;
       state.searchInput = undefined;
       state.createRecordFormData.template = defaultRecordLookup;
+      state.createRecordFormData.event = defaultRecordLookup;
     },
     onRecordLookupSelect: (state, action) => {
-      const index = state.TEMPLATE.findIndex(
-        (item) => item.id === action.payload.recordId
+      console.log(action.payload);
+      const { recordId, searchObjects } = action.payload;
+      const index = state[searchObjects].findIndex(
+        (item) => item.id === recordId
       );
-
-      const { id, title } = state.TEMPLATE[index];
-      state.createRecordFormData.template = { id, title };
+      const { id, title } = state[searchObjects][index];
+      state.createRecordFormData[searchObjects.toLowerCase()] = { id, title };
       state.searchResults = undefined;
       state.templateSearchResults = undefined;
       state.eventSearchResults = undefined;
+      state.eventSearchInput = undefined;
       state.templateSearchInput = undefined;
       state.searchInput = undefined;
     },
@@ -391,6 +408,10 @@ export const appSlice = createSlice({
         state.createRecordFormData.object = object;
       }
     },
+    onValidationError: (state, action) => {
+      //Boolean
+      state.titleValid = action.payload;
+    },
   },
 });
 
@@ -411,6 +432,7 @@ export const {
   onLogin,
   onCreateRecordFormDataChange,
   onRecordEdit,
+  onValidationError,
 } = appSlice.actions;
 
 export const selectNoteData = (state) => state.appSlice.NOTE;
@@ -439,5 +461,5 @@ export const selectTemplateSearchResults = (state) =>
 export const selectEventSearchResults = (state) =>
   state.appSlice.eventSearchResults;
 export const selectRecordEdit = (state) => state.appSlice.recordEdit;
-
+export const selectTitleValid = (state) => state.appSlice.titleValid;
 export default appSlice.reducer;

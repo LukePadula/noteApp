@@ -18,8 +18,6 @@ const Note = () => {
     return <h1 className="error">Something went wrong</h1>;
   }
 
-  console.log("RECORD", recordData);
-
   return (
     <>
       <NavBar />
@@ -31,7 +29,11 @@ const Note = () => {
           object={NOTE}
           content={recordData.content}
         />
-        <NoteSummary summary={recordData.summary} recordId={id} />
+        <NoteSummary
+          summary={recordData.summary}
+          recordId={id}
+          summaryLastRefreshed={recordData.summaryLastRefreshed}
+        />
       </div>
     </>
   );

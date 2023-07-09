@@ -1,0 +1,18 @@
+.calendar-action-cont {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.calendar-action {
+  width: 65%;
+  height: 35px;
+  max-width: 500px;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 900px) {
+  .calendar-action-cont {
+    align-self: flex-end;
+  }
+}

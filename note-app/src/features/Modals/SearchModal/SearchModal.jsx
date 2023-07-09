@@ -3,7 +3,7 @@ import SearchField from "../../../SearchField/SearchField";
 import { NAVIGATE } from "../../../../app/PredefinedValues";
 import { NOTE, TEMPLATE } from "../../../../app/PredefinedValues";
 
-const SearchModal = (props) => {
+const SearchModal = () => {
   return (
     <>
       <div className="modal-content">

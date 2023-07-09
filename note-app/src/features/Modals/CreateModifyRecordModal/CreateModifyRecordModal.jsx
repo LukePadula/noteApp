@@ -5,63 +5,87 @@ import {
   onRecordCreate,
   onCreateRecordFormDataChange,
   onRecordEdit,
+  onValidationError,
 } from "../../../../app/Slices/AppSlice";
-import "../CreateRecordModal/CreateRecordModal.css";
+import "./CreateModifyRecordModal.css";
 import {
   selectCreateRecordFormData,
-  selectRecordData,
+  selectTitleValid,
 } from "../../../../app/Slices/AppSlice";
 import SearchField from "../../../SearchField/SearchField";
 import { EVENT, SELECT } from "../../../../app/PredefinedValues";
 import { TEMPLATE, NOTE } from "../../../../app/PredefinedValues";
 
-const CreateRecordModal = (props) => {
+const Joi = require("joi");
+var schema = Joi.object().keys({
+  required: Joi.string().min(1).required(),
+});
+
+const CreateModifyRecordModal = (props) => {
   const { object, operation } = props;
   const dispatch = useDispatch();
   const formData = useSelector(selectCreateRecordFormData);
 
   const formTitle = object.toLowerCase();
-  console.log("EDIT MODAL", operation);
-  console.log(formData);
-
   let formSubmitFunction;
   let formSubmitButtonLabel;
+  let titleValid = useSelector(selectTitleValid);
+  let templateFieldDisabled = false;
 
   if (operation === "edit") {
     formSubmitFunction = onRecordEdit;
-    formSubmitButtonLabel = "Edit";
+    formSubmitButtonLabel = "Save";
+    templateFieldDisabled = true;
   } else {
     formSubmitFunction = onRecordCreate;
     formSubmitButtonLabel = "Create";
   }
 
-  console.log(formData);
+  const validateInput = () => {
+    const outcome = schema.validate(
+      { required: formData.title },
+      { abortEarly: false }
+    );
 
-  const templateSelector = (
-    <>
-      <label className="record-create-input">
-        Event
-        <SearchField
-          searchAction={SELECT}
-          value={formData.event.title}
-          id="event"
-          searchObjects={EVENT}
-        />
-      </label>
-      <label className="record-create-input">
-        Template
-        <SearchField
-          searchAction={SELECT}
-          value={formData.template.title}
-          id="template"
-          searchObjects={TEMPLATE}
-        />
-      </label>
-    </>
-  );
+    if (outcome.error) {
+      dispatch(onValidationError(false));
+      return false;
+    } else {
+      dispatch(onValidationError(true));
+      return true;
+    }
+  };
+
+  let recordSelectors;
+  if (object === NOTE) {
+    recordSelectors = (
+      <>
+        <label className="record-create-input">
+          Event
+          <SearchField
+            searchAction={SELECT}
+            value={formData.event.title}
+            id="event"
+            searchObjects={EVENT}
+          />
+        </label>
+        <label className="record-create-input">
+          Template
+          <SearchField
+            searchAction={SELECT}
+            value={formData.template.title}
+            id="template"
+            searchObjects={TEMPLATE}
+            disabled={templateFieldDisabled}
+          />
+        </label>
+      </>
+    );
+  }
+
   return (
     <>
-      <div id="createRecordModal" className="modal-content">
+      <div id="createModifyRecordModal" className="modal-content">
         <h1 className="modal-header">
           {formSubmitButtonLabel} {formTitle}
         </h1>
@@ -78,14 +102,23 @@ const CreateRecordModal = (props) => {
           }
           onSubmit={(e) => {
             e.preventDefault();
-            dispatch(formSubmitFunction({}));
+            const valid = validateInput();
+
+            if (valid) {
+              dispatch(formSubmitFunction({}));
+            }
           }}
         >
-          <label className="record-create-input">
-            Name
-            <input type="text" value={formData.title} id="title" />
+          <label className="record-create-input required">
+            Title
+            <input
+              placeholder={titleValid ? "" : "Title is required"}
+              type="text"
+              value={formData.title}
+              id="title"
+            />
           </label>
-          {object === NOTE && templateSelector}
+          {recordSelectors}
           <label className="record-create-input">
             Description
             <textarea
@@ -114,4 +147,4 @@ const CreateRecordModal = (props) => {
   );
 };
 
-export default CreateRecordModal;
+export default CreateModifyRecordModal;

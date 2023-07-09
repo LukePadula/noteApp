@@ -30,3 +30,36 @@
   border-radius: 10px;
   box-shadow: 0px 4px 4px 0px #80808040;
 }
+
+.search-results-cont {
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  left: 5px;
+  top: 35px;
+  background-color: white;
+  z-index: 10;
+}
+
+.search-item {
+  padding: 15px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  border-radius: 0px;
+  background-color: #f6f6f7;
+}
+
+.search-item:hover {
+  background-color: #dae7e3;
+  cursor: pointer;
+}
+
+.search-item small {
+  color: #97979b;
+  text-align: center;
+}

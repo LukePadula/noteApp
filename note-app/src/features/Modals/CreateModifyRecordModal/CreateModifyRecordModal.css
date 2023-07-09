@@ -1,8 +1,8 @@
-#createRecordModal .modal-actions {
+#createModifyRecordModal .modal-actions {
   margin-top: 10px;
 }
 
-#createRecordModal .modal-actions button {
+#createModifyRecordModal .modal-actions button {
   margin: 5px;
 }
 
@@ -22,4 +22,8 @@
 
 textarea {
   resize: none;
+}
+
+::placeholder {
+  color: #d9534f;
 }

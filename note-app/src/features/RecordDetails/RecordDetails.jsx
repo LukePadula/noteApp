@@ -1,6 +1,6 @@
 import "./RecordDetails.css";
 import { useDispatch } from "react-redux";
-import { onRecordEdit, onModalOpenClose } from "../../app/Slices/AppSlice";
+import { onModalOpenClose } from "../../app/Slices/AppSlice";
 import { TEMPLATE, NOTE } from "../../app/PredefinedValues";
 
 const RecordDetails = (props) => {
@@ -8,7 +8,32 @@ const RecordDetails = (props) => {
   const dispatch = useDispatch();
   let detailData;
 
-  const recordActions = (
+  const readOnlyFields = (
+    <div className="read-only-fields">
+      <small className="read-only-value">
+        Last modified:{" "}
+        {record.modified.toLocaleDateString("en-GB", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        })}{" "}
+      </small>
+      <small className="read-only-value">
+        Created:{" "}
+        {record.created.toLocaleDateString("en-GB", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        })}
+      </small>
+    </div>
+  );
+
+  const modifyRecordActions = (
     <div className="record-details-actions">
       <button
         onClick={(e) => {
@@ -38,23 +63,15 @@ const RecordDetails = (props) => {
 
   switch (object) {
     case NOTE:
-      const { title, template, event, description, created, modified } = record;
-
       detailData = (
         <form>
           <div className="edit-field">
             <label htmlFor="title">
               Title
-              <input id="title" disabled={true} value={title} type="text" />
-            </label>
-          </div>
-          <div className="edit-field">
-            <label htmlFor="template">
-              Template
               <input
-                id="template"
+                id="title"
                 disabled={true}
-                value={template.title}
+                value={record.title}
                 type="text"
               />
             </label>
@@ -65,7 +82,18 @@ const RecordDetails = (props) => {
               <input
                 id="event"
                 disabled={true}
-                value={event.title}
+                value={record.event.title}
+                type="text"
+              />
+            </label>
+          </div>
+          <div className="edit-field">
+            <label htmlFor="template">
+              Template
+              <input
+                id="template"
+                disabled={true}
+                value={record.template.title}
                 type="text"
               />
             </label>
@@ -76,62 +104,46 @@ const RecordDetails = (props) => {
               <textarea
                 id="description"
                 disabled={true}
-                value={description}
+                value={record.description}
                 type="text"
               />
             </label>
           </div>
-          <div className="read-only-fields">
-            <small>
-              Last modified:{" "}
-              {modified.toLocaleDateString("en-GB", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-              })}{" "}
-            </small>
-            <small>
-              Created:{" "}
-              {created.toLocaleDateString("en-GB", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-              })}
-            </small>
-          </div>
-          {recordActions}
+          {readOnlyFields}
+          {modifyRecordActions}
         </form>
       );
       break;
     case TEMPLATE:
       detailData = (
         <>
-          <div className="edit-field">
-            <label htmlFor="title">
-              Title
-              <input id="title" disabled={true} type="text" />
-            </label>
-          </div>
-          <div className="edit-field">
-            <label htmlFor="description">
-              Description
-              <textarea
-                id="description"
-                disabled={true}
-                cols="30"
-                rows="4"
-              ></textarea>
-            </label>
-          </div>
-          <div className="read-only-fields">
-            <small>Last modified: </small>
-            <small>Created: </small>
-          </div>
-          {recordActions}
+          <form>
+            <div className="edit-field">
+              <label htmlFor="title">
+                Title
+                <input
+                  id="title"
+                  value={record.title}
+                  disabled={true}
+                  type="text"
+                />
+              </label>
+            </div>
+            <div className="edit-field">
+              <label htmlFor="description">
+                Description
+                <textarea
+                  id="description"
+                  value={record.description}
+                  disabled={true}
+                  cols="30"
+                  rows="4"
+                ></textarea>
+              </label>
+            </div>
+            {readOnlyFields}
+            {modifyRecordActions}
+          </form>
         </>
       );
       break;
@@ -143,7 +155,6 @@ const RecordDetails = (props) => {
     <div className="record-details-cont">
       <div className="details-header">
         <h1 id="details-title">{record.title}</h1>
-
         <label
           className="button-green-square"
           id="detail-drop-down"

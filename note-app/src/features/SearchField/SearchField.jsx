@@ -6,7 +6,6 @@ import {
   onSearchClear,
 } from "../../app/Slices/AppSlice";
 import { useNavigate } from "react-router-dom";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import {
   selectSearchResults,
   selectSearchInput,
@@ -16,16 +15,12 @@ import {
   selectEventSearchResults,
 } from "../../app/Slices/AppSlice";
 import { NAVIGATE, SELECT } from "../../app/PredefinedValues";
-import {
-  TEMPLATE,
-  EVENT,
-  TEMPLATE_AND_EVENT,
-} from "../../app/PredefinedValues";
+import { TEMPLATE, EVENT } from "../../app/PredefinedValues";
 import "./SearchField.css";
 import { generateObjectTitle } from "../../app/Utils/Utils";
 
 const SearchField = (props) => {
-  const { searchAction, searchObjects, value } = props;
+  const { searchAction, searchObjects, value, disabled } = props;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,7 +49,7 @@ const SearchField = (props) => {
   if (searchResults) {
     searchResults.forEach((element) => {
       searchItems.push(
-        <div
+        <button
           className="search-item"
           onClick={() => {
             if (searchAction == NAVIGATE) {
@@ -69,7 +64,7 @@ const SearchField = (props) => {
         >
           <small>{element.title}</small>
           <small>{generateObjectTitle(element.object)}</small>
-        </div>
+        </button>
       );
     });
   }
@@ -81,7 +76,7 @@ const SearchField = (props) => {
           className="search-bar"
           type="text"
           value={value ? value : searchInput}
-          disabled={value ? true : false}
+          disabled={value ? true : false || disabled}
           onChange={(e) => {
             dispatch(onSearch({ value: e.target.value, searchObjects }));
           }}

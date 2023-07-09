@@ -11,7 +11,7 @@ import Note from "./features/pages/Note.jsx";
 
 import Modal from "./features/Modals/Modal/ModalTemplate/Modal.jsx";
 import SignOut from "./features/Modals/Modal/SignOutModal/SignOutModal.jsx";
-import CreateRecordModal from "./features/Modals/Modal/CreateRecordModal/CreateRecordModal";
+import CreateModifyRecordModal from "./features/Modals/Modal/CreateModifyRecordModal/CreateModifyRecordModal";
 import SearchModal from "./features/Modals/Modal/SearchModal/SearchModal";
 import DeleteRecordModal from "./features/Modals/DeleteRecordModal/DeleteRecordModal";
 import WorkInProgressModal from "./features/Modals/WorkInProgressModal/WorkInProgressModal";
@@ -36,13 +36,13 @@ const App = () => {
 
     case "createRecord":
       modalContent = (
-        <CreateRecordModal object={modalObject} operation={modalType} />
+        <CreateModifyRecordModal object={modalObject} operation={modalType} />
       );
       break;
 
     case "edit":
       modalContent = (
-        <CreateRecordModal object={modalObject} operation={modalType} />
+        <CreateModifyRecordModal object={modalObject} operation={modalType} />
       );
       break;
 
