@@ -1,9 +1,9 @@
-.overlay {
-  position: fixed;
+/* .overlay {
+  position: absolute;
   width: 100vw;
   height: 100vh;
   z-index: 100;
-}
+} */
 
 .modal-cont {
   display: flex;
@@ -54,6 +54,6 @@
 
 @media (min-width: 900px) {
   .modal-cont {
-    top: 35%;
+    top: 45%;
   }
 }

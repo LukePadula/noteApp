@@ -1,6 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./Modal.css";
-import { onModalOpenClose } from "../../../../app/Slices/AppSlice";
+import { onModalOpenClose } from "../../../app/Slices/AppSlice";
 
 const Modal = (props) => {
   const { content } = props;

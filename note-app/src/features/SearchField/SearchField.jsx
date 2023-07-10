@@ -84,7 +84,7 @@ const SearchField = (props) => {
         <div
           className="search-clear"
           onClick={() => {
-            dispatch(onSearchClear());
+            dispatch(onSearchClear({ searchObjects }));
           }}
         >
           <span className="material-symbols-outlined">close</span>

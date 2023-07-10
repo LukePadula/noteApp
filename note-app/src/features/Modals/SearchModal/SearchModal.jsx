@@ -1,7 +1,7 @@
-import "../SearchModal/SearchModal.css";
-import SearchField from "../../../SearchField/SearchField";
-import { NAVIGATE } from "../../../../app/PredefinedValues";
-import { NOTE, TEMPLATE } from "../../../../app/PredefinedValues";
+import "./SearchModal.css";
+import SearchField from "../../SearchField/SearchField";
+import { NAVIGATE } from "../../../app/PredefinedValues";
+import { NOTE, TEMPLATE } from "../../../app/PredefinedValues";
 
 const SearchModal = () => {
   return (

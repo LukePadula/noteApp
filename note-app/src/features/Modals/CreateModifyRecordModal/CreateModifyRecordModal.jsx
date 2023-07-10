@@ -6,15 +6,15 @@ import {
   onCreateRecordFormDataChange,
   onRecordEdit,
   onValidationError,
-} from "../../../../app/Slices/AppSlice";
+} from "../../../app/Slices/AppSlice";
 import "./CreateModifyRecordModal.css";
 import {
   selectCreateRecordFormData,
   selectTitleValid,
-} from "../../../../app/Slices/AppSlice";
-import SearchField from "../../../SearchField/SearchField";
-import { EVENT, SELECT } from "../../../../app/PredefinedValues";
-import { TEMPLATE, NOTE } from "../../../../app/PredefinedValues";
+} from "../../../app/Slices/AppSlice";
+import SearchField from "../../SearchField/SearchField";
+import { EVENT, SELECT } from "../../../app/PredefinedValues";
+import { TEMPLATE, NOTE } from "../../../app/PredefinedValues";
 
 const Joi = require("joi");
 var schema = Joi.object().keys({

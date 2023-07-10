@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { EVENT, NOTE, TEMPLATE } from "../PredefinedValues";
+import { EVENT, NOTE, TEMPLATE, TEMPLATE_AND_EVENT } from "../PredefinedValues";
 import { generateId } from "../Utils/Utils";
 
 const defaultRecordLookup = { id: "", title: "" };
@@ -359,24 +359,33 @@ export const appSlice = createSlice({
         state.searchResults = undefined;
         state.templateSearchResults = undefined;
         state.eventSearchResults = undefined;
-        state.templateSearchInput = undefined;
-        state.eventSearchInput = undefined;
-        state.searchInput = undefined;
+        state.templateSearchInput = "";
+        state.eventSearchInput = "";
+        state.searchInput = "";
       }
     },
     onSearchClear: (state, action) => {
-      state.searchResults = undefined;
-      state.eventSearchInput = undefined;
-      state.templateSearchInput = undefined;
-      state.templateSearchResults = undefined;
-      state.eventSearchResults = undefined;
-      state.templateSearchInput = undefined;
-      state.searchInput = undefined;
-      state.createRecordFormData.template = defaultRecordLookup;
-      state.createRecordFormData.event = defaultRecordLookup;
+      const { searchObjects } = action.payload;
+
+      switch (searchObjects) {
+        case EVENT:
+          state.eventSearchInput = "";
+          state.eventSearchResults = undefined;
+          state.createRecordFormData.event = defaultRecordLookup;
+          break;
+        case TEMPLATE:
+          state.templateSearchInput = "";
+          state.templateSearchResults = undefined;
+          state.createRecordFormData.template = defaultRecordLookup;
+          break;
+        case TEMPLATE_AND_EVENT:
+          state.searchInput = "";
+          state.searchResults = undefined;
+        default:
+          break;
+      }
     },
     onRecordLookupSelect: (state, action) => {
-      console.log(action.payload);
       const { recordId, searchObjects } = action.payload;
       const index = state[searchObjects].findIndex(
         (item) => item.id === recordId
@@ -386,9 +395,9 @@ export const appSlice = createSlice({
       state.searchResults = undefined;
       state.templateSearchResults = undefined;
       state.eventSearchResults = undefined;
-      state.eventSearchInput = undefined;
-      state.templateSearchInput = undefined;
-      state.searchInput = undefined;
+      state.eventSearchInput = "";
+      state.templateSearchInput = "";
+      state.searchInput = "";
     },
     onTextEdit: (state, action) => {
       const { id, object, content } = action.payload;

@@ -9,10 +9,10 @@ import Home from "./features/pages/Home.jsx";
 import Template from "./features/pages/Template.jsx";
 import Note from "./features/pages/Note.jsx";
 
-import Modal from "./features/Modals/Modal/ModalTemplate/Modal.jsx";
-import SignOut from "./features/Modals/Modal/SignOutModal/SignOutModal.jsx";
-import CreateModifyRecordModal from "./features/Modals/Modal/CreateModifyRecordModal/CreateModifyRecordModal";
-import SearchModal from "./features/Modals/Modal/SearchModal/SearchModal";
+import Modal from "./features/Modals/ModalTemplate/Modal";
+import SignOutModal from "./features/Modals/SignOutModal/SignOutModal";
+import CreateModifyRecordModal from "./features/Modals/CreateModifyRecordModal/CreateModifyRecordModal";
+import SearchModal from "./features/Modals/SearchModal/SearchModal";
 import DeleteRecordModal from "./features/Modals/DeleteRecordModal/DeleteRecordModal";
 import WorkInProgressModal from "./features/Modals/WorkInProgressModal/WorkInProgressModal";
 
@@ -31,7 +31,7 @@ const App = () => {
 
   switch (modalType) {
     case "signOut":
-      modalContent = <SignOut />;
+      modalContent = <SignOutModal />;
       break;
 
     case "createRecord":

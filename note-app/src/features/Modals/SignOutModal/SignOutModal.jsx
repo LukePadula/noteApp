@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
-import "../SignOutModal/SignOutModal.css";
+import "./SignOutModal.css";
 import {
   onModalOpenClose,
   onSignOutConfirm,
-} from "../../../../app/Slices/AppSlice";
+} from "../../../app/Slices/AppSlice";
 import { useNavigate } from "react-router-dom";
 
 const SignOutModal = (props) => {
