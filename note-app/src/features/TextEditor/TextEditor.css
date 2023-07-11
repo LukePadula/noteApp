@@ -1,7 +1,7 @@
 .editor-cont {
   background-color: #f6f6f7;
   padding: 20px;
-  margin: 6px;
+  margin: 10px;
   border-radius: 10px;
   box-shadow: 0px 4px 4px 0px #80808040;
   grid-column: 2;
@@ -41,4 +41,17 @@
 .negative,
 [data-item-name="negative"] {
   background-color: rgb(186, 67, 20, 0.5);
+}
+
+@media (min-width: 1500px) {
+  .tab {
+    height: 80vh;
+    width: 70%;
+    align-self: center;
+  }
+
+  .editor-cont {
+    display: flex;
+    flex-direction: column;
+  }
 }

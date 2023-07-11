@@ -16,8 +16,6 @@ const Template = () => {
     return <h1 className="error">Something went wrong</h1>;
   }
 
-  console.log("RECORD", recordData);
-
   return (
     <>
       <NavBar />

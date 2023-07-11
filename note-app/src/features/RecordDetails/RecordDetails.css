@@ -23,7 +23,7 @@
 
 .record-details-cont {
   background-color: #f6f6f7;
-  margin: 6px;
+  margin: 10px;
   padding: 20px;
   box-shadow: 0px 4px 4px 0px #80808040;
   border-radius: 10px;
@@ -76,9 +76,11 @@
   #detail-drop-down {
     display: none;
   }
+
   .detail {
     display: initial;
   }
+
   .edit-field,
   .read-only-fields {
     width: 80%;

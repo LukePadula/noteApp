@@ -22,8 +22,6 @@ const App = () => {
   let modalType;
   let modalObject;
 
-  console.log(modal);
-
   if (modal) {
     modalType = modal.type;
     modalObject = modal.object;

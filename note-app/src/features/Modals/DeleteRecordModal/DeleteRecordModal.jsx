@@ -1,13 +1,10 @@
-import { useSelector, useDispatch } from "react-redux";
-import AppSlice from "../../../app/Slices/AppSlice";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { onModalOpenClose, onRecordDelete } from "../../../app/Slices/AppSlice";
 
-const DeleteRecordModal = (props) => {
+const DeleteRecordModal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  console.log("rendered");
 
   return (
     <>
