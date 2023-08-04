@@ -20,26 +20,10 @@ const ObjectContainer = (props) => {
             <small>{record.eventName}</small>
           </div>
           <div className="record-data">
-            <small>
-              {record.created.toLocaleDateString("en-GB", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-              })}
-            </small>
+            <small>{record.created_date}</small>
           </div>
           <div className="record-data">
-            <small>
-              {record.modified.toLocaleDateString("en-GB", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-              })}
-            </small>
+            <small>{record.last_modified_date}</small>
           </div>
         </>
       );
@@ -55,26 +39,10 @@ const ObjectContainer = (props) => {
             </Link>
           </div>
           <div className="record-data">
-            <small>
-              {record.created.toLocaleDateString("en-GB", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-              })}
-            </small>
+            <small>{record.createdDate}</small>
           </div>
           <div className="record-data">
-            <small>
-              {record.modified.toLocaleDateString("en-GB", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-              })}
-            </small>
+            <small>{record.modifiedDate}</small>
           </div>
         </>
       );
@@ -91,13 +59,13 @@ const ObjectContainer = (props) => {
           </div>
           <div className="record-data">
             <small>
-              {record.startDateTime.toLocaleDateString("en-GB", {
+              {/* {record.startDateTime.toLocaleDateString("en-GB", {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
                 hour: "numeric",
                 minute: "numeric",
-              })}
+              })} */}
             </small>
           </div>
         </>

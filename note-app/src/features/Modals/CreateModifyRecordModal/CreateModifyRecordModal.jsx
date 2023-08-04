@@ -15,6 +15,7 @@ import {
 import SearchField from "../../SearchField/SearchField";
 import { EVENT, SELECT } from "../../../app/PredefinedValues";
 import { TEMPLATE, NOTE } from "../../../app/PredefinedValues";
+import axios from "axios";
 
 const Joi = require("joi");
 var schema = Joi.object().keys({
@@ -103,9 +104,22 @@ const CreateModifyRecordModal = (props) => {
           onSubmit={(e) => {
             e.preventDefault();
             const valid = validateInput();
-
+            let objectRoute = object === NOTE ? "notes" : "templates";
             if (valid) {
-              dispatch(formSubmitFunction({}));
+              try {
+                axios
+                  .post(`http://localhost:6002/records/${objectRoute}`, {
+                    title: formData.title,
+                    description: formData.description,
+                    template: formData.template.id,
+                    event: formData.event.id,
+                  })
+                  .then((res) => {
+                    dispatch(formSubmitFunction({}));
+                  });
+              } catch (error) {
+                console.log(error);
+              }
             }
           }}
         >

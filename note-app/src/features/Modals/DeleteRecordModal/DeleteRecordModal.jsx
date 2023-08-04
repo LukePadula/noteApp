@@ -1,10 +1,24 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { onModalOpenClose, onRecordDelete } from "../../../app/Slices/AppSlice";
+import {
+  onModalOpenClose,
+  onDataLoad,
+  onRecordDelete,
+} from "../../../app/Slices/AppSlice";
+import axios from "axios";
+import { selectRecordDelete } from "../../../app/Slices/AppSlice";
+import { deleteRecord } from "../../../app/Utils/Callouts";
+import { object } from "joi";
 
 const DeleteRecordModal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let recordToDelete = useSelector(selectRecordDelete);
+
+  console.log(recordToDelete);
+  const deleteRecord = async () => {
+    await deleteRecord(recordToDelete.object, recordToDelete.recordId);
+  };
 
   return (
     <>
@@ -16,6 +30,9 @@ const DeleteRecordModal = () => {
             className="button-orange"
             onClick={() => {
               navigate("/home");
+
+              deleteRecord();
+
               dispatch(onRecordDelete());
             }}
           >

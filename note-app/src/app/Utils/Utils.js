@@ -1,3 +1,5 @@
+import { NOTE, TEMPLATE, EVENT } from "../PredefinedValues";
+
 export const generateId = () => {
   return crypto.randomUUID();
 };
@@ -11,4 +13,20 @@ export const generateObjectTitle = (text) => {
     return textOutput;
   }
   return text;
+};
+
+export const getObjectRoute = (object) => {
+  switch (object) {
+    case NOTE:
+      return "notes";
+
+    case TEMPLATE:
+      return "templates";
+
+    case EVENT:
+      return "events";
+
+    default:
+      throw new Error("Invalid object type.");
+  }
 };
