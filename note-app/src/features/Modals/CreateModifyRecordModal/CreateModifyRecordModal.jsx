@@ -15,7 +15,7 @@ import {
 import SearchField from "../../SearchField/SearchField";
 import { EVENT, SELECT } from "../../../app/PredefinedValues";
 import { TEMPLATE, NOTE } from "../../../app/PredefinedValues";
-import axios from "axios";
+import { createRecord, updateRecord } from "../../../app/Utils/Callouts";
 
 const Joi = require("joi");
 var schema = Joi.object().keys({
@@ -26,12 +26,22 @@ const CreateModifyRecordModal = (props) => {
   const { object, operation } = props;
   const dispatch = useDispatch();
   const formData = useSelector(selectCreateRecordFormData);
+  console.log(formData);
 
   const formTitle = object.toLowerCase();
   let formSubmitFunction;
   let formSubmitButtonLabel;
   let titleValid = useSelector(selectTitleValid);
   let templateFieldDisabled = false;
+
+  const submitRecord = async (formData) => {
+    console.log(formData, "FORM");
+    console.log(operation, "OPERATION");
+    operation === "createRecord"
+      ? createRecord(object, formData)
+      : updateRecord(object, formData.id, formData);
+    dispatch(onModalOpenClose());
+  };
 
   if (operation === "edit") {
     formSubmitFunction = onRecordEdit;
@@ -103,23 +113,8 @@ const CreateModifyRecordModal = (props) => {
           }
           onSubmit={(e) => {
             e.preventDefault();
-            const valid = validateInput();
-            let objectRoute = object === NOTE ? "notes" : "templates";
-            if (valid) {
-              try {
-                axios
-                  .post(`http://localhost:6002/records/${objectRoute}`, {
-                    title: formData.title,
-                    description: formData.description,
-                    template: formData.template.id,
-                    event: formData.event.id,
-                  })
-                  .then((res) => {
-                    dispatch(formSubmitFunction({}));
-                  });
-              } catch (error) {
-                console.log(error);
-              }
+            if (validateInput()) {
+              submitRecord(formData);
             }
           }}
         >

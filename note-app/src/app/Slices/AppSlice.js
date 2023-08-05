@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { EVENT, NOTE, TEMPLATE, TEMPLATE_AND_EVENT } from "../PredefinedValues";
 import { generateId } from "../Utils/Utils";
-import axios from "axios";
 
 const defaultRecordLookup = { id: "", title: "" };
 const defaultcreateRecordFormData = {
@@ -262,9 +261,10 @@ export const appSlice = createSlice({
       state.searchInput = "";
     },
     onTextEdit: (state, action) => {
+      console.log(action.payload, "AY");
       const { id, object, content } = action.payload;
       const index = state[object].findIndex((item) => item.id === id);
-      state[object][index].content = { ...content };
+      state[object][index].content = { ...content.blocks };
     },
     onDropDownOpenClose: (state, action) => {
       state.recordDetailsDropdownActive = !state.recordDetailsDropdownActive;
@@ -284,23 +284,12 @@ export const appSlice = createSlice({
       state.titleValid = action.payload;
     },
     onDataLoad: (state, action) => {
-      const { object, data } = action.payload;
+      const { object, data, bulkLoad } = action.payload;
 
-      // console.log("HER", data);
-      // state.NOTE = data;
-
-      switch (object) {
-        case NOTE:
-          state.NOTE = data;
-          break;
-        case TEMPLATE:
-          state.TEMPLATE = data;
-          break;
-        case EVENT:
-          state.EVENT = data;
-          break;
-        default:
-          break;
+      if (bulkLoad) {
+        state[object] = data;
+      } else {
+        state[object].push(data[0]);
       }
     },
     onCurrentRecordLoad: (state, action) => {

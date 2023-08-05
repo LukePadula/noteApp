@@ -12,14 +12,9 @@ const Home = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const notesData = await getRecords(NOTE);
-      dispatch(onDataLoad({ object: NOTE, data: notesData }));
-
-      const templatesData = await getRecords(TEMPLATE);
-      dispatch(onDataLoad({ object: TEMPLATE, data: templatesData }));
-
-      const eventsData = await getRecords(EVENT);
-      dispatch(onDataLoad({ object: EVENT, data: eventsData }));
+      await getRecords(NOTE);
+      await getRecords(TEMPLATE);
+      await getRecords(EVENT);
     };
 
     getData();

@@ -9,16 +9,16 @@ const RecordDetails = (props) => {
   let detailData;
 
   console.log(record);
-  console.log(record.title);
 
   const readOnlyFields = (
-    <div className="read-only-fields">
-      <small className="read-only-value">
-        Last modified:
-        {record.modified}
-      </small>
-      <small className="read-only-value">Created: {record.created}</small>
-    </div>
+    <></>
+    // <div className="read-only-fields">
+    //   <small className="read-only-value">
+    //     Last modified:
+    //     {record.modified}
+    //   </small>
+    //   <small className="read-only-value">Created: {record.created}</small>
+    // </div>
   );
 
   const modifyRecordActions = (
@@ -48,6 +48,7 @@ const RecordDetails = (props) => {
       </button>
     </div>
   );
+  console.log(record, "RECORDTITLE");
 
   switch (object) {
     case NOTE:
@@ -65,7 +66,7 @@ const RecordDetails = (props) => {
             </label>
           </div>
           <div className="edit-field">
-            {/* <label htmlFor="event">
+            <label htmlFor="event">
               Event
               <input
                 id="event"
@@ -73,18 +74,18 @@ const RecordDetails = (props) => {
                 value={record.event.title}
                 type="text"
               />
-            </label> */}
+            </label>
           </div>
           <div className="edit-field">
-            {/* <label htmlFor="template">
+            <label htmlFor="template">
               Template
               <input
                 id="template"
                 disabled={true}
-                value={record.template.title}
+                value={record.template.title ?? ""}
                 type="text"
               />
-            </label> */}
+            </label>
           </div>
           <div className="edit-field">
             <label htmlFor="description">

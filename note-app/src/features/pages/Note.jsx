@@ -13,27 +13,21 @@ import NavBar from "../NavBar/NavBar";
 import "./Note.css";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import axios from "axios";
+import { getRecords } from "../../app/Utils/Callouts";
 
 const Note = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   let recordData = useSelector(selectCurrentRecord);
+  console.log("RECORD DATA", recordData);
 
   useEffect(() => {
     const getData = async () => {
-      let record = await axios.get(
-        `http://localhost:6002/records/notes/?id=1234`
-      );
-      dispatch(onCurrentRecordLoad(record.data));
+      getRecords(NOTE, id);
     };
 
     getData();
   }, []);
-
-  // let recordData = useSelector((state) =>
-  //   selectRecordData(state, { object: NOTE, id })
-  // );
 
   if (!recordData) {
     return <h1 className="error">Something went wrong</h1>;

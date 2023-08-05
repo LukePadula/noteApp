@@ -16,6 +16,7 @@ export const generateObjectTitle = (text) => {
 };
 
 export const getObjectRoute = (object) => {
+  console.log(object);
   switch (object) {
     case NOTE:
       return "notes";

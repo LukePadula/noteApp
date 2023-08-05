@@ -1,16 +1,24 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectRecordData } from "../../app/Slices/AppSlice";
+import { selectCurrentRecord } from "../../app/Slices/AppSlice";
 import { TEMPLATE } from "../../app/PredefinedValues";
 import TextEditor from "../TextEditor/TextEditor";
 import RecordDetails from "../RecordDetails/RecordDetails";
 import NavBar from "../NavBar/NavBar";
+import { useEffect } from "react";
+import { getRecords } from "../../app/Utils/Callouts";
 
 const Template = () => {
   const { id } = useParams();
-  let recordData = useSelector((state) =>
-    selectRecordData(state, { object: TEMPLATE, id })
-  );
+  let recordData = useSelector(selectCurrentRecord);
+
+  useEffect(() => {
+    const getData = async () => {
+      getRecords(TEMPLATE, id);
+    };
+
+    getData();
+  }, []);
 
   if (!recordData) {
     return <h1 className="error">Something went wrong</h1>;
@@ -20,7 +28,7 @@ const Template = () => {
     <>
       <NavBar />
       <div className="page-content">
-        <RecordDetails record={recordData} object={TEMPLATE} />
+        <RecordDetails record={recordData[0]} object={TEMPLATE} />
         <TextEditor
           record={recordData}
           recordId={id}

@@ -16,7 +16,8 @@ const DeleteRecordModal = () => {
   let recordToDelete = useSelector(selectRecordDelete);
 
   console.log(recordToDelete);
-  const deleteRecord = async () => {
+  const deleteaRecord = async () => {
+    console.log(recordToDelete.object);
     await deleteRecord(recordToDelete.object, recordToDelete.recordId);
   };
 
@@ -31,7 +32,7 @@ const DeleteRecordModal = () => {
             onClick={() => {
               navigate("/home");
 
-              deleteRecord();
+              deleteaRecord();
 
               dispatch(onRecordDelete());
             }}

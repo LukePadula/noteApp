@@ -10,8 +10,13 @@ import { generateObjectTitle } from "../../app/Utils/Utils";
 
 const TextEditor = (props) => {
   const dispatch = useDispatch();
-  const { id, object, content } = props.record;
+  console.log(props);
+  const { object, record } = props;
+  const { id, content } = record;
   let editorObjectTitle = generateObjectTitle(object);
+
+  console.log(record, "EDITOR RECORD");
+  console.log("CONTENT", content);
 
   const noteTools = {
     header: {
@@ -34,6 +39,7 @@ const TextEditor = (props) => {
       autofocus: true,
       onChange: async () => {
         let content = await editor.saver.save();
+
         dispatch(onTextEdit({ id, object, content }));
       },
       tools: object === NOTE ? noteTools : templateTools,
