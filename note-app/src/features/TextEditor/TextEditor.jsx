@@ -7,6 +7,7 @@ import { onTextEdit } from "../../app/Slices/AppSlice";
 import { Question, Positive, Negative } from "../../app/tools";
 import { NOTE } from "../../app/PredefinedValues";
 import { generateObjectTitle } from "../../app/Utils/Utils";
+import { updateRecord } from "../../app/Utils/Callouts";
 
 const TextEditor = (props) => {
   const dispatch = useDispatch();
@@ -15,8 +16,10 @@ const TextEditor = (props) => {
   const { id, content } = record;
   let editorObjectTitle = generateObjectTitle(object);
 
-  console.log(record, "EDITOR RECORD");
-  console.log("CONTENT", content);
+  const submitRecordText = async (content) => {
+    console.log(content);
+    updateRecord(object, record[0].id, { content });
+  };
 
   const noteTools = {
     header: {
@@ -39,8 +42,9 @@ const TextEditor = (props) => {
       autofocus: true,
       onChange: async () => {
         let content = await editor.saver.save();
-
-        dispatch(onTextEdit({ id, object, content }));
+        console.log(content);
+        await submitRecordText(content.blocks);
+        // dispatch(onTextEdit({ id, object, content }));
       },
       tools: object === NOTE ? noteTools : templateTools,
       data: content,

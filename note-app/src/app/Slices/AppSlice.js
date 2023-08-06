@@ -261,10 +261,10 @@ export const appSlice = createSlice({
       state.searchInput = "";
     },
     onTextEdit: (state, action) => {
-      console.log(action.payload, "AY");
-      const { id, object, content } = action.payload;
-      const index = state[object].findIndex((item) => item.id === id);
-      state[object][index].content = { ...content.blocks };
+      // console.log(action.payload, "AY");
+      // const { id, object, content } = action.payload;
+      // const index = state[object].findIndex((item) => item.id === id);
+      // state[object][index].content = { ...content.blocks };
     },
     onDropDownOpenClose: (state, action) => {
       state.recordDetailsDropdownActive = !state.recordDetailsDropdownActive;

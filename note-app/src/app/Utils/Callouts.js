@@ -7,6 +7,23 @@ import {
   onRecordEdit,
 } from "../Slices/AppSlice";
 
+export const userLogin = async (body) => {
+  console.log(body);
+  try {
+    const response = await axios.post(
+      `http://localhost:6002/users/login`,
+      body
+      // {
+      //   withCredentials: true,
+      // }
+    );
+
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getRecords = async (object, id = null) => {
   const recordIdUrl = id == null ? "" : `/?id="${id}"`;
   const route = getObjectRoute(object);
@@ -54,13 +71,26 @@ export const createRecord = async (object, data) => {
   }
 };
 
-export const updateRecord = async (object, id = undefined, data) => {
-  const body = {
-    title: data.title,
-    description: data.description,
-    event: data.event.id,
-    template: data.template.id,
-  };
+export const updateRecord = async (object, id, data) => {
+  let body = {};
+
+  console.log(data.content, "HELLOOOO");
+
+  if (Array.isArray(data.content)) {
+    body = {
+      content: data,
+    };
+  } else {
+    body = {
+      title: data.title,
+      description: data.description,
+      event: data.event.id,
+      template: data.template.id,
+      content: data.content,
+    };
+  }
+
+  console.log(body, "BODYS");
 
   const route = getObjectRoute(object);
   try {
