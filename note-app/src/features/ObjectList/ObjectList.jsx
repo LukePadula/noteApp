@@ -56,7 +56,6 @@ const ObjectList = (props) => {
     <ListHeaders key={title} header={title}></ListHeaders>
   ));
   // Get record details
-  console.log(objectRecords, "RECORDLIST ");
   let recordList = objectRecords.map((record, index) => (
     <ObjectContainer key={index} object={object} record={record} />
   ));

@@ -7,7 +7,6 @@ const RecordDetails = (props) => {
   const { record, object } = props;
   const dispatch = useDispatch();
   let detailData;
-
   console.log(record);
 
   const readOnlyFields = (
@@ -48,7 +47,6 @@ const RecordDetails = (props) => {
       </button>
     </div>
   );
-  console.log(record, "RECORDTITLE");
 
   switch (object) {
     case NOTE:

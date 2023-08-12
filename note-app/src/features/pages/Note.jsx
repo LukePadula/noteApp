@@ -19,8 +19,8 @@ const Note = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   let recordData = useSelector(selectCurrentRecord);
-  console.log("RECORD DATA", recordData);
 
+  console.log(recordData);
   useEffect(() => {
     const getData = async () => {
       getRecords(NOTE, id);

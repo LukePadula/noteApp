@@ -26,7 +26,6 @@ const CreateModifyRecordModal = (props) => {
   const { object, operation } = props;
   const dispatch = useDispatch();
   const formData = useSelector(selectCreateRecordFormData);
-  console.log(formData);
 
   const formTitle = object.toLowerCase();
   let formSubmitFunction;
@@ -35,8 +34,6 @@ const CreateModifyRecordModal = (props) => {
   let templateFieldDisabled = false;
 
   const submitRecord = async (formData) => {
-    console.log(formData, "FORM");
-    console.log(operation, "OPERATION");
     operation === "createRecord"
       ? createRecord(object, formData)
       : updateRecord(object, formData.id, formData);

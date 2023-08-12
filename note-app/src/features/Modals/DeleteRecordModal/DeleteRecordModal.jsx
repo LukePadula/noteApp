@@ -15,9 +15,7 @@ const DeleteRecordModal = () => {
   const navigate = useNavigate();
   let recordToDelete = useSelector(selectRecordDelete);
 
-  console.log(recordToDelete);
   const deleteaRecord = async () => {
-    console.log(recordToDelete.object);
     await deleteRecord(recordToDelete.object, recordToDelete.recordId);
   };
 

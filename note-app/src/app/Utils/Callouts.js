@@ -6,19 +6,17 @@ import {
   onCurrentRecordLoad,
   onRecordEdit,
 } from "../Slices/AppSlice";
+import { log } from "util";
 
 export const userLogin = async (body) => {
-  console.log(body);
   try {
     const response = await axios.post(
       `http://localhost:6002/users/login`,
-      body
-      // {
-      //   withCredentials: true,
-      // }
+      body,
+      {
+        withCredentials: true,
+      }
     );
-
-    console.log(response);
   } catch (error) {
     console.log(error);
   }
@@ -27,7 +25,6 @@ export const userLogin = async (body) => {
 export const getRecords = async (object, id = null) => {
   const recordIdUrl = id == null ? "" : `/?id="${id}"`;
   const route = getObjectRoute(object);
-  console.log(recordIdUrl);
 
   try {
     const response = await axios.get(
@@ -73,8 +70,7 @@ export const createRecord = async (object, data) => {
 
 export const updateRecord = async (object, id, data) => {
   let body = {};
-
-  console.log(data.content, "HELLOOOO");
+  console.log("UPDATE");
 
   if (Array.isArray(data.content)) {
     body = {
@@ -89,8 +85,7 @@ export const updateRecord = async (object, id, data) => {
       content: data.content,
     };
   }
-
-  console.log(body, "BODYS");
+  console.log(body);
 
   const route = getObjectRoute(object);
   try {

@@ -16,7 +16,6 @@ const Login = () => {
 
   const inputChange = (e) => {
     loginCreds[e.target.id] = e.target.value;
-    console.log(loginCreds);
   };
 
   return (

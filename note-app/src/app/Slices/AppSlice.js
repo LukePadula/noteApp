@@ -293,6 +293,7 @@ export const appSlice = createSlice({
       }
     },
     onCurrentRecordLoad: (state, action) => {
+      console.log(action.payload);
       state.currentRecord = action.payload;
     },
   },
