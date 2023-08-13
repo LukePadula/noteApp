@@ -1,12 +1,14 @@
 import "./Login.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { onLogin } from "../../app/Slices/AppSlice";
 import { useNavigate } from "react-router-dom";
-import { onModalOpenClose } from "../../app/Slices/AppSlice";
+import { onModalOpenClose, onLoginError } from "../../app/Slices/AppSlice";
 import { userLogin } from "../../app/Utils/Callouts";
+import { selectLoginError } from "../../app/Slices/AppSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
+  let loginError = useSelector(selectLoginError);
   const navigate = useNavigate();
 
   const loginCreds = {
@@ -26,6 +28,9 @@ const Login = () => {
           inputChange(e);
         }}
       >
+        {loginError && (
+          <h1 className="login-error">Incorrect details, please try again</h1>
+        )}
         <h1 className="login-title">Login</h1>
         <div className="login-input">
           <label htmlFor="email">Email</label>
@@ -41,8 +46,13 @@ const Login = () => {
             className="button-green"
             onClick={async () => {
               // dispatch(onLogin());
-              await userLogin(loginCreds);
-              navigate("/home");
+              const loginStatus = await userLogin(loginCreds);
+
+              if (loginStatus.status === "authorised" && loginStatus.token) {
+                navigate("/home");
+              } else {
+                dispatch(onLoginError());
+              }
             }}
           >
             Login

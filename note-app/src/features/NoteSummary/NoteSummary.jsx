@@ -2,10 +2,12 @@ import "./NoteSummary.css";
 import { useDispatch } from "react-redux";
 import { onSummaryRefresh } from "../../app/Slices/AppSlice";
 import { generateObjectTitle } from "../../app/Utils/Utils";
+import { refreshSummary } from "../../app/Utils/Callouts";
 
 const NoteSummary = (props) => {
   const dispatch = useDispatch();
   const { recordId, summary, summaryLastRefreshed } = props;
+  console.log(recordId, "RECORD ID");
   const summaryItems = [];
 
   for (const key in summary) {
@@ -32,7 +34,7 @@ const NoteSummary = (props) => {
 
   let listActionButtons = (
     <button
-      onClick={() => dispatch(onSummaryRefresh({ recordId }))}
+      onClick={() => refreshSummary(recordId)}
       className="button-orange-square refresh"
     >
       <span className="material-symbols-outlined">refresh</span>

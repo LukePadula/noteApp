@@ -37,6 +37,7 @@ const CreateModifyRecordModal = (props) => {
     operation === "createRecord"
       ? createRecord(object, formData)
       : updateRecord(object, formData.id, formData);
+
     dispatch(onModalOpenClose());
   };
 

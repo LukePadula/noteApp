@@ -15,7 +15,7 @@ const TextEditor = (props) => {
   const { id, content } = record;
   let editorObjectTitle = generateObjectTitle(object);
   const submitRecordText = async (content) => {
-    updateRecord(object, record[0].id, { content });
+    updateRecord(object, record.id, content);
   };
 
   const noteTools = {
@@ -39,14 +39,10 @@ const TextEditor = (props) => {
       autofocus: true,
       onChange: async () => {
         let content = await editor.saver.save();
-        console.log("Onchange triggered", Date.now());
-        // await submitRecordText(content.blocks);
-        // dispatch(onTextEdit({ id, object, content }));
+        await submitRecordText(content.blocks);
       },
       tools: object === NOTE ? noteTools : templateTools,
-      data: {
-        blocks: record[0].content,
-      },
+      data: { blocks: JSON.parse(content) },
     });
   }, []);
 

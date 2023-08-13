@@ -6,7 +6,7 @@ import {
   onCurrentRecordLoad,
   onRecordEdit,
 } from "../Slices/AppSlice";
-import { log } from "util";
+import Cookies from "js-cookie";
 
 export const userLogin = async (body) => {
   try {
@@ -17,21 +17,29 @@ export const userLogin = async (body) => {
         withCredentials: true,
       }
     );
+    console.log(response.data);
+    return response.data;
   } catch (error) {
-    console.log(error);
+    return { status: "error" };
   }
 };
 
 export const getRecords = async (object, id = null) => {
   const recordIdUrl = id == null ? "" : `/?id="${id}"`;
   const route = getObjectRoute(object);
+  const token = Cookies.get("token");
+  const headers = { token: token };
 
   try {
     const response = await axios.get(
-      `http://localhost:6002/records/${route}${recordIdUrl}`
+      `http://localhost:6002/records/${route}${recordIdUrl}`,
+      {
+        headers,
+      }
     );
 
     if (id) {
+      console.log("Single data", response.data);
       store.dispatch(onCurrentRecordLoad(response.data));
     } else {
       store.dispatch(
@@ -45,6 +53,8 @@ export const getRecords = async (object, id = null) => {
 
 export const createRecord = async (object, data) => {
   const route = getObjectRoute(object);
+  const token = Cookies.get("token");
+  console.log(data);
 
   const body = {
     title: data.title,
@@ -53,14 +63,15 @@ export const createRecord = async (object, data) => {
     template: data.template.id,
   };
 
+  const headers = { token: token };
+
   try {
     const response = await axios.post(
       `http://localhost:6002/records/${route}`,
-      body
+      body,
+      { headers }
     );
-    store.dispatch(
-      onDataLoad({ object, data: response.data, bulkLoad: false })
-    );
+    store.dispatch(onDataLoad({ object, data: response.data, bulkLoad: true }));
 
     // return response.data;
   } catch (error) {
@@ -70,9 +81,11 @@ export const createRecord = async (object, data) => {
 
 export const updateRecord = async (object, id, data) => {
   let body = {};
-  console.log("UPDATE");
+  console.log("UPDATE", data);
+  const token = Cookies.get("token");
+  const headers = { token: token };
 
-  if (Array.isArray(data.content)) {
+  if (Array.isArray(data)) {
     body = {
       content: data,
     };
@@ -80,19 +93,19 @@ export const updateRecord = async (object, id, data) => {
     body = {
       title: data.title,
       description: data.description,
-      event: data.event.id,
-      template: data.template.id,
-      content: data.content,
+      // event: data.event.id,
+      // template: data.template.id,
+      content: data,
     };
   }
-  console.log(body);
-
   const route = getObjectRoute(object);
   try {
     const response = await axios.post(
       `http://localhost:6002/records/${route}/?id="${id}"`,
-      body
+      body,
+      { headers }
     );
+    console.log(response.data, "RESPONSE DATA");
     store.dispatch(onCurrentRecordLoad(response.data));
 
     // return response.data;
@@ -103,10 +116,13 @@ export const updateRecord = async (object, id, data) => {
 
 export const deleteRecord = async (object, id) => {
   const route = getObjectRoute(object);
+  const token = Cookies.get("token");
+  const headers = { token: token };
 
   try {
     let deleteResponse = await axios.delete(
-      `http://localhost:6002/records/${route}/${id}`
+      `http://localhost:6002/records/${route}/${id}`,
+      { headers }
     );
   } catch (error) {
     console.log(error);
@@ -114,18 +130,27 @@ export const deleteRecord = async (object, id) => {
   getRecords(object);
 };
 
-// export const refreshSummary = async (id, content) => {
-//   const body = {
-//     content,
-//   };
+export const getSummary = async (id) => {
+  const token = Cookies.get("token");
+  const headers = { token: token };
+  try {
+    let response = await axios.get(`http://localhost:6002/summary/${id}`, {
+      headers,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-//   try {
-//     let response = await axios.delete(
-//       `http://localhost:6002/summary/${id}`,
-//       body
-//     );
-//   } catch (error) {
-//     console.log(error);
-//   }
-//   getRecords(object);
-// };
+export const refreshSummary = async (id) => {
+  const token = Cookies.get("token");
+  const headers = { token: token };
+  console.log("REFRESHING");
+  try {
+    let response = await axios.post(`http://localhost:6002/summary/${id}`, {
+      headers,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

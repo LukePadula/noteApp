@@ -20,7 +20,6 @@ const Note = () => {
   const dispatch = useDispatch();
   let recordData = useSelector(selectCurrentRecord);
 
-  console.log(recordData);
   useEffect(() => {
     const getData = async () => {
       getRecords(NOTE, id);
@@ -37,7 +36,7 @@ const Note = () => {
     <>
       <NavBar />
       <div className="page-content">
-        <RecordDetails record={recordData[0]} object={NOTE} />
+        <RecordDetails record={recordData} object={NOTE} />
         <TextEditor
           record={recordData}
           recordId={id}

@@ -46,28 +46,6 @@ export const appSlice = createSlice({
       }
     },
     onRecordDelete: (state, action) => {
-      // let refreshedData;
-      // const deleteRecord = async () => {
-      // try {
-      //   let deleteResponse = await axios.delete(
-      //     `http://localhost:6002/records/notes/${state.recordDelete.recordId}`
-      //   );
-      // } catch (error) {
-      //   console.log(error);
-      // }
-
-      //   try {
-      //     let queryResponse = await axios.get(
-      //       `http://localhost:6002/records/notes`
-      //     );
-      //     console.log(queryResponse.data);
-      //     refreshedData = queryResponse.data;
-      //     state.NOTE = queryResponse.data;
-      //   } catch (error) {}
-      // };
-
-      // deleteRecord();
-
       state.modalType = undefined;
     },
     onModalOpenClose: (state, action) => {
@@ -106,87 +84,9 @@ export const appSlice = createSlice({
     },
     onSignOutConfirm: (state, action) => {
       state.modalType = undefined;
-      state.userLoggedIn = false;
+      state.loginError = false;
     },
-    onRecordCreate: (state, action) => {
-      state.modalType = undefined;
-      const { title, description, object, template, event } =
-        state.createRecordFormData;
 
-      const newRecord = {
-        id: generateId(),
-        title,
-        description,
-        created: new Date(),
-        modified: new Date(),
-        showActions: false,
-        object,
-      };
-
-      if (object === NOTE) {
-        const index = state[TEMPLATE].findIndex(
-          (item) => item.id === template.id
-        );
-
-        index >= 0
-          ? (newRecord.content = state[TEMPLATE][index].content)
-          : (newRecord.content = undefined);
-        newRecord.template = { ...template };
-        newRecord.event = { ...event };
-      }
-      state[object].push(newRecord);
-      state.createRecordFormData = defaultcreateRecordFormData;
-    },
-    onRecordEdit: (state, action) => {
-      const { object } = state.createRecordFormData;
-      const index = state[object].findIndex(
-        (item) => item.id === state.createRecordFormData.id
-      );
-
-      state[object][index] = {
-        ...state.createRecordFormData,
-        modified: new Date(),
-      };
-
-      state.modalType = undefined;
-      state.createRecordFormData = defaultcreateRecordFormData;
-    },
-    onSummaryRefresh: (state, action) => {
-      const index = state.NOTE.findIndex(
-        (item) => item.id === action.payload.recordId
-      );
-      const record = state.NOTE[index];
-      const questionSummary = [];
-      const positiveSummary = [];
-      const negativeSummary = [];
-
-      if (record.content) {
-        record.content.blocks.forEach((element) => {
-          if (element.data.text) {
-            switch (element.type) {
-              case "question":
-                questionSummary.push(element.data.text);
-                break;
-              case "positive":
-                positiveSummary.push(element.data.text);
-                break;
-              case "negative":
-                negativeSummary.push(element.data.text);
-                break;
-              default:
-                break;
-            }
-          }
-        });
-
-        state.NOTE[index].summary = {
-          question: questionSummary,
-          positive: positiveSummary,
-          negative: negativeSummary,
-        };
-        state.NOTE[index].summaryLastRefreshed = new Date();
-      }
-    },
     onSearch: (state, action) => {
       if (action.payload.value) {
         const { value, searchObjects } = action.payload;
@@ -194,7 +94,11 @@ export const appSlice = createSlice({
 
         if (Array.isArray(searchObjects)) {
           searchObjects.forEach((object) => {
-            records.push(...state[object]);
+            state[object].forEach((record) => {
+              record.object = object;
+              console.log(JSON.stringify(record));
+              records.push(record);
+            });
           });
           state.searchInput = value;
 
@@ -247,6 +151,7 @@ export const appSlice = createSlice({
       }
     },
     onRecordLookupSelect: (state, action) => {
+      console.log(action.payload, "PL");
       const { recordId, searchObjects } = action.payload;
       const index = state[searchObjects].findIndex(
         (item) => item.id === recordId
@@ -259,12 +164,6 @@ export const appSlice = createSlice({
       state.eventSearchInput = "";
       state.templateSearchInput = "";
       state.searchInput = "";
-    },
-    onTextEdit: (state, action) => {
-      // console.log(action.payload, "AY");
-      // const { id, object, content } = action.payload;
-      // const index = state[object].findIndex((item) => item.id === id);
-      // state[object][index].content = { ...content.blocks };
     },
     onDropDownOpenClose: (state, action) => {
       state.recordDetailsDropdownActive = !state.recordDetailsDropdownActive;
@@ -293,8 +192,10 @@ export const appSlice = createSlice({
       }
     },
     onCurrentRecordLoad: (state, action) => {
-      console.log(action.payload);
-      state.currentRecord = action.payload;
+      state.currentRecord = action.payload[0];
+    },
+    onLoginError: (state, action) => {
+      state.loginError = true;
     },
   },
 });
@@ -319,6 +220,7 @@ export const {
   onValidationError,
   onDataLoad,
   onCurrentRecordLoad,
+  onLoginError,
 } = appSlice.actions;
 
 export const selectNoteData = (state) => state.appSlice.NOTE;
@@ -350,5 +252,6 @@ export const selectRecordEdit = (state) => state.appSlice.recordEdit;
 export const selectTitleValid = (state) => state.appSlice.titleValid;
 export const selectCurrentRecord = (state) => state.appSlice.currentRecord;
 export const selectRecordDelete = (state) => state.appSlice.recordDelete;
+export const selectLoginError = (state) => state.appSlice.loginError;
 
 export default appSlice.reducer;
