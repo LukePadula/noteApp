@@ -1,12 +1,25 @@
 import axios from "axios";
 import { getObjectRoute } from "../Utils/Utils";
 import { store } from "../store";
-import {
-  onDataLoad,
-  onCurrentRecordLoad,
-  onRecordEdit,
-} from "../Slices/AppSlice";
+import { onDataLoad, onCurrentRecordLoad } from "../Slices/AppSlice";
 import Cookies from "js-cookie";
+import { NOTE } from "../PredefinedValues";
+
+export const userSignUp = async (body) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:6002/users/signup`,
+      body,
+      {
+        withCredentials: true,
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    return { status: "error" };
+  }
+};
 
 export const userLogin = async (body) => {
   try {
@@ -62,6 +75,7 @@ export const createRecord = async (object, data) => {
     event: data.event.id,
     template: data.template.id,
   };
+  console.log(JSON.stringify(body));
 
   const headers = { token: token };
 
@@ -94,9 +108,12 @@ export const updateRecord = async (object, id, data) => {
       title: data.title,
       description: data.description,
       // event: data.event.id,
-      // template: data.template.id,
       content: data,
     };
+    console.log(object, "OBJECTG");
+    if (object === NOTE) {
+      body.event = data.event.id;
+    }
   }
   const route = getObjectRoute(object);
   try {
@@ -144,6 +161,7 @@ export const getSummary = async (id) => {
 
 export const refreshSummary = async (id) => {
   const token = Cookies.get("token");
+  console.log(token);
   const headers = { token: token };
   console.log("REFRESHING");
   try {

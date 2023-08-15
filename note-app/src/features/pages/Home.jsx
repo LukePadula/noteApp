@@ -4,7 +4,7 @@ import { NOTE, TEMPLATE, EVENT } from "../../app/PredefinedValues";
 import NavBar from "../NavBar/NavBar";
 import "./Home.css";
 import { useDispatch } from "react-redux";
-import { onDataLoad } from "../../app/Slices/AppSlice";
+import { onCurrentRecordDeLoad } from "../../app/Slices/AppSlice";
 import { getRecords } from "../../app/Utils/Callouts";
 
 const Home = () => {
@@ -12,6 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     const getData = async () => {
+      dispatch(onCurrentRecordDeLoad());
       await getRecords(NOTE);
       await getRecords(TEMPLATE);
       await getRecords(EVENT);

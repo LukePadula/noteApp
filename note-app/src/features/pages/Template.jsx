@@ -28,7 +28,7 @@ const Template = () => {
     <>
       <NavBar />
       <div className="page-content">
-        <RecordDetails record={recordData[0]} object={TEMPLATE} />
+        <RecordDetails record={recordData} object={TEMPLATE} />
         <TextEditor
           record={recordData}
           recordId={id}

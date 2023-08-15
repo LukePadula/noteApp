@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { EVENT, NOTE, TEMPLATE, TEMPLATE_AND_EVENT } from "../PredefinedValues";
-import { generateId } from "../Utils/Utils";
 
 const defaultRecordLookup = { id: "", title: "" };
 const defaultcreateRecordFormData = {
@@ -21,7 +20,6 @@ const initialState = {
   eventSearchInput: "",
   templateSearchInput: "",
   recordDetailsDropdownActive: false,
-  userLoggedIn: false,
   createRecordFormData: defaultcreateRecordFormData,
   recordDelete: defaultDeleteRecordObject,
   titleValid: true,
@@ -69,11 +67,7 @@ export const appSlice = createSlice({
         }
 
         if (action.payload.type === "edit") {
-          const { id, object, value } = action.payload;
-          const index = state[object].findIndex((item) => item.id === id);
-          const record = state[object][index];
-
-          state.createRecordFormData = { ...record };
+          state.createRecordFormData = { ...state.currentRecord };
         }
 
         if (action.payload.type === "createRecord") {
@@ -84,7 +78,6 @@ export const appSlice = createSlice({
     },
     onSignOutConfirm: (state, action) => {
       state.modalType = undefined;
-      state.loginError = false;
     },
 
     onSearch: (state, action) => {
@@ -168,9 +161,6 @@ export const appSlice = createSlice({
     onDropDownOpenClose: (state, action) => {
       state.recordDetailsDropdownActive = !state.recordDetailsDropdownActive;
     },
-    onLogin: (state, action) => {
-      state.userLoggedIn = true;
-    },
     onCreateRecordFormDataChange: (state, action) => {
       const { object, id, value } = action.payload;
       if (id !== "template") {
@@ -194,6 +184,9 @@ export const appSlice = createSlice({
     onCurrentRecordLoad: (state, action) => {
       state.currentRecord = action.payload[0];
     },
+    onCurrentRecordDeLoad: (state, action) => {
+      state.currentRecord = undefined;
+    },
     onLoginError: (state, action) => {
       state.loginError = true;
     },
@@ -201,26 +194,23 @@ export const appSlice = createSlice({
 });
 
 export const {
-  onQueryData,
   onActionMenuClick,
   onRecordDelete,
-  onRecordView,
   onModalOpenClose,
   onSignOutConfirm,
   onSummaryRefresh,
   onRecordCreate,
-  onTextEdit,
   onSearch,
   onDropDownOpenClose,
   onRecordLookupSelect,
   onSearchClear,
-  onLogin,
   onCreateRecordFormDataChange,
   onRecordEdit,
   onValidationError,
   onDataLoad,
   onCurrentRecordLoad,
   onLoginError,
+  onCurrentRecordDeLoad,
 } = appSlice.actions;
 
 export const selectNoteData = (state) => state.appSlice.NOTE;

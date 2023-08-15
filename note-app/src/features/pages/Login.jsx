@@ -1,9 +1,8 @@
 import "./Login.css";
 import { useDispatch, useSelector } from "react-redux";
-import { onLogin } from "../../app/Slices/AppSlice";
 import { useNavigate } from "react-router-dom";
 import { onModalOpenClose, onLoginError } from "../../app/Slices/AppSlice";
-import { userLogin } from "../../app/Utils/Callouts";
+import { userSignUp, userLogin } from "../../app/Utils/Callouts";
 import { selectLoginError } from "../../app/Slices/AppSlice";
 
 const Login = () => {
@@ -45,7 +44,6 @@ const Login = () => {
           <button
             className="button-green"
             onClick={async () => {
-              // dispatch(onLogin());
               const loginStatus = await userLogin(loginCreds);
 
               if (loginStatus.status === "authorised" && loginStatus.token) {
@@ -58,7 +56,13 @@ const Login = () => {
             Login
           </button>
           <button
-            onClick={() => dispatch(onModalOpenClose({ type: "wip" }))}
+            onClick={async () => {
+              const signUpStatus = await userSignUp(loginCreds);
+
+              if (signUpStatus.status === "authorised" && signUpStatus.token) {
+                navigate("/home");
+              }
+            }}
             className="button-orange"
           >
             Sign up

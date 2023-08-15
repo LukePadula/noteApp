@@ -3,7 +3,6 @@ import Header from "@editorjs/header";
 import { useDispatch } from "react-redux";
 import "../TextEditor/TextEditor.css";
 import { useEffect } from "react";
-import { onTextEdit } from "../../app/Slices/AppSlice";
 import { Question, Positive, Negative } from "../../app/tools";
 import { NOTE } from "../../app/PredefinedValues";
 import { generateObjectTitle } from "../../app/Utils/Utils";
@@ -42,7 +41,7 @@ const TextEditor = (props) => {
         await submitRecordText(content.blocks);
       },
       tools: object === NOTE ? noteTools : templateTools,
-      data: { blocks: JSON.parse(content) },
+      data: { blocks: content ? JSON.parse(content) : "" },
     });
   }, []);
 
@@ -61,9 +60,9 @@ const TextEditor = (props) => {
     <>
       <div className="editor-cont">
         <h1>{editorObjectTitle}</h1>
-        <div className="modified-cont">
+        {/* <div className="modified-cont">
           {content && <small>Last edited: {lastEdited}</small>}
-        </div>
+        </div> */}
         <div className="tab" id="editorjs"></div>
       </div>
     </>

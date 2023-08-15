@@ -1,10 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {
-  selectRecordData,
-  selectCurrentRecord,
-} from "../../app/Slices/AppSlice";
-import { onCurrentRecordLoad } from "../../app/Slices/AppSlice";
+import { selectCurrentRecord } from "../../app/Slices/AppSlice";
 import { NOTE } from "../../app/PredefinedValues";
 import TextEditor from "../TextEditor/TextEditor";
 import RecordDetails from "../RecordDetails/RecordDetails";
@@ -12,12 +8,10 @@ import NoteSummary from "../NoteSummary/NoteSummary";
 import NavBar from "../NavBar/NavBar";
 import "./Note.css";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { getRecords } from "../../app/Utils/Callouts";
 
 const Note = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
   let recordData = useSelector(selectCurrentRecord);
 
   useEffect(() => {

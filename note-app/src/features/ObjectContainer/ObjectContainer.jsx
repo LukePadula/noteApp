@@ -6,6 +6,7 @@ import RecordActions from "../RecordActions/RecordActions";
 const ObjectContainer = (props) => {
   const { object, record } = props;
   let recordContent;
+  console.log(record);
 
   switch (object) {
     case NOTE:
@@ -17,7 +18,7 @@ const ObjectContainer = (props) => {
             </Link>
           </div>
           <div className="record-data">
-            <small>{record.eventName}</small>
+            <small>{record.event.title}</small>
           </div>
           <div className="record-data">
             <small>{record.created_date}</small>

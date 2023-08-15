@@ -36,7 +36,7 @@ const ObjectList = (props) => {
   let listTitle = generateObjectTitle(object) + "s";
   let listActionButtons = <ListActions object={object} />;
 
-  //If no results found.
+  // If no results found.
   if (!objectRecords || objectRecords.length === 0) {
     return (
       <>

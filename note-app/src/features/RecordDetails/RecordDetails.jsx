@@ -7,7 +7,7 @@ const RecordDetails = (props) => {
   const { record, object } = props;
   const dispatch = useDispatch();
   let detailData;
-  console.log(record);
+  console.log(record, "RECORD SS");
 
   const readOnlyFields = (
     <></>
